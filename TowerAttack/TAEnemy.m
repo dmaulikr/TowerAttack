@@ -8,6 +8,7 @@
 
 #import "TAEnemy.h"
 #import "TABattleScene.h"
+#import "TAUIOverlay.h"
 
 @implementation TAEnemy
 
@@ -19,15 +20,16 @@
         self.movementSpeed = 20;
         self.maximumHealth = 100;
         self.currentHealth = 100;
+        self.goldReward = 10;
         
         self.name =  [NSString stringWithFormat:@"Enemy %lu", (unsigned long)[self.battleScene.towersOnField count]];
         self.size = CGSizeMake(100, 100);
         self.position = location;
         self.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:self.size.width / 6];
         self.physicsBody.dynamic = YES;
-        self.physicsBody.contactTestBitMask = TAContactTypeTower | TAContactTypeProjectile | TAContactTypeDetector;
+        self.physicsBody.contactTestBitMask = TAContactTypeProjectile | TAContactTypeDetector;
         self.physicsBody.categoryBitMask = TAContactTypeEnemy;
-        self.physicsBody.collisionBitMask = TAContactTypeTower;
+        self.physicsBody.collisionBitMask = TAContactTypeNothing;
         
         SKSpriteNode *outsideBar = [SKSpriteNode spriteNodeWithImageNamed:@"Health_Bar_Outside"];
         outsideBar.size = CGSizeMake(35, 5.6);
@@ -55,9 +57,10 @@
 {
     _currentHealth = currentHealth;
     self.healthBarInside.size = CGSizeMake(33.5 * self.currentHealth / self.maximumHealth, self.healthBarInside.size.height);
-    if (_currentHealth <= 0) {
+    if (_currentHealth <= 0 && [self.battleScene.enemiesOnField containsObject:self]) {
         [self.battleScene removeChildrenInArray:[NSArray arrayWithObjects:self, self.healthBarInside, nil]];
         [self.battleScene.enemiesOnField removeObject:self];
+        self.battleScene.uiOverlay.currentGold += self.goldReward;
     }
 }
 

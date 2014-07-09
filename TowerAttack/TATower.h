@@ -22,6 +22,7 @@
 @property (nonatomic, strong) NSTimer *attackUpdate;
 @property (nonatomic, weak) TABattleScene *battleScene;
 @property (nonatomic, strong) NSMutableSet *enemiesInRange;
+@property (nonatomic) NSUInteger purchaseCost;
 
 
 -(void)beginAttackOnEnemy: (TAEnemy *)enemy;

@@ -7,6 +7,7 @@
 //
 
 #import "TAUIOverlay.h"
+#import "TABattleScene.h"
 
 @implementation TAUIOverlay
 
@@ -14,8 +15,34 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        self.backgroundColor = [UIColor clearColor];
+        self.goldLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 5, 100, 30)];
+        [self.goldLabel setFont:[UIFont fontWithName:@"Cochin" size:15]];
+        [self addSubview:self.goldLabel];
+        self.currentGold = 100;
     }
     return self;
+}
+
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.battleScene touchesBegan:touches withEvent:event];
+}
+
+-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.battleScene touchesMoved:touches withEvent:event];
+}
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.battleScene touchesEnded:touches withEvent:event];
+}
+
+ -(void)setCurrentGold:(NSUInteger)currentGold
+{
+    [self.goldLabel setText:[NSString stringWithFormat:@"Gold: %lu",currentGold]];
+    _currentGold = currentGold;
 }
 
 /*

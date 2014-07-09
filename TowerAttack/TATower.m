@@ -18,26 +18,29 @@
         //init code
         self.attackRadius = 200;
         self.battleScene = sceneParam;
-        self.timeBetweenAttacks = 0.25;
-        self.attackDamage = 3;
+        self.timeBetweenAttacks = 0.5;
+        self.attackDamage = 6;
         self.isAttacking = NO;
         self.projectileSpeed = 400;
         self.enemiesInRange = [NSMutableSet set];
+        self.purchaseCost = 50;
         
         self.size = CGSizeMake(30, 30);
-        self.name =  [NSString stringWithFormat:@"Tower %d", [self.battleScene.towersOnField count]];
+        self.name =  [NSString stringWithFormat:@"Tower %lu", (unsigned long)[self.battleScene.towersOnField count]];
         self.position = location;
         
         self.physicsBody.contactTestBitMask = TAContactTypeEnemy;
         self.physicsBody.categoryBitMask = TAContactTypeTower;
-        self.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:self.size.width / 2];
+        self.physicsBody.collisionBitMask = TAContactTypeNothing;
+        self.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:(self.size.width - 4) / 2];
         self.physicsBody.dynamic = NO;
         
-        SKNode *collisionDetection = [SKNode node];
-       // SKSpriteNode *collisionDetection = [SKSpriteNode spriteNodeWithImageNamed:@"1"];
-       // collisionDetection.size = CGSizeMake(self.attackRadius * 2, self.attackRadius * 2);
+        //SKNode *collisionDetection = [SKNode node];
+        SKSpriteNode *collisionDetection = [SKSpriteNode spriteNodeWithImageNamed:@"TowerRadius"];
+        collisionDetection.size = CGSizeMake(self.attackRadius * 2, self.attackRadius * 2);
+        collisionDetection.alpha = 0.3;
         collisionDetection.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:self.attackRadius];
-        collisionDetection.name = [NSString stringWithFormat:@"Detector %d", [self.battleScene.towersOnField count]];
+        collisionDetection.name = [NSString stringWithFormat:@"Detector %lu", (unsigned long)[self.battleScene.towersOnField count]];
         collisionDetection.position = self.position;
         collisionDetection.physicsBody.contactTestBitMask = TAContactTypeEnemy;
         collisionDetection.physicsBody.categoryBitMask = TAContactTypeDetector;
@@ -71,9 +74,13 @@
                          [enemy setCurrentHealth:enemy.currentHealth - self.attackDamage];
                         // NSLog(@"Hit; enemy health = %d",enemy.currentHealth);
                          if ([enemy currentHealth] <= 0) {
+                             [self.enemiesInRange removeObject:enemy];
                              [self endAttack];
                          }
                      }];
+    if ([self.enemiesInRange count] == 0) {
+        [self endAttack];
+    }
 }
 
 -(void)endAttack

@@ -9,6 +9,7 @@
 #import <SpriteKit/SpriteKit.h>
 
 @class TATower;
+@class TAUIOverlay;
 
 typedef enum : uint8_t {
     TAContactTypeTower             = 1,
@@ -20,7 +21,6 @@ typedef enum : uint8_t {
 
 @interface TABattleScene : SKScene <SKPhysicsContactDelegate>
 
-@property (nonatomic) CGPoint destination;
 @property (strong, nonatomic) NSMutableArray *towersOnField;
 @property (strong, nonatomic) NSMutableArray *enemiesOnField;
 @property (nonatomic) CGPoint spawnPoint;
@@ -28,6 +28,7 @@ typedef enum : uint8_t {
 @property (nonatomic) NSInteger enemiesLetThrough;
 @property (nonatomic) CGPathRef enemyMovementPath;
 @property (nonatomic) CGFloat enemyMovementPathLength;
+@property (strong, nonatomic) TAUIOverlay *uiOverlay;
 
 -(CGFloat)distanceFromA:(CGPoint)pointA toB:(CGPoint)pointB;
 -(id)initWithSize:(CGSize)size andPath:(CGPathRef)path andSpawnPoint:(CGPoint)point;

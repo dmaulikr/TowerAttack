@@ -9,6 +9,7 @@
 #import "TAMainMenuViewController.h"
 #import "TABattleScene.h"
 #import "TAPathDrawer.h"
+#import "TAUIOverlay.h"
 
 @implementation TAMainMenuViewController
 
@@ -39,6 +40,9 @@
             x = arc4random() % ((int)self.view.frame.size.width - 50) + 25;
         }while (x == xC1);
         y -= arc4random() % (int)self.view.frame.size.height / 2 + 10;
+        if (y <= 0) {
+            y = 0;
+        }
         xC1 = arc4random() % abs((int)(x - xC1)) + MIN(x, xC1);
         yC1 -= arc4random() % (int)(yC1 - y);
         if (x == xC1) {
@@ -46,9 +50,6 @@
         }
         xC2 = arc4random() % abs((int)(x - xC1)) + MIN(x, xC1);
         yC2 = yC1 - arc4random() % (int)(yC1 - y);
-        if (y <= 0) {
-            y = -10;
-        }
         CGPathAddCurveToPoint(pathToDraw, NULL, xC1, yC1, xC2, yC2, x, y);
         CGPathAddCurveToPoint(path, NULL, xC1, self.view.frame.size.height - yC1, xC2, self.view.frame.size.height - yC2, x,self.view.frame.size.height -  y);
     }
@@ -57,11 +58,21 @@
     [self.view addSubview:pathDrawer];
     [self.view bringSubviewToFront:skView];
     
-    SKScene * scene = [[TABattleScene alloc] initWithSize:self.view.frame.size andPath:path andSpawnPoint:CGPointMake(x, self.view.frame.size.height -  y)];
+    TABattleScene *scene = [[TABattleScene alloc] initWithSize:self.view.frame.size andPath:path andSpawnPoint:CGPointMake(x, self.view.frame.size.height -  y)];
     scene.scaleMode = SKSceneScaleModeAspectFill;
     
+    TAUIOverlay *overLay = [[TAUIOverlay alloc] initWithFrame:self.view.frame];
+    overLay.battleScene = scene;
+    [skView addSubview:overLay];
+    
+    scene.uiOverlay = overLay;
     // Present the scene.
     [skView presentScene:scene];
+}
+
+-(BOOL)prefersStatusBarHidden
+{
+    return YES;
 }
 
 - (BOOL)shouldAutorotate

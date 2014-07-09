@@ -17,6 +17,7 @@
 @property (nonatomic) NSInteger maximumHealth;
 @property (nonatomic) NSInteger currentHealth;
 @property (nonatomic, strong) SKSpriteNode *healthBarInside;
+@property (nonatomic) NSUInteger goldReward;
 
 
 -(id)initWithImageNamed:(NSString *)name andLocation:(CGPoint)location inScene:(TABattleScene *)scene;

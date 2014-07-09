@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C6ECC65196DC68F00053238 /* TowerRadius.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C6ECC64196DC68F00053238 /* TowerRadius.png */; };
+		2C6ECC67196DC84600053238 /* Tower.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C6ECC66196DC84600053238 /* Tower.png */; };
+		2C6ECC6A196DC9BC00053238 /* TAUIOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C6ECC69196DC9BC00053238 /* TAUIOverlay.m */; };
 		2CD8D47E196B21E100F4BA87 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CD8D47D196B21E100F4BA87 /* Foundation.framework */; };
 		2CD8D480196B21E100F4BA87 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CD8D47F196B21E100F4BA87 /* CoreGraphics.framework */; };
 		2CD8D482196B21E100F4BA87 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CD8D481196B21E100F4BA87 /* UIKit.framework */; };
@@ -24,7 +27,6 @@
 		2CD8D4AE196B21E200F4BA87 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2CD8D4AC196B21E200F4BA87 /* InfoPlist.strings */; };
 		2CD8D4B0196B21E200F4BA87 /* TowerAttackTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD8D4AF196B21E200F4BA87 /* TowerAttackTests.m */; };
 		2CE59DF7196B2A6500FF3BD4 /* TATower.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE59DF6196B2A6500FF3BD4 /* TATower.m */; };
-		2CE59DF9196B2C8400FF3BD4 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CE59DF8196B2C8400FF3BD4 /* 1.png */; };
 		2CE59DFC196B30B900FF3BD4 /* TAEnemy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE59DFB196B30B900FF3BD4 /* TAEnemy.m */; };
 		2CE59DFE196B34F700FF3BD4 /* Goblin.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CE59DFD196B34F700FF3BD4 /* Goblin.png */; };
 		2CFF7811196C44EF0028F4AD /* Health_Bar_Outside.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CFF7810196C44EF0028F4AD /* Health_Bar_Outside.png */; };
@@ -45,6 +47,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2C6ECC64196DC68F00053238 /* TowerRadius.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TowerRadius.png; sourceTree = "<group>"; };
+		2C6ECC66196DC84600053238 /* Tower.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tower.png; sourceTree = "<group>"; };
+		2C6ECC68196DC9BC00053238 /* TAUIOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAUIOverlay.h; sourceTree = "<group>"; };
+		2C6ECC69196DC9BC00053238 /* TAUIOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAUIOverlay.m; sourceTree = "<group>"; };
 		2CD8D47A196B21E100F4BA87 /* TowerAttack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TowerAttack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CD8D47D196B21E100F4BA87 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2CD8D47F196B21E100F4BA87 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -69,7 +75,6 @@
 		2CD8D4AF196B21E200F4BA87 /* TowerAttackTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TowerAttackTests.m; sourceTree = "<group>"; };
 		2CE59DF5196B2A6500FF3BD4 /* TATower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TATower.h; sourceTree = "<group>"; };
 		2CE59DF6196B2A6500FF3BD4 /* TATower.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TATower.m; sourceTree = "<group>"; };
-		2CE59DF8196B2C8400FF3BD4 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
 		2CE59DFA196B30B900FF3BD4 /* TAEnemy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAEnemy.h; sourceTree = "<group>"; };
 		2CE59DFB196B30B900FF3BD4 /* TAEnemy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAEnemy.m; sourceTree = "<group>"; };
 		2CE59DFD196B34F700FF3BD4 /* Goblin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Goblin.png; sourceTree = "<group>"; };
@@ -144,6 +149,8 @@
 				2CD8D48F196B21E200F4BA87 /* AppDelegate.m */,
 				2CFF781A196C73A70028F4AD /* TAPathDrawer.h */,
 				2CFF781B196C73A70028F4AD /* TAPathDrawer.m */,
+				2C6ECC68196DC9BC00053238 /* TAUIOverlay.h */,
+				2C6ECC69196DC9BC00053238 /* TAUIOverlay.m */,
 				2CE59DF5196B2A6500FF3BD4 /* TATower.h */,
 				2CE59DF6196B2A6500FF3BD4 /* TATower.m */,
 				2CE59DFA196B30B900FF3BD4 /* TAEnemy.h */,
@@ -153,8 +160,9 @@
 				2CD8D495196B21E200F4BA87 /* TAMainMenuViewController.m */,
 				2CD8D497196B21E200F4BA87 /* TABattleScene.h */,
 				2CD8D498196B21E200F4BA87 /* TABattleScene.m */,
-				2CE59DF8196B2C8400FF3BD4 /* 1.png */,
 				2CE59DFD196B34F700FF3BD4 /* Goblin.png */,
+				2C6ECC66196DC84600053238 /* Tower.png */,
+				2C6ECC64196DC68F00053238 /* TowerRadius.png */,
 				2CFF7810196C44EF0028F4AD /* Health_Bar_Outside.png */,
 				2CFF7812196C44F40028F4AD /* Health_Bar_Inside.png */,
 				2CFF7816196C50FF0028F4AD /* Projectile.sks */,
@@ -271,13 +279,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				2CD8D48A196B21E200F4BA87 /* InfoPlist.strings in Resources */,
+				2C6ECC65196DC68F00053238 /* TowerRadius.png in Resources */,
 				2CFF7811196C44EF0028F4AD /* Health_Bar_Outside.png in Resources */,
-				2CE59DF9196B2C8400FF3BD4 /* 1.png in Resources */,
 				2CE59DFE196B34F700FF3BD4 /* Goblin.png in Resources */,
 				2CFF7819196C50FF0028F4AD /* spark.png in Resources */,
 				2CFF7818196C50FF0028F4AD /* Projectile.sks in Resources */,
 				2CD8D49D196B21E200F4BA87 /* Images.xcassets in Resources */,
 				2CFF7813196C44F40028F4AD /* Health_Bar_Inside.png in Resources */,
+				2C6ECC67196DC84600053238 /* Tower.png in Resources */,
 				2CD8D493196B21E200F4BA87 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -302,6 +311,7 @@
 				2CD8D496196B21E200F4BA87 /* TAMainMenuViewController.m in Sources */,
 				2CFF781C196C73A70028F4AD /* TAPathDrawer.m in Sources */,
 				2CD8D490196B21E200F4BA87 /* AppDelegate.m in Sources */,
+				2C6ECC6A196DC9BC00053238 /* TAUIOverlay.m in Sources */,
 				2CD8D48C196B21E200F4BA87 /* main.m in Sources */,
 				2CE59DF7196B2A6500FF3BD4 /* TATower.m in Sources */,
 			);
