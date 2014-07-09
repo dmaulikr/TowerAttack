@@ -15,15 +15,23 @@
 		2CD8D48C196B21E200F4BA87 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD8D48B196B21E200F4BA87 /* main.m */; };
 		2CD8D490196B21E200F4BA87 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD8D48F196B21E200F4BA87 /* AppDelegate.m */; };
 		2CD8D493196B21E200F4BA87 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CD8D491196B21E200F4BA87 /* Main.storyboard */; };
-		2CD8D496196B21E200F4BA87 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD8D495196B21E200F4BA87 /* ViewController.m */; };
-		2CD8D499196B21E200F4BA87 /* MyScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD8D498196B21E200F4BA87 /* MyScene.m */; };
-		2CD8D49B196B21E200F4BA87 /* Spaceship.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD8D49A196B21E200F4BA87 /* Spaceship.png */; };
+		2CD8D496196B21E200F4BA87 /* TAMainMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD8D495196B21E200F4BA87 /* TAMainMenuViewController.m */; };
+		2CD8D499196B21E200F4BA87 /* TABattleScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD8D498196B21E200F4BA87 /* TABattleScene.m */; };
 		2CD8D49D196B21E200F4BA87 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CD8D49C196B21E200F4BA87 /* Images.xcassets */; };
 		2CD8D4A4196B21E200F4BA87 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CD8D4A3196B21E200F4BA87 /* XCTest.framework */; };
 		2CD8D4A5196B21E200F4BA87 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CD8D47D196B21E100F4BA87 /* Foundation.framework */; };
 		2CD8D4A6196B21E200F4BA87 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CD8D481196B21E100F4BA87 /* UIKit.framework */; };
 		2CD8D4AE196B21E200F4BA87 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2CD8D4AC196B21E200F4BA87 /* InfoPlist.strings */; };
 		2CD8D4B0196B21E200F4BA87 /* TowerAttackTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD8D4AF196B21E200F4BA87 /* TowerAttackTests.m */; };
+		2CE59DF7196B2A6500FF3BD4 /* TATower.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE59DF6196B2A6500FF3BD4 /* TATower.m */; };
+		2CE59DF9196B2C8400FF3BD4 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CE59DF8196B2C8400FF3BD4 /* 1.png */; };
+		2CE59DFC196B30B900FF3BD4 /* TAEnemy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE59DFB196B30B900FF3BD4 /* TAEnemy.m */; };
+		2CE59DFE196B34F700FF3BD4 /* Goblin.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CE59DFD196B34F700FF3BD4 /* Goblin.png */; };
+		2CFF7811196C44EF0028F4AD /* Health_Bar_Outside.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CFF7810196C44EF0028F4AD /* Health_Bar_Outside.png */; };
+		2CFF7813196C44F40028F4AD /* Health_Bar_Inside.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CFF7812196C44F40028F4AD /* Health_Bar_Inside.png */; };
+		2CFF7818196C50FF0028F4AD /* Projectile.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2CFF7816196C50FF0028F4AD /* Projectile.sks */; };
+		2CFF7819196C50FF0028F4AD /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CFF7817196C50FF0028F4AD /* spark.png */; };
+		2CFF781C196C73A70028F4AD /* TAPathDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CFF781B196C73A70028F4AD /* TAPathDrawer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,17 +57,28 @@
 		2CD8D48E196B21E200F4BA87 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		2CD8D48F196B21E200F4BA87 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		2CD8D492196B21E200F4BA87 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		2CD8D494196B21E200F4BA87 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		2CD8D495196B21E200F4BA87 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		2CD8D497196B21E200F4BA87 /* MyScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyScene.h; sourceTree = "<group>"; };
-		2CD8D498196B21E200F4BA87 /* MyScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyScene.m; sourceTree = "<group>"; };
-		2CD8D49A196B21E200F4BA87 /* Spaceship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Spaceship.png; sourceTree = "<group>"; };
+		2CD8D494196B21E200F4BA87 /* TAMainMenuViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TAMainMenuViewController.h; sourceTree = "<group>"; };
+		2CD8D495196B21E200F4BA87 /* TAMainMenuViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TAMainMenuViewController.m; sourceTree = "<group>"; };
+		2CD8D497196B21E200F4BA87 /* TABattleScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TABattleScene.h; sourceTree = "<group>"; };
+		2CD8D498196B21E200F4BA87 /* TABattleScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TABattleScene.m; sourceTree = "<group>"; };
 		2CD8D49C196B21E200F4BA87 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2CD8D4A2196B21E200F4BA87 /* TowerAttackTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TowerAttackTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CD8D4A3196B21E200F4BA87 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		2CD8D4AB196B21E200F4BA87 /* TowerAttackTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TowerAttackTests-Info.plist"; sourceTree = "<group>"; };
 		2CD8D4AD196B21E200F4BA87 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2CD8D4AF196B21E200F4BA87 /* TowerAttackTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TowerAttackTests.m; sourceTree = "<group>"; };
+		2CE59DF5196B2A6500FF3BD4 /* TATower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TATower.h; sourceTree = "<group>"; };
+		2CE59DF6196B2A6500FF3BD4 /* TATower.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TATower.m; sourceTree = "<group>"; };
+		2CE59DF8196B2C8400FF3BD4 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
+		2CE59DFA196B30B900FF3BD4 /* TAEnemy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAEnemy.h; sourceTree = "<group>"; };
+		2CE59DFB196B30B900FF3BD4 /* TAEnemy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAEnemy.m; sourceTree = "<group>"; };
+		2CE59DFD196B34F700FF3BD4 /* Goblin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Goblin.png; sourceTree = "<group>"; };
+		2CFF7810196C44EF0028F4AD /* Health_Bar_Outside.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Health_Bar_Outside.png; sourceTree = "<group>"; };
+		2CFF7812196C44F40028F4AD /* Health_Bar_Inside.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Health_Bar_Inside.png; sourceTree = "<group>"; };
+		2CFF7816196C50FF0028F4AD /* Projectile.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Projectile.sks; sourceTree = "<group>"; };
+		2CFF7817196C50FF0028F4AD /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
+		2CFF781A196C73A70028F4AD /* TAPathDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPathDrawer.h; sourceTree = "<group>"; };
+		2CFF781B196C73A70028F4AD /* TAPathDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPathDrawer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,12 +142,23 @@
 			children = (
 				2CD8D48E196B21E200F4BA87 /* AppDelegate.h */,
 				2CD8D48F196B21E200F4BA87 /* AppDelegate.m */,
+				2CFF781A196C73A70028F4AD /* TAPathDrawer.h */,
+				2CFF781B196C73A70028F4AD /* TAPathDrawer.m */,
+				2CE59DF5196B2A6500FF3BD4 /* TATower.h */,
+				2CE59DF6196B2A6500FF3BD4 /* TATower.m */,
+				2CE59DFA196B30B900FF3BD4 /* TAEnemy.h */,
+				2CE59DFB196B30B900FF3BD4 /* TAEnemy.m */,
 				2CD8D491196B21E200F4BA87 /* Main.storyboard */,
-				2CD8D494196B21E200F4BA87 /* ViewController.h */,
-				2CD8D495196B21E200F4BA87 /* ViewController.m */,
-				2CD8D497196B21E200F4BA87 /* MyScene.h */,
-				2CD8D498196B21E200F4BA87 /* MyScene.m */,
-				2CD8D49A196B21E200F4BA87 /* Spaceship.png */,
+				2CD8D494196B21E200F4BA87 /* TAMainMenuViewController.h */,
+				2CD8D495196B21E200F4BA87 /* TAMainMenuViewController.m */,
+				2CD8D497196B21E200F4BA87 /* TABattleScene.h */,
+				2CD8D498196B21E200F4BA87 /* TABattleScene.m */,
+				2CE59DF8196B2C8400FF3BD4 /* 1.png */,
+				2CE59DFD196B34F700FF3BD4 /* Goblin.png */,
+				2CFF7810196C44EF0028F4AD /* Health_Bar_Outside.png */,
+				2CFF7812196C44F40028F4AD /* Health_Bar_Inside.png */,
+				2CFF7816196C50FF0028F4AD /* Projectile.sks */,
+				2CFF7817196C50FF0028F4AD /* spark.png */,
 				2CD8D49C196B21E200F4BA87 /* Images.xcassets */,
 				2CD8D486196B21E200F4BA87 /* Supporting Files */,
 			);
@@ -241,8 +271,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				2CD8D48A196B21E200F4BA87 /* InfoPlist.strings in Resources */,
+				2CFF7811196C44EF0028F4AD /* Health_Bar_Outside.png in Resources */,
+				2CE59DF9196B2C8400FF3BD4 /* 1.png in Resources */,
+				2CE59DFE196B34F700FF3BD4 /* Goblin.png in Resources */,
+				2CFF7819196C50FF0028F4AD /* spark.png in Resources */,
+				2CFF7818196C50FF0028F4AD /* Projectile.sks in Resources */,
 				2CD8D49D196B21E200F4BA87 /* Images.xcassets in Resources */,
-				2CD8D49B196B21E200F4BA87 /* Spaceship.png in Resources */,
+				2CFF7813196C44F40028F4AD /* Health_Bar_Inside.png in Resources */,
 				2CD8D493196B21E200F4BA87 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -262,10 +297,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CD8D499196B21E200F4BA87 /* MyScene.m in Sources */,
-				2CD8D496196B21E200F4BA87 /* ViewController.m in Sources */,
+				2CD8D499196B21E200F4BA87 /* TABattleScene.m in Sources */,
+				2CE59DFC196B30B900FF3BD4 /* TAEnemy.m in Sources */,
+				2CD8D496196B21E200F4BA87 /* TAMainMenuViewController.m in Sources */,
+				2CFF781C196C73A70028F4AD /* TAPathDrawer.m in Sources */,
 				2CD8D490196B21E200F4BA87 /* AppDelegate.m in Sources */,
 				2CD8D48C196B21E200F4BA87 /* main.m in Sources */,
+				2CE59DF7196B2A6500FF3BD4 /* TATower.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -472,6 +510,7 @@
 				2CD8D4B5196B21E200F4BA87 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2CD8D4B6196B21E200F4BA87 /* Build configuration list for PBXNativeTarget "TowerAttackTests" */ = {
 			isa = XCConfigurationList;
@@ -480,6 +519,7 @@
 				2CD8D4B8196B21E200F4BA87 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
