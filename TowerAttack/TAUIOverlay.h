@@ -14,7 +14,8 @@
 
 @property (weak, nonatomic) TABattleScene *battleScene;
 @property (nonatomic) NSUInteger currentGold;
-@property (strong, nonatomic) UILabel *goldLabel;
+@property (nonatomic) NSInteger livesLeft;
+@property (strong, nonatomic) UILabel *displayLabel;
 
 -(id)initWithFrame:(CGRect)frame;
 

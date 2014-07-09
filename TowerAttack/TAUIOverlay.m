@@ -16,9 +16,11 @@
     if (self) {
         // Initialization code
         self.backgroundColor = [UIColor clearColor];
-        self.goldLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 5, 100, 30)];
-        [self.goldLabel setFont:[UIFont fontWithName:@"Cochin" size:15]];
-        [self addSubview:self.goldLabel];
+        self.displayLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 5, 200, 60)];
+        self.livesLeft = 10;
+        [self.displayLabel setFont:[UIFont fontWithName:@"Cochin" size:15]];
+        self.displayLabel.numberOfLines = 2;
+        [self addSubview:self.displayLabel];
         self.currentGold = 100;
     }
     return self;
@@ -41,10 +43,23 @@
 
  -(void)setCurrentGold:(NSUInteger)currentGold
 {
-    [self.goldLabel setText:[NSString stringWithFormat:@"Gold: %lu",currentGold]];
+    [self.displayLabel setText:[NSString stringWithFormat:@"Gold: %lu\nLives: %ld",currentGold,(long)self
+                                .livesLeft]];
     _currentGold = currentGold;
 }
 
+-(void)setLivesLeft:(NSInteger)livesLeft
+{
+    [self.displayLabel setText:[NSString stringWithFormat:@"Gold: %lu\nLives: %ld",self.currentGold,(long)livesLeft]];
+    if (livesLeft == 0) {
+        [self.battleScene.view setPaused:YES];
+        UILabel *endGame = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width / 2 - 100, self.frame.size.width / 2 - 25, 200, 50)];
+        [endGame setText:@"YOU LOSE"];
+        [endGame setFont:[UIFont fontWithName:@"Cochin" size:30]];
+        [self addSubview:endGame];
+    }
+    _livesLeft = livesLeft;
+}
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

@@ -21,7 +21,6 @@
         [self setBackgroundColor:nil];
         self.spawnRefreshCount = 0;
         self.spawnPoint = point;
-        self.enemiesLetThrough = 0;
         
         self.towersOnField = [[NSMutableArray alloc] init];
         self.enemiesOnField = [[NSMutableArray alloc] init];
@@ -135,7 +134,8 @@
 
 -(void)update:(CFTimeInterval)currentTime {
     
-    if (self.spawnRefreshCount == 60 / self.view.frameInterval * 4) {
+    if (self.spawnRefreshCount == 60 * 4) {
+     //   NSLog(@"%ld",self.view.frameInterval);
         self.spawnRefreshCount = 0;
         NSLog(@"Spawn");
         TAEnemy *enemy = [[TAEnemy alloc] initWithImageNamed:@"Goblin" andLocation:self.spawnPoint inScene:self];

@@ -44,7 +44,7 @@
         
         
         [self runAction:[[SKAction followPath:self.battleScene.enemyMovementPath asOffset:YES orientToPath:YES duration:30] reversedAction] completion:^{
-            self.battleScene.enemiesLetThrough++;
+            self.battleScene.uiOverlay.livesLeft--;
             [self.battleScene removeChildrenInArray:[NSArray arrayWithObjects:self, self.healthBarInside, nil]];
             [self.battleScene.enemiesOnField removeObject:self];
         }];

@@ -25,7 +25,6 @@ typedef enum : uint8_t {
 @property (strong, nonatomic) NSMutableArray *enemiesOnField;
 @property (nonatomic) CGPoint spawnPoint;
 @property (nonatomic) NSInteger spawnRefreshCount;
-@property (nonatomic) NSInteger enemiesLetThrough;
 @property (nonatomic) CGPathRef enemyMovementPath;
 @property (nonatomic) CGFloat enemyMovementPathLength;
 @property (strong, nonatomic) TAUIOverlay *uiOverlay;
