@@ -11,6 +11,8 @@
 @class TAEnemy;
 @class TABattleScene;
 
+extern NSInteger const towerHeightAndWidth;
+
 @interface TATower : SKSpriteNode
 
 @property (nonatomic) CGFloat spaceUsedRadius;

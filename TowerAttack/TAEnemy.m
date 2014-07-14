@@ -42,7 +42,6 @@
         [self.healthBarInside addChild:outsideBar];
         [self.battleScene addChild:self.healthBarInside];
         
-        
         [self runAction:[[SKAction followPath:self.battleScene.enemyMovementPath asOffset:YES orientToPath:YES duration:30] reversedAction] completion:^{
             self.battleScene.uiOverlay.livesLeft--;
             [self.battleScene removeChildrenInArray:[NSArray arrayWithObjects:self, self.healthBarInside, nil]];
@@ -61,6 +60,7 @@
         [self.battleScene removeChildrenInArray:[NSArray arrayWithObjects:self, self.healthBarInside, nil]];
         [self.battleScene.enemiesOnField removeObject:self];
         self.battleScene.uiOverlay.currentGold += self.goldReward;
+        [self removeAllActions];
     }
 }
 

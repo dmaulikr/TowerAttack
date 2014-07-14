@@ -10,13 +10,15 @@
 #import "TABattleScene.h"
 #import "TAEnemy.h"
 
+NSInteger const towerHeightAndWidth = 50;
+
 @implementation TATower
 
 -(id)initWithImageNamed:(NSString *)name andLocation:(CGPoint)location inScene:(TABattleScene *)sceneParam
 {
     if (self == [super initWithImageNamed:name]) {
         //init code
-        self.attackRadius = 200;
+        self.attackRadius = 100;
         self.battleScene = sceneParam;
         self.timeBetweenAttacks = 0.5;
         self.attackDamage = 6;
@@ -25,10 +27,11 @@
         self.enemiesInRange = [NSMutableSet set];
         self.purchaseCost = 50;
         
-        self.size = CGSizeMake(30, 30);
+        self.size = CGSizeMake(towerHeightAndWidth, towerHeightAndWidth);
         self.name =  [NSString stringWithFormat:@"Tower %lu", (unsigned long)[self.battleScene.towersOnField count]];
         self.position = location;
         
+        self.zPosition = 0.1;
         self.physicsBody.contactTestBitMask = TAContactTypeEnemy;
         self.physicsBody.categoryBitMask = TAContactTypeTower;
         self.physicsBody.collisionBitMask = TAContactTypeNothing;

@@ -29,11 +29,14 @@
     // Drawing code
     CGContextRef drawContext = UIGraphicsGetCurrentContext();
     CGContextAddPath(drawContext, self.pathToDraw);
-    CGContextSetRGBStrokeColor(drawContext, 250.0f/255.0f, 224.0f/255.0f, 150.0f/255.0f, 1.0f);
-    CGContextSetLineWidth(drawContext, 50);
+    CGContextSetRGBStrokeColor(drawContext, 0, 0, 0, 0.7f);
+    CGContextSetRGBFillColor(drawContext, 250.0f/255.0f, 224.0f/255.0f, 150.0f/255.0f, 1.0f);
+    CGContextSetLineWidth(drawContext, 2);
     CGContextSetLineCap(drawContext, kCGLineCapRound);
     CGContextSetLineJoin(drawContext, kCGLineJoinRound);
     CGContextStrokePath(drawContext);
+    CGContextAddPath(drawContext, self.pathToDraw);
+    CGContextFillPath(drawContext);
 }
 
 

@@ -10,6 +10,8 @@
 		2C6ECC65196DC68F00053238 /* TowerRadius.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C6ECC64196DC68F00053238 /* TowerRadius.png */; };
 		2C6ECC67196DC84600053238 /* Tower.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C6ECC66196DC84600053238 /* Tower.png */; };
 		2C6ECC6A196DC9BC00053238 /* TAUIOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C6ECC69196DC9BC00053238 /* TAUIOverlay.m */; };
+		2C6ECC71196F329600053238 /* Cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C6ECC6F196F329600053238 /* Cancel.png */; };
+		2C6ECC72196F329600053238 /* Confirm.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C6ECC70196F329600053238 /* Confirm.png */; };
 		2CD8D47E196B21E100F4BA87 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CD8D47D196B21E100F4BA87 /* Foundation.framework */; };
 		2CD8D480196B21E100F4BA87 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CD8D47F196B21E100F4BA87 /* CoreGraphics.framework */; };
 		2CD8D482196B21E100F4BA87 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CD8D481196B21E100F4BA87 /* UIKit.framework */; };
@@ -51,6 +53,8 @@
 		2C6ECC66196DC84600053238 /* Tower.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tower.png; sourceTree = "<group>"; };
 		2C6ECC68196DC9BC00053238 /* TAUIOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAUIOverlay.h; sourceTree = "<group>"; };
 		2C6ECC69196DC9BC00053238 /* TAUIOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAUIOverlay.m; sourceTree = "<group>"; };
+		2C6ECC6F196F329600053238 /* Cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cancel.png; sourceTree = "<group>"; };
+		2C6ECC70196F329600053238 /* Confirm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Confirm.png; sourceTree = "<group>"; };
 		2CD8D47A196B21E100F4BA87 /* TowerAttack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TowerAttack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CD8D47D196B21E100F4BA87 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2CD8D47F196B21E100F4BA87 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -162,6 +166,8 @@
 				2CD8D498196B21E200F4BA87 /* TABattleScene.m */,
 				2CE59DFD196B34F700FF3BD4 /* Goblin.png */,
 				2C6ECC66196DC84600053238 /* Tower.png */,
+				2C6ECC6F196F329600053238 /* Cancel.png */,
+				2C6ECC70196F329600053238 /* Confirm.png */,
 				2C6ECC64196DC68F00053238 /* TowerRadius.png */,
 				2CFF7810196C44EF0028F4AD /* Health_Bar_Outside.png */,
 				2CFF7812196C44F40028F4AD /* Health_Bar_Inside.png */,
@@ -249,6 +255,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Ethan Hardy";
 				TargetAttributes = {
+					2CD8D479196B21E100F4BA87 = {
+						DevelopmentTeam = 87ZFCTHS33;
+					};
 					2CD8D4A1196B21E200F4BA87 = {
 						TestTargetID = 2CD8D479196B21E100F4BA87;
 					};
@@ -282,12 +291,14 @@
 				2C6ECC65196DC68F00053238 /* TowerRadius.png in Resources */,
 				2CFF7811196C44EF0028F4AD /* Health_Bar_Outside.png in Resources */,
 				2CE59DFE196B34F700FF3BD4 /* Goblin.png in Resources */,
+				2C6ECC72196F329600053238 /* Confirm.png in Resources */,
 				2CFF7819196C50FF0028F4AD /* spark.png in Resources */,
 				2CFF7818196C50FF0028F4AD /* Projectile.sks in Resources */,
 				2CD8D49D196B21E200F4BA87 /* Images.xcassets in Resources */,
 				2CFF7813196C44F40028F4AD /* Health_Bar_Inside.png in Resources */,
 				2C6ECC67196DC84600053238 /* Tower.png in Resources */,
 				2CD8D493196B21E200F4BA87 /* Main.storyboard in Resources */,
+				2C6ECC71196F329600053238 /* Cancel.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,10 +449,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TowerAttack/TowerAttack-Prefix.pch";
 				INFOPLIST_FILE = "TowerAttack/TowerAttack-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
 				WRAPPER_EXTENSION = app;
 			};
@@ -452,10 +466,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TowerAttack/TowerAttack-Prefix.pch";
 				INFOPLIST_FILE = "TowerAttack/TowerAttack-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
 				WRAPPER_EXTENSION = app;
 			};

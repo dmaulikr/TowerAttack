@@ -22,6 +22,7 @@
     skView.showsFPS = YES;
     skView.showsNodeCount = YES;
     skView.allowsTransparency = YES;
+    //skView.showsPhysics = YES;
     [skView setBackgroundColor:nil];
     [self.view setBackgroundColor:nil];
     [self.view addSubview:skView];
@@ -54,7 +55,9 @@
         CGPathAddCurveToPoint(path, NULL, xC1, self.view.frame.size.height - yC1, xC2, self.view.frame.size.height - yC2, x,self.view.frame.size.height -  y);
     }
     
-    TAPathDrawer *pathDrawer = [[TAPathDrawer alloc] initWithFrame:self.view.frame andPath:pathToDraw];
+    CGPathRef newPath = CGPathCreateCopyByStrokingPath(pathToDraw, NULL, 50, kCGLineCapRound, kCGLineJoinRound, 100);
+    
+    TAPathDrawer *pathDrawer = [[TAPathDrawer alloc] initWithFrame:self.view.frame andPath:newPath];
     [self.view addSubview:pathDrawer];
     [self.view bringSubviewToFront:skView];
     
