@@ -7,13 +7,20 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "TAUnit.h"
 
 @class TAEnemy;
 @class TABattleScene;
 
 extern NSInteger const towerHeightAndWidth;
+extern NSInteger const maxTowerLevel;
 
-@interface TATower : SKSpriteNode
+enum TATowerType : NSInteger {
+    TATowerTypeTower,
+    TATowerTypeNoTower
+};
+
+@interface TATower : TAUnit
 
 @property (nonatomic) CGFloat spaceUsedRadius;
 @property (nonatomic) CGFloat attackRadius;
@@ -22,15 +29,13 @@ extern NSInteger const towerHeightAndWidth;
 @property (nonatomic) NSInteger projectileSpeed;
 @property (nonatomic) BOOL isAttacking;
 @property (nonatomic, strong) NSTimer *attackUpdate;
-@property (nonatomic, weak) TABattleScene *battleScene;
 @property (nonatomic, strong) NSMutableSet *enemiesInRange;
 @property (nonatomic) NSUInteger purchaseCost;
-
+@property (nonatomic) NSUInteger towerLevel;
 
 -(void)beginAttackOnEnemy: (TAEnemy *)enemy;
 -(void)endAttack;
 -(void)fireProjectileCalledByTimer: (NSTimer *)timer;
--(id)initWithImageNamed:(NSString *)name andLocation:(CGPoint)location inScene: (TABattleScene *)sceneParam;
 
 
 @end

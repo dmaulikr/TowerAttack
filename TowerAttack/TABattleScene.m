@@ -11,6 +11,7 @@
 #import "TAEnemy.h"
 #import "TAPathDrawer.h"
 #import "TAUIOverlay.h"
+#import "TATowerPurchaseSidebar.h"
 
 
 @implementation TABattleScene
@@ -60,6 +61,7 @@
         n.name = @"Path";
         n.physicsBody.collisionBitMask = TAContactTypeNothing;
     }
+    NSLog(@"%f, %f",self.size.width,self.size.height);
     return self;
 }
 
@@ -81,11 +83,12 @@
     self.click = NO;
     if (self.isDraggingTowerPlaceholder) {
         [[self childNodeWithName:@"Placeholder"] setPosition:[[touches anyObject] locationInNode:self]];
-        if ([[[(SKSpriteNode *)[self childNodeWithName:@"Placeholder"] physicsBody] allContactedBodies] count] > 0 || self.uiOverlay.currentGold < 50) {
+        NSLog(@"%lu",(unsigned long)[[[(SKSpriteNode *)[self childNodeWithName:@"Placeholder"] physicsBody] allContactedBodies] count]);
+     /*   if ([[[(SKSpriteNode *)[self childNodeWithName:@"Placeholder"] physicsBody] allContactedBodies] count] > 0 || self.uiOverlay.currentGold < 50) {
             [(SKSpriteNode *)[self childNodeWithName:@"Placeholder"] setColor:[UIColor redColor]];
         }
         else
-            [(SKSpriteNode *)[self childNodeWithName:@"Placeholder"] setColor:[UIColor greenColor]];
+            [(SKSpriteNode *)[self childNodeWithName:@"Placeholder"] setColor:[UIColor greenColor]];*/
      //   [self.uiOverlay changeNodeOverlayLocation:[[touches anyObject] locationInView:self.uiOverlay] andHidden:NO];
         [self.uiOverlay changeNodeOverlayLocation:CGPointMake(0, 0) andHidden:YES];
     }
@@ -95,6 +98,7 @@
 {
     if (self.click) {
         [self userClickedAtLocation:[[touches anyObject] locationInNode:self]];
+        self.isDraggingTowerPlaceholder = NO;
     }
     if (self.isDraggingTowerPlaceholder) {
         [self.uiOverlay changeNodeOverlayLocation:[[touches anyObject] locationInView:self.uiOverlay] andHidden:NO];
@@ -109,32 +113,40 @@
 
 -(void)userClickedAtLocation:(CGPoint)point
 {
- /*   if ([[[self nodeAtPoint:point] name] characterAtIndex:0] == 'P') {
-        self.uiOverlay.selectedNode = [self nodeAtPoint:point];
+    if ([[[self nodeAtPoint:point] name] characterAtIndex:0] == 'E') {
+        self.uiOverlay.selectedUnit = (TAEnemy *)[self nodeAtPoint:point];
     }
-    else */if ([[[self nodeAtPoint:point] name] characterAtIndex:0] == 'T') {
-        self.uiOverlay.selectedTower = (TATower *)[self nodeAtPoint:point];
+    else if ([[[self nodeAtPoint:point] name] characterAtIndex:0] == 'T') {
+        self.uiOverlay.selectedUnit = (TATower *)[self nodeAtPoint:point];
         //this will be implemented with the tower overlay
     }
     else {
         if (point.y < 40) {
             [self spawnEnemy];
         }
-        else if ([self childNodeWithName:@"Placeholder"] == nil) {
+        else if ([self childNodeWithName:@"Placeholder"] == nil && self.uiOverlay.purchaseSidebar.selectedTowerType == TATowerTypeTower) {
             SKSpriteNode *towerPlaceHolder = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImageNamed:@"Tower"] size:CGSizeMake(towerHeightAndWidth, towerHeightAndWidth)];
             towerPlaceHolder.colorBlendFactor = 0.5;
-            towerPlaceHolder.color = [UIColor greenColor];
             towerPlaceHolder.name = @"Placeholder";
             towerPlaceHolder.position = point;
+            towerPlaceHolder.zPosition = 0.2;
             towerPlaceHolder.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:towerHeightAndWidth / 2];
             towerPlaceHolder.physicsBody.collisionBitMask = TAContactTypeNothing;
             towerPlaceHolder.physicsBody.categoryBitMask = TAContactTypeTower;
             towerPlaceHolder.physicsBody.dynamic = YES;
             [self addChild:towerPlaceHolder];
             self.uiOverlay.selectedNode = towerPlaceHolder;
-            if ([[towerPlaceHolder.physicsBody allContactedBodies] count] > 0 || self.uiOverlay.currentGold < 50) {
-                    towerPlaceHolder.color = [UIColor redColor];
+            self.uiOverlay.purchaseSidebar.selectedTowerType = TATowerTypeNoTower;
+            for (UIButton *b in self.uiOverlay.purchaseSidebar.towerIcons) {
+                b.selected = NO;
             }
+          /*  NSLog(@"%lu",(unsigned long)[[towerPlaceHolder.physicsBody allContactedBodies] count]);
+            if ([[towerPlaceHolder.physicsBody allContactedBodies] count] > 0 || self.uiOverlay.currentGold < 50) {
+                towerPlaceHolder.color = [UIColor redColor];
+            }
+            else {
+                towerPlaceHolder.color = [UIColor greenColor];
+            }*/
         }
     }
 }
@@ -199,6 +211,15 @@
     TAEnemy *enemy = [[TAEnemy alloc] initWithImageNamed:@"Goblin" andLocation:self.spawnPoint inScene:self];
     [self addChild:enemy];
     [self.enemiesOnField addObject:enemy];
+}
+
+-(void)didSimulatePhysics
+{
+    if ([[[(SKSpriteNode *)[self childNodeWithName:@"Placeholder"] physicsBody] allContactedBodies] count] > 0 || self.uiOverlay.currentGold < 50) {
+        [(SKSpriteNode *)[self childNodeWithName:@"Placeholder"] setColor:[UIColor redColor]];
+    }
+    else
+        [(SKSpriteNode *)[self childNodeWithName:@"Placeholder"] setColor:[UIColor greenColor]];
 }
 
 -(void)update:(CFTimeInterval)currentTime {

@@ -11,17 +11,23 @@
 
 @class TABattleScene;
 @class TATower;
+@class TATowerInfoPanel;
+@class TAUnit;
+@class TATowerPurchaseSidebar;
 
 @interface TAUIOverlay : UIView
 
 @property (weak, nonatomic) TABattleScene *battleScene;
-@property (weak, nonatomic) TATower *selectedTower;
+@property (weak, nonatomic) TAUnit *selectedUnit;
 @property (strong, nonatomic) SKSpriteNode *selectedNode;
 @property (nonatomic) NSUInteger currentGold;
 @property (nonatomic) NSInteger livesLeft;
 @property (strong, nonatomic) UILabel *displayLabel;
 @property (strong, nonatomic) UIButton *cancelButton;
 @property (strong, nonatomic) UIButton *confirmButton;
+@property (strong, nonatomic) TATowerInfoPanel *infoPanel;
+@property (strong, nonatomic) TATowerPurchaseSidebar *purchaseSidebar;
+@property (nonatomic) BOOL shouldPassTouches;
 
 -(id)initWithFrame:(CGRect)frame;
 -(void)changeNodeOverlayLocation:(CGPoint)point andHidden:(BOOL)hidden;

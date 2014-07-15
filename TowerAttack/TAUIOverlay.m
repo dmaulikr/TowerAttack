@@ -9,6 +9,11 @@
 #import "TAUIOverlay.h"
 #import "TABattleScene.h"
 #import "TATower.h"
+#import "TATowerInfoPanel.h"
+#import "TAUnit.h"
+#import "TATowerPurchaseSidebar.h"
+
+CGFloat panelY = 240;
 
 @implementation TAUIOverlay
 
@@ -20,6 +25,7 @@
         self.backgroundColor = [UIColor clearColor];
         self.displayLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 5, 200, 60)];
         self.livesLeft = 10;
+        self.shouldPassTouches = YES;
         [self.displayLabel setFont:[UIFont fontWithName:@"Cochin" size:15]];
         self.displayLabel.numberOfLines = 2;
         [self addSubview:self.displayLabel];
@@ -32,10 +38,14 @@
         self.confirmButton.tag = 0;
         self.cancelButton.tag = 1;
         self.cancelButton.hidden = YES;
+        self.purchaseSidebar = [[TATowerPurchaseSidebar alloc] initWithFrame:CGRectMake(500, 0, 68, 320)];
+        [self addSubview:self.purchaseSidebar];
         [self addSubview:self.cancelButton];
         [self addSubview:self.confirmButton];
         [self.cancelButton addTarget:self action:@selector(decideTowerPlacementFromButton:) forControlEvents:UIControlEventTouchUpInside];
         [self.confirmButton addTarget:self action:@selector(decideTowerPlacementFromButton:) forControlEvents:UIControlEventTouchUpInside];
+        self.infoPanel = [[TATowerInfoPanel alloc] initWithFrame:CGRectMake(0, 320, 568, 80)];
+        [self addSubview:self.infoPanel];
     }
     return self;
 }
@@ -65,17 +75,34 @@
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [self.battleScene touchesBegan:touches withEvent:event];
+    if (self.infoPanel.frame.origin.y == panelY) {
+        if ([[touches anyObject] locationInView:self].y < panelY) {
+            [UIView animateWithDuration:0.25 animations:^(void) {
+                self.infoPanel.frame = CGRectMake(0, 568, 568, 80);
+            }];
+        }
+        self.shouldPassTouches = NO;
+    }
+    else {
+        [self.battleScene touchesBegan:touches withEvent:event];
+    }
 }
 
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [self.battleScene touchesMoved:touches withEvent:event];
+    if (self.shouldPassTouches) {
+        [self.battleScene touchesMoved:touches withEvent:event];
+    }
 }
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [self.battleScene touchesEnded:touches withEvent:event];
+    if (self.shouldPassTouches) {
+        [self.battleScene touchesEnded:touches withEvent:event];
+    }
+    else {
+        self.shouldPassTouches = YES;
+    }
 }
 
  -(void)setCurrentGold:(NSUInteger)currentGold
@@ -98,15 +125,20 @@
     _livesLeft = livesLeft;
 }
 
--(void)setSelectedNode:(SKSpriteNode *)selectedNode
+-(void)setSelectedNode:(SKSpriteNode *)selectedNode //this property is for the placeholder
 {
     _selectedNode = selectedNode;
     [self changeNodeOverlayLocation:[self.battleScene convertPointToView:selectedNode.position] andHidden:NO];
 }
 
--(void)setSelectedTower:(TATower *)selectedTower
+-(void)setSelectedUnit:(TAUnit *)selectedUnit
 {
-    _selectedTower = selectedTower;
+    _selectedUnit = selectedUnit;
+    _selectedNode = selectedUnit;
+    self.infoPanel.selectedUnit = selectedUnit;
+    [UIView animateWithDuration:0.25 animations:^(void) {
+        self.infoPanel.frame = CGRectMake(0, panelY, 568, 80);
+    }];
     //code for bringing up tower upgrade / info overlay
 }
 

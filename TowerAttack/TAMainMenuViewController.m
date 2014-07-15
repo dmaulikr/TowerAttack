@@ -13,9 +13,9 @@
 
 @implementation TAMainMenuViewController
 
-- (void)viewDidLoad
+- (void)viewWillLayoutSubviews
 {
-    [super viewDidLoad];
+    [super viewWillLayoutSubviews];
 
     // Configure the view.
     SKView * skView = [[SKView alloc] initWithFrame:self.view.frame];//(SKView *)self.view;
@@ -60,6 +60,7 @@
     TAPathDrawer *pathDrawer = [[TAPathDrawer alloc] initWithFrame:self.view.frame andPath:newPath];
     [self.view addSubview:pathDrawer];
     [self.view bringSubviewToFront:skView];
+
     
     TABattleScene *scene = [[TABattleScene alloc] initWithSize:self.view.frame.size andPath:path andSpawnPoint:CGPointMake(x, self.view.frame.size.height -  y)];
     scene.scaleMode = SKSceneScaleModeAspectFill;

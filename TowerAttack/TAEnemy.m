@@ -9,23 +9,26 @@
 #import "TAEnemy.h"
 #import "TABattleScene.h"
 #import "TAUIOverlay.h"
+#import "TATowerInfoPanel.h"
 
 @implementation TAEnemy
 
--(id)initWithImageNamed:(NSString *)name andLocation:(CGPoint)location inScene:(TABattleScene *)scene
+-(id)initWithImageNamed:(NSString *)name andLocation:(CGPoint)location inScene:(TABattleScene *)sceneParam
 {
-    if (self == [super initWithImageNamed:name]) {
+    if (self == [super initWithImageNamed:name andLocation:location inScene:sceneParam]) {
         //init code
-        self.battleScene = scene;
         self.movementSpeed = 20;
         self.maximumHealth = 100;
         self.currentHealth = 100;
         self.goldReward = 10;
+        self.description = @"Weak but relatively fast, enemies are a common enemy, but not too much of a threat.";
+        self.unitType = @"Enemy";
+        self.imageName = @"Goblin";
+        self.zPosition = 0.1;
         
         self.name =  [NSString stringWithFormat:@"Enemy %lu", (unsigned long)[self.battleScene.towersOnField count]];
         self.size = CGSizeMake(100, 100);
-        self.position = location;
-        self.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:self.size.width / 6];
+        self.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:self.size.width / 4];
         self.physicsBody.dynamic = YES;
         self.physicsBody.contactTestBitMask = TAContactTypeProjectile | TAContactTypeDetector;
         self.physicsBody.categoryBitMask = TAContactTypeEnemy;
@@ -55,8 +58,10 @@
 -(void)setCurrentHealth:(NSInteger)currentHealth
 {
     _currentHealth = currentHealth;
+    [(UILabel *)[self.battleScene.uiOverlay.infoPanel.additionalUnitInfo objectAtIndex:0] setText:[NSString stringWithFormat:@"Health: %lu/%lu",(unsigned long)self.currentHealth,(unsigned long)self.maximumHealth]];
     self.healthBarInside.size = CGSizeMake(33.5 * self.currentHealth / self.maximumHealth, self.healthBarInside.size.height);
     if (_currentHealth <= 0 && [self.battleScene.enemiesOnField containsObject:self]) {
+        _currentHealth = 0;
         [self.battleScene removeChildrenInArray:[NSArray arrayWithObjects:self, self.healthBarInside, nil]];
         [self.battleScene.enemiesOnField removeObject:self];
         self.battleScene.uiOverlay.currentGold += self.goldReward;
