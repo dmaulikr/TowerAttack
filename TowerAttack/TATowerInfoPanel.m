@@ -71,6 +71,12 @@
         [(UILabel *)[self.additionalUnitInfo objectAtIndex:2] setText:[NSString stringWithFormat:@"%g shots/second",tower.timeBetweenAttacks]];
         [self.upgradeButton setTitle:[NSString stringWithFormat:@"Upgrade: %lu gold",(unsigned long)tower.towerLevel * 10] forState:UIControlStateNormal];
         self.upgradeButton.hidden = NO;
+        if (((TATower *)self.selectedUnit).towerLevel == maxTowerLevel) {
+            self.upgradeButton.enabled = NO;
+        }
+        else {
+            self.upgradeButton.enabled = YES;
+        }
     }
     else {
         TAEnemy *enemy = (TAEnemy *)selectedUnit;

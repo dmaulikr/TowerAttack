@@ -22,7 +22,7 @@
     skView.showsFPS = YES;
     skView.showsNodeCount = YES;
     skView.allowsTransparency = YES;
-    //skView.showsPhysics = YES;
+   // skView.showsPhysics = YES;
     [skView setBackgroundColor:nil];
     [self.view setBackgroundColor:nil];
     [self.view addSubview:skView];
@@ -31,7 +31,7 @@
     
     CGMutablePathRef pathToDraw = CGPathCreateMutable();
     CGMutablePathRef path = CGPathCreateMutable();
-    CGPathMoveToPoint(pathToDraw, NULL, self.view.frame.size.width / 2, self.view.frame.size.height);
+ /*   CGPathMoveToPoint(pathToDraw, NULL, self.view.frame.size.width / 2, self.view.frame.size.height);
     CGPathMoveToPoint(path, NULL, self.view.frame.size.width / 2, self.view.frame.size.height - self.view.frame.size.height);
     CGFloat x = self.view.frame.size.width / 2, y = self.view.frame.size.height, xC1, yC1, xC2, yC2;
     while (y > 0) {
@@ -53,25 +53,60 @@
         yC2 = yC1 - arc4random() % (int)(yC1 - y);
         CGPathAddCurveToPoint(pathToDraw, NULL, xC1, yC1, xC2, yC2, x, y);
         CGPathAddCurveToPoint(path, NULL, xC1, self.view.frame.size.height - yC1, xC2, self.view.frame.size.height - yC2, x,self.view.frame.size.height -  y);
+    }*/
+
+    CGFloat approximateLength = 0.0f;
+    CGPoint lastPoint = CGPointMake(1200 / 2, 900);
+    CGPathMoveToPoint(pathToDraw, NULL, 1200 / 2, 900);
+    CGPathMoveToPoint(path, NULL, 1200 / 2, 900 - 900);
+    CGFloat x = 1200 / 2, y = 900, xC1, yC1, xC2, yC2;
+    while (y > 0) {
+        xC1 = x;
+        yC1 = y;
+        do {
+            x = arc4random() % ((int)1200 - 50) + 25;
+        }while (x == xC1);
+        y -= arc4random() % (int)900 / 2 + 10;
+        if (y <= 0) {
+            y = 0;
+        }
+        xC1 = arc4random() % abs((int)(x - xC1)) + MIN(x, xC1);
+        yC1 -= arc4random() % (int)(yC1 - y);
+        if (x == xC1) {
+            xC1 += 10;
+        }
+        xC2 = arc4random() % abs((int)(x - xC1)) + MIN(x, xC1);
+        yC2 = yC1 - arc4random() % (int)(yC1 - y);
+        CGPathAddCurveToPoint(pathToDraw, NULL, xC1, yC1, xC2, yC2, x, y);
+        CGPathAddCurveToPoint(path, NULL, xC1, 900 - yC1, xC2, 900 - yC2, x,900 -  y);
+        approximateLength += sqrtf(powf(lastPoint.x - x, 2) + powf(lastPoint.y - y, 2));
     }
+
     
     CGPathRef newPath = CGPathCreateCopyByStrokingPath(pathToDraw, NULL, 50, kCGLineCapRound, kCGLineJoinRound, 100);
     
-    TAPathDrawer *pathDrawer = [[TAPathDrawer alloc] initWithFrame:self.view.frame andPath:newPath];
+    TAPathDrawer *pathDrawer = [[TAPathDrawer alloc] initWithFrame:CGRectMake(0, 0, 1200, 900) andPath:newPath];
     [self.view addSubview:pathDrawer];
     [self.view bringSubviewToFront:skView];
-
     
-    TABattleScene *scene = [[TABattleScene alloc] initWithSize:self.view.frame.size andPath:path andSpawnPoint:CGPointMake(x, self.view.frame.size.height -  y)];
-    scene.scaleMode = SKSceneScaleModeAspectFill;
+    TABattleScene *scene = [[TABattleScene alloc] initWithSize:CGSizeMake(1200, 900) andPath:path andSpawnPoint:CGPointMake(x, self.view.frame.size.height -  y)];
+    
+    SKScene *sceneToPresent = [SKScene sceneWithSize:self.view.frame.size];
+    [sceneToPresent setBackgroundColor:nil];
+    sceneToPresent.physicsWorld.gravity = CGVectorMake(0, 0);
+    sceneToPresent.physicsWorld.contactDelegate = scene;
+    sceneToPresent.scaleMode = SKSceneScaleModeAspectFill;
+    [sceneToPresent addChild:scene];
     
     TAUIOverlay *overLay = [[TAUIOverlay alloc] initWithFrame:self.view.frame];
     overLay.battleScene = scene;
     [skView addSubview:overLay];
     
     scene.uiOverlay = overLay;
+    scene.pathDrawer = pathDrawer;
+    scene.enemyMovementPathLength = approximateLength;
     // Present the scene.
-    [skView presentScene:scene];
+    [skView presentScene:sceneToPresent];
 }
 
 -(BOOL)prefersStatusBarHidden

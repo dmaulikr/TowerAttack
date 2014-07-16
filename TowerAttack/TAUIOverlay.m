@@ -44,7 +44,7 @@ CGFloat panelY = 240;
         [self addSubview:self.confirmButton];
         [self.cancelButton addTarget:self action:@selector(decideTowerPlacementFromButton:) forControlEvents:UIControlEventTouchUpInside];
         [self.confirmButton addTarget:self action:@selector(decideTowerPlacementFromButton:) forControlEvents:UIControlEventTouchUpInside];
-        self.infoPanel = [[TATowerInfoPanel alloc] initWithFrame:CGRectMake(0, 320, 568, 80)];
+        self.infoPanel = [[TATowerInfoPanel alloc] initWithFrame:CGRectMake(0, 320, 568, 100)];
         [self addSubview:self.infoPanel];
     }
     return self;
@@ -53,11 +53,12 @@ CGFloat panelY = 240;
 -(void)changeNodeOverlayLocation:(CGPoint)point andHidden:(BOOL)hidden
 {
     if (!hidden) {
-        [self.cancelButton setFrame:CGRectMake(point.x + (float)towerHeightAndWidth / 15.0f, point.y + (float)towerHeightAndWidth / (1.0f + 2.0f/3.0f), (float)towerHeightAndWidth / 2.0f, (float)towerHeightAndWidth / 2.0f)];
-        [self.confirmButton setFrame:CGRectMake(point.x - (float)towerHeightAndWidth / 2.0f, point.y + (float)towerHeightAndWidth / (1.0f + 2.0f/3.0f), (float)towerHeightAndWidth / 2.0f, (float)towerHeightAndWidth / 2.0f)];
+        [self.cancelButton setFrame:CGRectMake(point.x + (float)self.selectedNode.size.width / 15.0f, point.y + (float)self.selectedNode.size.width / (1.0f + 2.0f/3.0f), (float)self.selectedNode.size.width / 2.0f, (float)self.selectedNode.size.width / 2.0f)];
+        [self.confirmButton setFrame:CGRectMake(point.x - (float)self.selectedNode.size.width / 2.0f, point.y + (float)self.selectedNode.size.width / (1.0f + 2.0f/3.0f), (float)self.selectedNode.size.width / 2.0f, (float)self.selectedNode.size.width / 2.0f)];
     }
     self.confirmButton.hidden = hidden;
     self.cancelButton.hidden = hidden;
+    self.lastOverlayLocation = point;
 }
 
 -(void)decideTowerPlacementFromButton:(UIButton *)button
@@ -79,6 +80,7 @@ CGFloat panelY = 240;
         if ([[touches anyObject] locationInView:self].y < panelY) {
             [UIView animateWithDuration:0.25 animations:^(void) {
                 self.infoPanel.frame = CGRectMake(0, 568, 568, 80);
+                self.purchaseSidebar.frame = CGRectMake(500, 0, 68, 320);
             }];
         }
         self.shouldPassTouches = NO;
@@ -116,7 +118,7 @@ CGFloat panelY = 240;
 {
     [self.displayLabel setText:[NSString stringWithFormat:@"Gold: %lu\nLives: %ld",(unsigned long)self.currentGold,(long)livesLeft]];
     if (livesLeft == 0) {
-        [self.battleScene.view setPaused:YES];
+        [self.battleScene.scene.view setPaused:YES];
         UILabel *endGame = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width / 2 - 100, self.frame.size.width / 2 - 25, 200, 50)];
         [endGame setText:@"YOU LOSE"];
         [endGame setFont:[UIFont fontWithName:@"Cochin" size:30]];
@@ -128,7 +130,7 @@ CGFloat panelY = 240;
 -(void)setSelectedNode:(SKSpriteNode *)selectedNode //this property is for the placeholder
 {
     _selectedNode = selectedNode;
-    [self changeNodeOverlayLocation:[self.battleScene convertPointToView:selectedNode.position] andHidden:NO];
+   // [self changeNodeOverlayLocation:[self.battleScene.scene convertPointToView:selectedNode.position] andHidden:NO];
 }
 
 -(void)setSelectedUnit:(TAUnit *)selectedUnit
@@ -138,6 +140,7 @@ CGFloat panelY = 240;
     self.infoPanel.selectedUnit = selectedUnit;
     [UIView animateWithDuration:0.25 animations:^(void) {
         self.infoPanel.frame = CGRectMake(0, panelY, 568, 80);
+        self.purchaseSidebar.frame = CGRectMake(568, 0, 68, 320);
     }];
     //code for bringing up tower upgrade / info overlay
 }

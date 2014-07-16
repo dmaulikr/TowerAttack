@@ -10,9 +10,9 @@
 
 @implementation TAUnit
 
--(id)initWithImageNamed:(NSString *)name andLocation:(CGPoint)location inScene:(TABattleScene *)sceneParam
+-(id)initWithLocation:(CGPoint)location inScene:(TABattleScene *)sceneParam
 {
-    if (self == [super initWithImageNamed:name]) {
+    if (self == [super init]) {
         //init code
         self.battleScene = sceneParam;
         self.position = location;

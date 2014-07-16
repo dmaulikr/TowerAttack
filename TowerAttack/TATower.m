@@ -12,19 +12,18 @@
 #import "TAUIOverlay.h"
 #import "TATowerInfoPanel.h"
 
-NSInteger const towerHeightAndWidth = 50;
 NSInteger const maxTowerLevel = 5;
 NSArray *towerStatsForLevel;
 
 @implementation TATower
 
--(id)initWithImageNamed:(NSString *)name andLocation:(CGPoint)location inScene:(TABattleScene *)sceneParam
+-(id)initWithLocation:(CGPoint)location inScene:(TABattleScene *)sceneParam
 {
-    if (self == [super initWithImageNamed:name andLocation:location inScene:sceneParam]) {
+    if (self == [super initWithLocation:location inScene:sceneParam]) {
         //init code
          towerStatsForLevel = [[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Game Data" ofType:@"plist"]] objectForKey:@"TowerStatsForLevel"];
         
-        self.attackRadius = 100;
+        _attackRadius = TATowerAttackRadiusTower;
         self.towerLevel = 1;
         self.timeBetweenAttacks = [[(NSString *)[towerStatsForLevel objectAtIndex:self.towerLevel-1] substringFromIndex:[(NSString *)[towerStatsForLevel objectAtIndex:self.towerLevel-1] rangeOfString:@" "].location] floatValue];
         self.attackDamage = [[(NSString *)[towerStatsForLevel objectAtIndex:self.towerLevel-1] substringToIndex:[(NSString *)[towerStatsForLevel objectAtIndex:self.towerLevel-1] rangeOfString:@" "].location] integerValue];
@@ -36,7 +35,8 @@ NSArray *towerStatsForLevel;
         self.imageName = @"Tower";
         self.unitType = @"Tower";
         
-        self.size = CGSizeMake(towerHeightAndWidth, towerHeightAndWidth);
+        self.texture = [SKTexture textureWithImageNamed:self.imageName];
+        self.size = CGSizeMake(TATowerSizeTower, TATowerSizeTower);
         self.name =  [NSString stringWithFormat:@"Tower %lu", (unsigned long)[self.battleScene.towersOnField count]];
         
         self.zPosition = 0.1;
@@ -49,10 +49,11 @@ NSArray *towerStatsForLevel;
         //SKNode *collisionDetection = [SKNode node];
         SKSpriteNode *collisionDetection = [SKSpriteNode spriteNodeWithImageNamed:@"TowerRadius"];
         collisionDetection.size = CGSizeMake(self.attackRadius * 2, self.attackRadius * 2);
-        collisionDetection.alpha = 0.3;
+        collisionDetection.alpha = 0.5;
         collisionDetection.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:self.attackRadius];
         collisionDetection.name = [NSString stringWithFormat:@"Detector %lu", (unsigned long)[self.battleScene.towersOnField count]];
         collisionDetection.position = self.position;
+        collisionDetection.anchorPoint = CGPointMake(0.5, 0.5);
         collisionDetection.physicsBody.contactTestBitMask = TAContactTypeEnemy;
         collisionDetection.physicsBody.categoryBitMask = TAContactTypeDetector;
         collisionDetection.physicsBody.collisionBitMask = TAContactTypeNothing;
@@ -106,6 +107,29 @@ NSArray *towerStatsForLevel;
     else {
         self.isAttacking = NO;
     }
+}
+
++(NSArray *)towerIconStrings
+{
+    return [NSArray arrayWithObjects:@"50Tower", @"40FreezeTower", @"45BlastTower", nil];
+}
+
++(NSArray *)towerNames
+{
+    return [NSArray arrayWithObjects:@"Tower", @"Freeze Tower", @"Blast Tower", nil];
+}
+
+-(void)setAttackRadius:(CGFloat)attackRadius
+{
+    _attackRadius = attackRadius;
+    NSUInteger ownTowerNumber = [[self.name substringFromIndex:[self.name rangeOfString:@" "].location + 1] integerValue];
+    SKSpriteNode *detector = (SKSpriteNode *)[self.battleScene childNodeWithName:[NSString stringWithFormat:@"Detector %lu", ownTowerNumber]];
+    detector.size = CGSizeMake(attackRadius * 2, attackRadius * 2);
+    detector.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:attackRadius];
+    detector.physicsBody.contactTestBitMask = TAContactTypeEnemy;
+    detector.physicsBody.categoryBitMask = TAContactTypeDetector;
+    detector.physicsBody.collisionBitMask = TAContactTypeNothing;
+    detector.physicsBody.dynamic = NO;
 }
 
 -(void)setTowerLevel:(NSUInteger)towerLevel

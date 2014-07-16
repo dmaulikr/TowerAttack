@@ -10,6 +10,7 @@
 
 @class TATower;
 @class TAUIOverlay;
+@class TAPathDrawer;
 
 typedef enum : uint8_t {
     TAContactTypeTower             = 1,
@@ -19,7 +20,7 @@ typedef enum : uint8_t {
     TAContactTypeNothing           = 0
 } TAContactType;
 
-@interface TABattleScene : SKScene <SKPhysicsContactDelegate>
+@interface TABattleScene : SKNode <SKPhysicsContactDelegate>
 
 @property (strong, nonatomic) NSMutableArray *towersOnField;
 @property (strong, nonatomic) NSMutableArray *enemiesOnField;
@@ -29,12 +30,15 @@ typedef enum : uint8_t {
 @property (nonatomic) CGFloat enemyMovementPathLength;
 @property (nonatomic) BOOL click;
 @property (nonatomic) BOOL isDraggingTowerPlaceholder;
+@property (nonatomic) CGPoint lastPoint;
 @property (strong, nonatomic) TAUIOverlay *uiOverlay;
+@property (strong, nonatomic) TAPathDrawer *pathDrawer;
+@property (nonatomic) CGRect pathDrawerFrame;
 
 -(CGFloat)distanceFromA:(CGPoint)pointA toB:(CGPoint)pointB;
 -(id)initWithSize:(CGSize)size andPath:(CGPathRef)path andSpawnPoint:(CGPoint)point;
 -(void)spawnEnemy;
 -(void)addTower;
--(void)userClickedAtLocation:(CGPoint)point;
+-(void)userClickedAtLocation:(UITouch *)touch;
 
 @end

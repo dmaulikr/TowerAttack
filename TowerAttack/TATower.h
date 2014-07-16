@@ -12,12 +12,25 @@
 @class TAEnemy;
 @class TABattleScene;
 
-extern NSInteger const towerHeightAndWidth;
 extern NSInteger const maxTowerLevel;
 
 enum TATowerType : NSInteger {
     TATowerTypeTower,
+    TATowerTypeFreezeTower,
+    TATowerTypeBlastTower,
     TATowerTypeNoTower
+};
+
+enum TATowerSize : NSInteger {
+    TATowerSizeTower = 50,
+    TATowerSizeFreezeTower = 40,
+    TATowerSizeBlastTower = 45
+};
+
+enum TATowerAttackRadius : NSInteger {
+    TATowerAttackRadiusTower = 100,
+    TATowerAttackRadiusFreezeTower = 70,
+    TATowerAttackRadiusBlastTower = 55
 };
 
 @interface TATower : TAUnit
@@ -36,6 +49,8 @@ enum TATowerType : NSInteger {
 -(void)beginAttackOnEnemy: (TAEnemy *)enemy;
 -(void)endAttack;
 -(void)fireProjectileCalledByTimer: (NSTimer *)timer;
++(NSArray *)towerNames;
++(NSArray *)towerIconStrings;
 
 
 @end

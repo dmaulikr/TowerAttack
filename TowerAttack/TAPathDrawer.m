@@ -37,6 +37,8 @@
     CGContextStrokePath(drawContext);
     CGContextAddPath(drawContext, self.pathToDraw);
     CGContextFillPath(drawContext);
+    CGContextAddRect(drawContext, self.frame);
+    CGContextStrokePath(drawContext);
 }
 
 

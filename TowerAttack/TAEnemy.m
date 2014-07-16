@@ -13,11 +13,11 @@
 
 @implementation TAEnemy
 
--(id)initWithImageNamed:(NSString *)name andLocation:(CGPoint)location inScene:(TABattleScene *)sceneParam
+-(id)initWithLocation:(CGPoint)location inScene:(TABattleScene *)sceneParam
 {
-    if (self == [super initWithImageNamed:name andLocation:location inScene:sceneParam]) {
+    if (self == [super initWithLocation:location inScene:sceneParam]) {
         //init code
-        self.movementSpeed = 20;
+        self.movementSpeed = 60;
         self.maximumHealth = 100;
         self.currentHealth = 100;
         self.goldReward = 10;
@@ -26,7 +26,8 @@
         self.imageName = @"Goblin";
         self.zPosition = 0.1;
         
-        self.name =  [NSString stringWithFormat:@"Enemy %lu", (unsigned long)[self.battleScene.towersOnField count]];
+        self.texture = [SKTexture textureWithImageNamed:self.imageName];
+        self.name =  [NSString stringWithFormat:@"Enemy %lu", (unsigned long)[self.battleScene.enemiesOnField count]];
         self.size = CGSizeMake(100, 100);
         self.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:self.size.width / 4];
         self.physicsBody.dynamic = YES;
@@ -45,12 +46,12 @@
         [self.healthBarInside addChild:outsideBar];
         [self.battleScene addChild:self.healthBarInside];
         
-        [self runAction:[[SKAction followPath:self.battleScene.enemyMovementPath asOffset:YES orientToPath:YES duration:30] reversedAction] completion:^{
+        [self runAction:[[SKAction followPath:self.battleScene.enemyMovementPath asOffset:YES orientToPath:YES duration:self.battleScene.enemyMovementPathLength / self.movementSpeed] reversedAction] completion:^{
             self.battleScene.uiOverlay.livesLeft--;
             [self.battleScene removeChildrenInArray:[NSArray arrayWithObjects:self, self.healthBarInside, nil]];
             [self.battleScene.enemiesOnField removeObject:self];
         }];
-        [self.healthBarInside runAction:[[SKAction followPath:self.battleScene.enemyMovementPath asOffset:YES orientToPath:NO duration:30] reversedAction]];
+        [self.healthBarInside runAction:[[SKAction followPath:self.battleScene.enemyMovementPath asOffset:YES orientToPath:NO duration:self.battleScene.enemyMovementPathLength / self.movementSpeed] reversedAction]];
     }
     return self;
 }

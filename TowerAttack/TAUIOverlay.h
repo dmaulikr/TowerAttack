@@ -28,6 +28,7 @@
 @property (strong, nonatomic) TATowerInfoPanel *infoPanel;
 @property (strong, nonatomic) TATowerPurchaseSidebar *purchaseSidebar;
 @property (nonatomic) BOOL shouldPassTouches;
+@property (nonatomic) CGPoint lastOverlayLocation;
 
 -(id)initWithFrame:(CGRect)frame;
 -(void)changeNodeOverlayLocation:(CGPoint)point andHidden:(BOOL)hidden;
