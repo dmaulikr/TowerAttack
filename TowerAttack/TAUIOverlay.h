@@ -10,7 +10,7 @@
 #import <SpriteKit/SpriteKit.h>
 
 @class TABattleScene;
-@class TATower;
+@class TANonPassiveTower;
 @class TATowerInfoPanel;
 @class TAUnit;
 @class TATowerPurchaseSidebar;

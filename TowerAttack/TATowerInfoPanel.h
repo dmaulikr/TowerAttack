@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class TATower;
+@class TANonPassiveTower;
 @class TAUnit;
 
 @interface TATowerInfoPanel : UIView

@@ -17,12 +17,12 @@
 {
     if (self == [super initWithLocation:location inScene:sceneParam]) {
         //init code
-        self.movementSpeed = 60;
+        self.movementSpeed = 40;
         self.maximumHealth = 100;
         self.currentHealth = 100;
         self.goldReward = 10;
         self.description = @"Weak but relatively fast, enemies are a common enemy, but not too much of a threat.";
-        self.unitType = @"Enemy";
+       // self.unitType = @"Enemy";
         self.imageName = @"Goblin";
         self.zPosition = 0.1;
         
@@ -46,12 +46,12 @@
         [self.healthBarInside addChild:outsideBar];
         [self.battleScene addChild:self.healthBarInside];
         
-        [self runAction:[[SKAction followPath:self.battleScene.enemyMovementPath asOffset:YES orientToPath:YES duration:self.battleScene.enemyMovementPathLength / self.movementSpeed] reversedAction] completion:^{
+        [self runAction:[[SKAction followPath:self.battleScene.enemyMovementPath asOffset:YES orientToPath:YES speed:self.movementSpeed] reversedAction] completion:^{
             self.battleScene.uiOverlay.livesLeft--;
             [self.battleScene removeChildrenInArray:[NSArray arrayWithObjects:self, self.healthBarInside, nil]];
             [self.battleScene.enemiesOnField removeObject:self];
         }];
-        [self.healthBarInside runAction:[[SKAction followPath:self.battleScene.enemyMovementPath asOffset:YES orientToPath:NO duration:self.battleScene.enemyMovementPathLength / self.movementSpeed] reversedAction]];
+        [self.healthBarInside runAction:[[SKAction followPath:self.battleScene.enemyMovementPath asOffset:YES orientToPath:NO speed:self.movementSpeed] reversedAction]];
     }
     return self;
 }

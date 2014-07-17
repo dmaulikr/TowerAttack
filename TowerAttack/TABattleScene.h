@@ -8,7 +8,7 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-@class TATower;
+@class TANonPassiveTower;
 @class TAUIOverlay;
 @class TAPathDrawer;
 

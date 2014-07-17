@@ -6,8 +6,10 @@
 //  Copyright (c) 2014 Ethan Hardy. All rights reserved.
 //
 
-#import "TATower.h"
+#import "TANonPassiveTower.h"
 
 @interface TAFreezeTower : TATower
+
+@property (nonatomic, strong) NSMutableArray *affectedEnemyStats;
 
 @end

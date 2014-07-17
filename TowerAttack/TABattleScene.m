@@ -7,7 +7,7 @@
 //
 
 #import "TABattleScene.h"
-#import "TATower.h"
+#import "TAFireballTower.h"
 #import "TAFreezeTower.h"
 #import "TABlastTower.h"
 #import "TAEnemy.h"
@@ -21,48 +21,35 @@
 -(id)initWithSize:(CGSize)size andPath:(CGPathRef)path andSpawnPoint:(CGPoint)point {
     if (self = [super init]) {
         /* Setup your scene here */
+        
         self.spawnRefreshCount = 0;
         self.spawnPoint = point;
         self.click = NO;
         self.towersOnField = [[NSMutableArray alloc] init];
         self.enemiesOnField = [[NSMutableArray alloc] init];
         self.isDraggingTowerPlaceholder = NO;
-        self.position = CGPointMake(0, 0);
-        /* [self setBackgroundColor:nil];
-        self.physicsWorld.gravity = CGVectorMake(0, 0);
-        self.physicsWorld.contactDelegate = self;*/
-        self.pathDrawerFrame = CGRectMake(0, 0, 1200, 900);
         self.enemyMovementPath = CGPathCreateCopy(path);
+        self.pathDrawer.alpha = 0;
         
-    /*    for (int i = -25; i <= 25; i += 25) {
-            SKNode *pathNode = [SKNode node];
-            pathNode.position = CGPointMake(pathNode.position.x + i, pathNode.position.y);
-            pathNode.physicsBody = [SKPhysicsBody bodyWithEdgeChainFromPath:self.enemyMovementPath];
-            pathNode.physicsBody.categoryBitMask = TAContactTypeTower;
-            pathNode.physicsBody.contactTestBitMask = TAContactTypeTower;
-            pathNode.physicsBody.collisionBitMask = 0;
-            i += 25;
-            [self addChild:pathNode];
-        }
-        for (int i = -25; i <= 25; i += 25) {
-            SKNode *pathNode = [SKNode node];
-            pathNode.position = CGPointMake(pathNode.position.x, pathNode.position.y + i);
-            pathNode.physicsBody = [SKPhysicsBody bodyWithEdgeChainFromPath:self.enemyMovementPath];
-            pathNode.physicsBody.categoryBitMask = TAContactTypeTower;
-            pathNode.physicsBody.contactTestBitMask = TAContactTypeTower;
-            pathNode.physicsBody.collisionBitMask = 0;
-            i += 25;
-            [self addChild:pathNode];
-        }*/
-   //     NSTimer *spawnTimer = [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(spawnEnemy) userInfo:nil repeats:YES];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.001 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            self.pathDrawer.alpha = 1;
+            self.position = CGPointMake(0, 0);
+            self.pathDrawerFrame = CGRectMake(0, 0, 1200, 900);
+            CGFloat deltaX = -(1200 / 2 - 568 / 2), deltaY = 1;
+            self.position = CGPointMake(self.position.x + deltaX, self.position.y + deltaY);
+            [self.pathDrawer setFrame:CGRectMake(self.pathDrawerFrame.origin.x + deltaX, self.pathDrawerFrame.origin.y - deltaY, self.pathDrawerFrame.size.width,self.pathDrawerFrame.size.height)];
+            self.pathDrawerFrame = CGRectMake(self.pathDrawerFrame.origin.x + deltaX, self.pathDrawerFrame.origin.y - deltaY, self.pathDrawerFrame.size.width,self.pathDrawerFrame.size.height);
+        });
+    
         SKNode *n = [SKNode node];
-        n.physicsBody = [SKPhysicsBody bodyWithEdgeChainFromPath:CGPathCreateCopyByStrokingPath(self.enemyMovementPath, NULL, 50, kCGLineCapRound, kCGLineJoinRound, 100)];//[SKPhysicsBody bodyWithPolygonFromPath:CGPathCreateCopyByStrokingPath(self.enemyMovementPath, NULL, 50, kCGLineCapRound, kCGLineJoinRound, 100)];
+        n.physicsBody = [SKPhysicsBody bodyWithEdgeChainFromPath:CGPathCreateCopyByStrokingPath(self.enemyMovementPath, NULL, 50, kCGLineCapRound, kCGLineJoinRound, 100)];
         [self addChild:n];
         n.physicsBody.categoryBitMask = TAContactTypeTower;
         n.physicsBody.contactTestBitMask = TAContactTypeTower;
         n.name = @"Path";
         n.position = CGPointMake(0, -580);
         n.physicsBody.collisionBitMask = TAContactTypeNothing;
+        
         SKSpriteNode *node = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:size];
         [self addChild:node];
     }
@@ -151,18 +138,22 @@
         }
         else if ([self childNodeWithName:@"Placeholder"] == nil && self.uiOverlay.purchaseSidebar.selectedTowerType != TATowerTypeNoTower) {
             SKSpriteNode *towerPlaceHolder;
+            CGSize detectorSize;
             switch (self.uiOverlay.purchaseSidebar.selectedTowerType) {
-                case TATowerTypeTower:
-                    towerPlaceHolder = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImageNamed:@"Tower"] size:CGSizeMake(TATowerSizeTower, TATowerSizeTower)];
-                    towerPlaceHolder.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:TATowerSizeTower / 2];
+                case TATowerTypeFireballTower:
+                    towerPlaceHolder = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImageNamed:@"Tower"] size:CGSizeMake(TATowerSizeFireballTower, TATowerSizeFireballTower)];
+                    towerPlaceHolder.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:TATowerSizeFireballTower / 2];
+                    detectorSize = CGSizeMake(TATowerAttackRadiusFireballTower * 2 + 25, TATowerAttackRadiusFireballTower * 2 + 25);
                     break;
                 case TATowerTypeFreezeTower:
                     towerPlaceHolder = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImageNamed:@"FreezeTower"] size:CGSizeMake(TATowerSizeFreezeTower, TATowerSizeFreezeTower)];
                     towerPlaceHolder.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:TATowerSizeFreezeTower / 2];
+                    detectorSize = CGSizeMake(TATowerAttackRadiusFreezeTower * 2 + 25, TATowerAttackRadiusFreezeTower * 2 + 25);
                     break;
                 case TATowerTypeBlastTower:
                     towerPlaceHolder = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImageNamed:@"BlastTower"] size:CGSizeMake(TATowerSizeBlastTower, TATowerSizeBlastTower)];
                     towerPlaceHolder.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:TATowerSizeBlastTower / 2];
+                    detectorSize = CGSizeMake(TATowerAttackRadiusBlastTower * 2 + 25, TATowerAttackRadiusBlastTower * 2 +  25);
                     break;
             }
             towerPlaceHolder.colorBlendFactor = 0.5;
@@ -170,8 +161,14 @@
             towerPlaceHolder.position = [touch locationInNode:self];
             towerPlaceHolder.zPosition = 0.2;
             towerPlaceHolder.physicsBody.collisionBitMask = TAContactTypeNothing;
+            towerPlaceHolder.physicsBody.contactTestBitMask = TAContactTypeTower;
             towerPlaceHolder.physicsBody.categoryBitMask = TAContactTypeTower;
             towerPlaceHolder.physicsBody.dynamic = YES;
+            
+            SKSpriteNode *detectorPlaceholder = [SKSpriteNode spriteNodeWithImageNamed:@"TowerRadius"];
+            detectorPlaceholder.size = detectorSize;
+            detectorPlaceholder.alpha = 0.5;
+            [towerPlaceHolder addChild:detectorPlaceholder];
             
             [self addChild:towerPlaceHolder];
             self.uiOverlay.selectedNode = towerPlaceHolder;
@@ -181,8 +178,7 @@
                 b.selected = NO;
                 b.highlighted = NO;
             }
-            NSLog(@"%lu",(unsigned long)[[towerPlaceHolder.physicsBody allContactedBodies] count]);
-            if ([[towerPlaceHolder.physicsBody allContactedBodies] count] > 0 || self.uiOverlay.currentGold < 50) {
+            if ([[[(SKSpriteNode *)[self childNodeWithName:@"Placeholder"] physicsBody] allContactedBodies] count] > 0 || self.uiOverlay.currentGold < 50) {
                 towerPlaceHolder.color = [UIColor redColor];
             }
             else {
@@ -200,8 +196,8 @@
      //   NSLog(@"%@ contact began",tower.name);
         TAEnemy *enemy = (TAEnemy *)contact.bodyB.node;
         [tower.enemiesInRange addObject:enemy];
-        if (!tower.isAttacking) {
-            [tower beginAttackOnEnemy:enemy];
+        if ([tower.enemiesInRange count] == 1 || tower.isPassive) {
+            [tower beginAttack];
         }
     }
     else  if ([[contact bodyB].node.name characterAtIndex:0] == 'D' && [[contact bodyA].node.name characterAtIndex:0] == 'E') {
@@ -210,8 +206,8 @@
    //     NSLog(@"%@ contact began",tower.name);
         TAEnemy *enemy = (TAEnemy *)contact.bodyA.node;
         [tower.enemiesInRange addObject:enemy];
-        if (!tower.isAttacking) {
-            [tower beginAttackOnEnemy:enemy];
+        if ([tower.enemiesInRange count] == 1 || tower.isPassive) {
+            [tower beginAttack];
         }
     }
 }
@@ -221,17 +217,29 @@
     if ([[contact bodyA].node.name characterAtIndex:0] == 'D' && [[contact bodyB].node.name characterAtIndex:0] == 'E') {
         NSUInteger towerIndex = [[[contact bodyA].node.name substringFromIndex:9] integerValue];
         TATower *tower = (TATower *)[self.towersOnField objectAtIndex:towerIndex];
-        if (tower.isAttacking) {
+        TAEnemy *enemy = (TAEnemy *)([contact bodyB].node);
+        if (tower.isPassive) {
+            //[tower endAttackOnEnemy:enemy];
+            [tower performSelectorOnMainThread:@selector(endAttackOnEnemy:) withObject:enemy waitUntilDone:YES];
+            [tower.enemiesInRange removeObject:enemy];
+        }
+        else {
+            [tower.enemiesInRange removeObject:enemy];
             [tower endAttack];
-            [tower.enemiesInRange removeObject:(TAEnemy *)([contact bodyB].node)];
         }
     }
     else  if ([[contact bodyB].node.name characterAtIndex:0] == 'D' && [[contact bodyA].node.name characterAtIndex:0] == 'E') {
         NSUInteger towerIndex = [[[contact bodyB].node.name substringFromIndex:9] integerValue];
         TATower *tower = (TATower *)[self.towersOnField objectAtIndex:towerIndex];
-        if (tower.isAttacking) {
+        TAEnemy *enemy = (TAEnemy *)([contact bodyB].node);
+        if (tower.isPassive) {
+           // [tower endAttackOnEnemy:enemy];
+            [tower performSelectorOnMainThread:@selector(endAttackOnEnemy:) withObject:enemy waitUntilDone:YES];
+            [tower.enemiesInRange removeObject:enemy];
+        }
+        else {
+            [tower.enemiesInRange removeObject:enemy];
             [tower endAttack];
-            [tower.enemiesInRange removeObject:(TAEnemy *)([contact bodyA].node)];
         }
     }
 }
@@ -239,8 +247,8 @@
 -(void)addTower
 {
     switch ((NSInteger)[(SKSpriteNode *)[self childNodeWithName:@"Placeholder"] size].width) {
-        case TATowerSizeTower: {
-            TATower *tower = [[TATower alloc] initWithLocation:[[self childNodeWithName:@"Placeholder"] position] inScene:self];
+        case TATowerSizeFireballTower: {
+            TAFireballTower *tower = [[TAFireballTower alloc] initWithLocation:[[self childNodeWithName:@"Placeholder"] position] inScene:self];
             self.uiOverlay.currentGold -= tower.purchaseCost;
             [self removeChildrenInArray:[NSArray arrayWithObject:[self childNodeWithName:@"Placeholder"]]];
             [self addChild:tower];

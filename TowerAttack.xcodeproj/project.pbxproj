@@ -12,7 +12,11 @@
 		2C6828C41976D7A5001FEDFA /* BlastTower.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C6828C11976D7A5001FEDFA /* BlastTower.png */; };
 		2C6828C81976F47B001FEDFA /* TAFreezeTower.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C6828C71976F47B001FEDFA /* TAFreezeTower.m */; };
 		2C6828CB1976F499001FEDFA /* TABlastTower.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C6828CA1976F499001FEDFA /* TABlastTower.m */; };
+		2C6828D21977105B001FEDFA /* TATower.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C6828D11977105B001FEDFA /* TATower.m */; };
 		2C6ECC6A196DC9BC00053238 /* TAUIOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C6ECC69196DC9BC00053238 /* TAUIOverlay.m */; };
+		2C7E6CBA1977140A0017BE62 /* TAFireballTower.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C7E6CB91977140A0017BE62 /* TAFireballTower.m */; };
+		2C842E951977255100C98606 /* Blast.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2C842E941977255100C98606 /* Blast.sks */; };
+		2C842E9719782FD500C98606 /* Frost.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2C842E9619782FD500C98606 /* Frost.sks */; };
 		2CA3D7D9197422CE0042BB27 /* TATowerInfoPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CA3D7D8197422CE0042BB27 /* TATowerInfoPanel.m */; };
 		2CA3D7DC197437400042BB27 /* TAUnit.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CA3D7DB197437400042BB27 /* TAUnit.m */; };
 		2CA3D7DE197441F90042BB27 /* TowerPlaced.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2CA3D7DD197441F90042BB27 /* TowerPlaced.wav */; };
@@ -34,7 +38,7 @@
 		2CD8D4A6196B21E200F4BA87 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CD8D481196B21E100F4BA87 /* UIKit.framework */; };
 		2CD8D4AE196B21E200F4BA87 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2CD8D4AC196B21E200F4BA87 /* InfoPlist.strings */; };
 		2CD8D4B0196B21E200F4BA87 /* TowerAttackTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CD8D4AF196B21E200F4BA87 /* TowerAttackTests.m */; };
-		2CE59DF7196B2A6500FF3BD4 /* TATower.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE59DF6196B2A6500FF3BD4 /* TATower.m */; };
+		2CE59DF7196B2A6500FF3BD4 /* TANonPassiveTower.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE59DF6196B2A6500FF3BD4 /* TANonPassiveTower.m */; };
 		2CE59DFC196B30B900FF3BD4 /* TAEnemy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE59DFB196B30B900FF3BD4 /* TAEnemy.m */; };
 		2CFF781C196C73A70028F4AD /* TAPathDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CFF781B196C73A70028F4AD /* TAPathDrawer.m */; };
 /* End PBXBuildFile section */
@@ -57,8 +61,14 @@
 		2C6828C71976F47B001FEDFA /* TAFreezeTower.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAFreezeTower.m; sourceTree = "<group>"; };
 		2C6828C91976F499001FEDFA /* TABlastTower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TABlastTower.h; sourceTree = "<group>"; };
 		2C6828CA1976F499001FEDFA /* TABlastTower.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TABlastTower.m; sourceTree = "<group>"; };
+		2C6828D01977105B001FEDFA /* TATower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TATower.h; sourceTree = "<group>"; };
+		2C6828D11977105B001FEDFA /* TATower.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TATower.m; sourceTree = "<group>"; };
 		2C6ECC68196DC9BC00053238 /* TAUIOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAUIOverlay.h; sourceTree = "<group>"; };
 		2C6ECC69196DC9BC00053238 /* TAUIOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAUIOverlay.m; sourceTree = "<group>"; };
+		2C7E6CB81977140A0017BE62 /* TAFireballTower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAFireballTower.h; sourceTree = "<group>"; };
+		2C7E6CB91977140A0017BE62 /* TAFireballTower.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAFireballTower.m; sourceTree = "<group>"; };
+		2C842E941977255100C98606 /* Blast.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Blast.sks; path = TowerAttack/Images.atlas/Blast.sks; sourceTree = "<group>"; };
+		2C842E9619782FD500C98606 /* Frost.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Frost.sks; path = TowerAttack/Images.atlas/Frost.sks; sourceTree = "<group>"; };
 		2CA3D7D7197422CE0042BB27 /* TATowerInfoPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TATowerInfoPanel.h; sourceTree = "<group>"; };
 		2CA3D7D8197422CE0042BB27 /* TATowerInfoPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TATowerInfoPanel.m; sourceTree = "<group>"; };
 		2CA3D7DA197437400042BB27 /* TAUnit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAUnit.h; sourceTree = "<group>"; };
@@ -89,8 +99,8 @@
 		2CD8D4AB196B21E200F4BA87 /* TowerAttackTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TowerAttackTests-Info.plist"; sourceTree = "<group>"; };
 		2CD8D4AD196B21E200F4BA87 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2CD8D4AF196B21E200F4BA87 /* TowerAttackTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TowerAttackTests.m; sourceTree = "<group>"; };
-		2CE59DF5196B2A6500FF3BD4 /* TATower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TATower.h; sourceTree = "<group>"; };
-		2CE59DF6196B2A6500FF3BD4 /* TATower.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TATower.m; sourceTree = "<group>"; };
+		2CE59DF5196B2A6500FF3BD4 /* TANonPassiveTower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TANonPassiveTower.h; sourceTree = "<group>"; };
+		2CE59DF6196B2A6500FF3BD4 /* TANonPassiveTower.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TANonPassiveTower.m; sourceTree = "<group>"; };
 		2CE59DFA196B30B900FF3BD4 /* TAEnemy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAEnemy.h; sourceTree = "<group>"; };
 		2CE59DFB196B30B900FF3BD4 /* TAEnemy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAEnemy.m; sourceTree = "<group>"; };
 		2CFF781A196C73A70028F4AD /* TAPathDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPathDrawer.h; sourceTree = "<group>"; };
@@ -136,8 +146,12 @@
 		2C6828CD1976F4C3001FEDFA /* Towers */ = {
 			isa = PBXGroup;
 			children = (
-				2CE59DF5196B2A6500FF3BD4 /* TATower.h */,
-				2CE59DF6196B2A6500FF3BD4 /* TATower.m */,
+				2C6828D01977105B001FEDFA /* TATower.h */,
+				2C6828D11977105B001FEDFA /* TATower.m */,
+				2CE59DF5196B2A6500FF3BD4 /* TANonPassiveTower.h */,
+				2CE59DF6196B2A6500FF3BD4 /* TANonPassiveTower.m */,
+				2C7E6CB81977140A0017BE62 /* TAFireballTower.h */,
+				2C7E6CB91977140A0017BE62 /* TAFireballTower.m */,
 				2C6828C61976F47B001FEDFA /* TAFreezeTower.h */,
 				2C6828C71976F47B001FEDFA /* TAFreezeTower.m */,
 				2C6828C91976F499001FEDFA /* TABlastTower.h */,
@@ -173,6 +187,8 @@
 		2CD8D471196B21E100F4BA87 = {
 			isa = PBXGroup;
 			children = (
+				2C842E9619782FD500C98606 /* Frost.sks */,
+				2C842E941977255100C98606 /* Blast.sks */,
 				2CD8D485196B21E200F4BA87 /* TowerAttack */,
 				2CD8D4A9196B21E200F4BA87 /* TowerAttackTests */,
 				2CD8D47C196B21E100F4BA87 /* Frameworks */,
@@ -332,9 +348,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C842E951977255100C98606 /* Blast.sks in Resources */,
 				2CD8D48A196B21E200F4BA87 /* InfoPlist.strings in Resources */,
 				2CD8D49D196B21E200F4BA87 /* Images.xcassets in Resources */,
 				2CA3D7DE197441F90042BB27 /* TowerPlaced.wav in Resources */,
+				2C842E9719782FD500C98606 /* Frost.sks in Resources */,
 				2C6828BD1976CEB2001FEDFA /* Images.atlas in Resources */,
 				2CD8D493196B21E200F4BA87 /* Main.storyboard in Resources */,
 				2C6828C41976D7A5001FEDFA /* BlastTower.png in Resources */,
@@ -363,14 +381,16 @@
 				2CD8D496196B21E200F4BA87 /* TAMainMenuViewController.m in Sources */,
 				2CFF781C196C73A70028F4AD /* TAPathDrawer.m in Sources */,
 				2CA3D7DC197437400042BB27 /* TAUnit.m in Sources */,
+				2C7E6CBA1977140A0017BE62 /* TAFireballTower.m in Sources */,
 				2CD8D490196B21E200F4BA87 /* AppDelegate.m in Sources */,
+				2C6828D21977105B001FEDFA /* TATower.m in Sources */,
 				2CA3D7E3197568630042BB27 /* TATowerPurchaseSidebar.m in Sources */,
 				2C6828CB1976F499001FEDFA /* TABlastTower.m in Sources */,
 				2CA3D7D9197422CE0042BB27 /* TATowerInfoPanel.m in Sources */,
 				2C6ECC6A196DC9BC00053238 /* TAUIOverlay.m in Sources */,
 				2C6828C81976F47B001FEDFA /* TAFreezeTower.m in Sources */,
 				2CD8D48C196B21E200F4BA87 /* main.m in Sources */,
-				2CE59DF7196B2A6500FF3BD4 /* TATower.m in Sources */,
+				2CE59DF7196B2A6500FF3BD4 /* TANonPassiveTower.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

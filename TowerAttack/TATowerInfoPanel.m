@@ -7,7 +7,7 @@
 //
 
 #import "TATowerInfoPanel.h"
-#import "TATower.h"
+#import "TANonPassiveTower.h"
 #import "TAUnit.h"
 #import "TAEnemy.h"
 #import "TABattleScene.h"
@@ -65,13 +65,13 @@
     self.unitName.text = selectedUnit.unitType;
     self.unitDescription.text = selectedUnit.description;
     if ([selectedUnit.unitType characterAtIndex:0] == 'T') {
-        TATower *tower = (TATower *)selectedUnit;
+        TANonPassiveTower *tower = (TANonPassiveTower *)selectedUnit;
         [(UILabel *)[self.additionalUnitInfo objectAtIndex:0] setText:[NSString stringWithFormat:@"Level: %lu",(unsigned long)tower.towerLevel]];
         [(UILabel *)[self.additionalUnitInfo objectAtIndex:1] setText:[NSString stringWithFormat:@"Damage: %lu",(unsigned long)tower.attackDamage]];
         [(UILabel *)[self.additionalUnitInfo objectAtIndex:2] setText:[NSString stringWithFormat:@"%g shots/second",tower.timeBetweenAttacks]];
         [self.upgradeButton setTitle:[NSString stringWithFormat:@"Upgrade: %lu gold",(unsigned long)tower.towerLevel * 10] forState:UIControlStateNormal];
         self.upgradeButton.hidden = NO;
-        if (((TATower *)self.selectedUnit).towerLevel == maxTowerLevel) {
+        if (((TANonPassiveTower *)self.selectedUnit).towerLevel == maxTowerLevel) {
             self.upgradeButton.enabled = NO;
         }
         else {
@@ -89,14 +89,14 @@
 
 -(void)upgradeSelectedTower
 {
-    if (self.selectedUnit.battleScene.uiOverlay.currentGold >= ((TATower *)self.selectedUnit).towerLevel*10) {
-        self.selectedUnit.battleScene.uiOverlay.currentGold -= ((TATower *)self.selectedUnit).towerLevel*10;
-        ((TATower *)self.selectedUnit).towerLevel++;
-        if (((TATower *)self.selectedUnit).towerLevel == maxTowerLevel) {
+    if (self.selectedUnit.battleScene.uiOverlay.currentGold >= ((TANonPassiveTower *)self.selectedUnit).towerLevel*10) {
+        self.selectedUnit.battleScene.uiOverlay.currentGold -= ((TANonPassiveTower *)self.selectedUnit).towerLevel*10;
+        ((TANonPassiveTower *)self.selectedUnit).towerLevel++;
+        if (((TANonPassiveTower *)self.selectedUnit).towerLevel == maxTowerLevel) {
             self.upgradeButton.enabled = NO;
         }
         else {
-            [self.upgradeButton setTitle:[NSString stringWithFormat:@"Upgrade: %lu gold",(unsigned long)((TATower *)self.selectedUnit). towerLevel * 10] forState:UIControlStateNormal];
+            [self.upgradeButton setTitle:[NSString stringWithFormat:@"Upgrade: %lu gold",(unsigned long)((TANonPassiveTower *)self.selectedUnit). towerLevel * 10] forState:UIControlStateNormal];
         }
     }
 }

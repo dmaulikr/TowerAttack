@@ -7,7 +7,7 @@
 //
 
 #import "TATowerPurchaseSidebar.h"
-#import "TATower.h"
+#import "TANonPassiveTower.h"
 
 @implementation TATowerPurchaseSidebar
 
@@ -21,7 +21,7 @@
         self.towerIcons = [NSArray arrayWithObjects:[UIButton buttonWithType:UIButtonTypeCustom], [UIButton buttonWithType:UIButtonTypeCustom], [UIButton buttonWithType:UIButtonTypeCustom], /*[UIButton buttonWithType:UIButtonTypeCustom],*/ nil];
         int i = 0;
         CGFloat yCount = 0.0, bufferThickness = 11.0 / 2.0 + 5.0;
-        NSArray *towerImageNames = [TATower towerIconStrings];
+        NSArray *towerImageNames = [TANonPassiveTower towerIconStrings];
         for (UIButton *b in self.towerIcons) {
             [b setImage:[UIImage imageNamed:[[towerImageNames objectAtIndex:i] substringFromIndex:2]] forState:UIControlStateNormal];
             b.tag = i;
@@ -36,7 +36,7 @@
             i++;
         }
         self.towerLabels = [NSArray arrayWithObjects:[[UILabel alloc] initWithFrame:CGRectMake(0, 62, 70, 11)], [[UILabel alloc] initWithFrame:CGRectMake(0, 123, 70, 11)], [[UILabel alloc] initWithFrame:CGRectMake(0, 190, 70, 11)], /*[[UILabel alloc] initWithFrame:CGRectMake(10, 290, 50, 45)],*/ nil];
-        NSArray *towerNames = [TATower towerNames];
+        NSArray *towerNames = [TANonPassiveTower towerNames];
         i = 0;
         for (UILabel *l in self.towerLabels) {
             l.font = [UIFont fontWithName:@"Cochin" size:11];

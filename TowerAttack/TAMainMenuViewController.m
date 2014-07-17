@@ -22,7 +22,7 @@
     skView.showsFPS = YES;
     skView.showsNodeCount = YES;
     skView.allowsTransparency = YES;
-   // skView.showsPhysics = YES;
+  //  skView.showsPhysics = YES;
     [skView setBackgroundColor:nil];
     [self.view setBackgroundColor:nil];
     [self.view addSubview:skView];
@@ -63,12 +63,13 @@
     while (y > 0) {
         xC1 = x;
         yC1 = y;
+        y -= arc4random() % (int)900 / 2 + 10;
         do {
             x = arc4random() % ((int)1200 - 50) + 25;
         }while (x == xC1);
-        y -= arc4random() % (int)900 / 2 + 10;
         if (y <= 0) {
             y = 0;
+            x = 1200 / 2;
         }
         xC1 = arc4random() % abs((int)(x - xC1)) + MIN(x, xC1);
         yC1 -= arc4random() % (int)(yC1 - y);

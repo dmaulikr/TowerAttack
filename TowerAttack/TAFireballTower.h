@@ -1,5 +1,5 @@
 //
-//  TABlastTower.h
+//  TAFireballTower.h
 //  TowerAttack
 //
 //  Created by Ethan Hardy on 2014-07-16.
@@ -8,6 +8,6 @@
 
 #import "TANonPassiveTower.h"
 
-@interface TABlastTower : TANonPassiveTower
+@interface TAFireballTower : TANonPassiveTower
 
 @end

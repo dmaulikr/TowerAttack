@@ -8,7 +8,7 @@
 
 #import "TAUIOverlay.h"
 #import "TABattleScene.h"
-#import "TATower.h"
+#import "TANonPassiveTower.h"
 #import "TATowerInfoPanel.h"
 #import "TAUnit.h"
 #import "TATowerPurchaseSidebar.h"
