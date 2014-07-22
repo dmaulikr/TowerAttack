@@ -24,26 +24,38 @@
         self.unitIcon = [[UIImageView alloc] initWithFrame:CGRectMake(18, 9, 45, 45)];
         [self addSubview:self.unitIcon];
         
-        self.unitName = [[UILabel alloc] initWithFrame:CGRectMake(17, 54, 46, 21)];
-        self.unitName.font = [UIFont fontWithName:@"Cochin" size:15];
+        self.unitName = [[UILabel alloc] initWithFrame:CGRectMake(10, 54, 70, 21)];
+        self.unitName.font = [UIFont fontWithName:@"Cochin" size:13];
         self.unitName.adjustsFontSizeToFitWidth = YES;
-        self.unitName.minimumScaleFactor = 2;
+        self.unitName.minimumScaleFactor = 0.5;
         self.unitName.textAlignment = NSTextAlignmentCenter;
+        [self.unitName setCenter:CGPointMake(self.unitIcon.center.x, self.unitName.center.y)];
         [self addSubview:self.unitName];
         
-        self.unitDescription = [[UILabel alloc] initWithFrame:CGRectMake(71, 7, 151, 66)];
-        self.unitDescription.font = [UIFont fontWithName:@"Cochin" size:13];
+        self.unitDescription = [[UILabel alloc] initWithFrame:CGRectMake(74, 7, 151, 66)];
+        self.unitDescription.font = [UIFont fontWithName:@"Cochin" size:12];
         self.unitDescription.numberOfLines = 0;
         self.unitDescription.textAlignment = NSTextAlignmentCenter;
+        self.unitDescription.adjustsFontSizeToFitWidth = YES;
+        self.unitDescription.minimumScaleFactor = 0.5;
         [self addSubview:self.unitDescription];
         
-        self.additionalUnitInfo = [NSArray arrayWithObjects:[[UILabel alloc] initWithFrame:CGRectMake(236, 9, 150, 21)], [[UILabel alloc] initWithFrame:CGRectMake(236, 29, 150, 21)], [[UILabel alloc] initWithFrame:CGRectMake(236, 49, 150, 21)], nil];
+       /* self.additionalUnitInfo = [NSArray arrayWithObjects:[[UILabel alloc] initWithFrame:CGRectMake(236, 9, 150, 21)], [[UILabel alloc] initWithFrame:CGRectMake(236, 29, 150, 21)], [[UILabel alloc] initWithFrame:CGRectMake(236, 49, 150, 21)], nil];
         for (UILabel *l in self.additionalUnitInfo) {
             l.font = [UIFont fontWithName:@"Cochin" size:14];
             l.adjustsFontSizeToFitWidth = YES;
             l.minimumScaleFactor = 2;
             [self addSubview:l];
-        }
+        }*/
+        
+        self.otherUnitInfo = [[UILabel alloc] initWithFrame:CGRectMake(245, 10, 200, 80)];
+        self.otherUnitInfo.numberOfLines = 0;
+        self.otherUnitInfo.textAlignment = NSTextAlignmentCenter;
+        self.otherUnitInfo.font = [UIFont fontWithName:@"Cochin" size:12];
+        self.otherUnitInfo.adjustsFontSizeToFitWidth = YES;
+        self.otherUnitInfo.minimumScaleFactor = 0.5;
+        self.otherUnitInfo.lineBreakMode = NSLineBreakByWordWrapping;
+        [self addSubview:self.otherUnitInfo];
         
         self.upgradeButton = [UIButton buttonWithType:UIButtonTypeSystem]; //[[UIButton alloc] initWithFrame:CGRectMake(428, 12, 126, 56)];
         self.upgradeButton.frame = CGRectMake(428, 12, 126, 56);
@@ -60,44 +72,50 @@
 
 -(void)setSelectedUnit:(TAUnit *)selectedUnit
 {
+    if ([_selectedUnit.name characterAtIndex:0] == 'T') {
+        NSUInteger towerNumber = [[_selectedUnit.name substringFromIndex:[_selectedUnit.name rangeOfString:@" "].location + 1] integerValue];
+        SKSpriteNode *detector = (SKSpriteNode *)[_selectedUnit.battleScene childNodeWithName:[NSString stringWithFormat:@"Detector %lu", towerNumber]];
+        detector.alpha = 0.0;
+    }
     _selectedUnit = selectedUnit;
-    self.unitIcon.image = [UIImage imageNamed:selectedUnit.imageName];
-    self.unitName.text = selectedUnit.unitType;
-    self.unitDescription.text = selectedUnit.description;
-    if ([selectedUnit.unitType characterAtIndex:0] == 'T') {
-        TANonPassiveTower *tower = (TANonPassiveTower *)selectedUnit;
-        [(UILabel *)[self.additionalUnitInfo objectAtIndex:0] setText:[NSString stringWithFormat:@"Level: %lu",(unsigned long)tower.towerLevel]];
-        [(UILabel *)[self.additionalUnitInfo objectAtIndex:1] setText:[NSString stringWithFormat:@"Damage: %lu",(unsigned long)tower.attackDamage]];
-        [(UILabel *)[self.additionalUnitInfo objectAtIndex:2] setText:[NSString stringWithFormat:@"%g shots/second",tower.timeBetweenAttacks]];
-        [self.upgradeButton setTitle:[NSString stringWithFormat:@"Upgrade: %lu gold",(unsigned long)tower.towerLevel * 10] forState:UIControlStateNormal];
+    if (_selectedUnit != nil) {
+        self.unitIcon.image = [UIImage imageNamed:selectedUnit.imageName];
+        self.unitName.text = selectedUnit.unitType;
+        self.unitDescription.text = selectedUnit.description;
+        NSMutableArray *arr = _selectedUnit.infoStrings;
+        _selectedUnit.infoStrings = arr;
+    }
+}
+
+-(void)refreshLabelsWithInfo:(NSArray *)otherUnitInfoStrings
+{
+    self.otherUnitInfo.text = @"";
+    for (NSString *s in otherUnitInfoStrings) {
+        self.otherUnitInfo.text = [self.otherUnitInfo.text stringByAppendingString:[NSString stringWithFormat:@"%@\n",s]];
+    }
+    self.otherUnitInfo.text = [self.otherUnitInfo.text substringToIndex:self.otherUnitInfo.text.length-1];
+  //  [self.otherUnitInfo sizeToFit];
+    [self.otherUnitInfo setCenter:CGPointMake((self.upgradeButton.frame.origin.x + 224) / 2, self.frame.size.height / 2)];
+    if ([self.selectedUnit.unitType characterAtIndex:0] == 'E') {
+        self.upgradeButton.hidden = YES;
+    }
+    else {
         self.upgradeButton.hidden = NO;
-        if (((TANonPassiveTower *)self.selectedUnit).towerLevel == maxTowerLevel) {
+        if (((TATower *)self.selectedUnit).towerLevel == maxTowerLevel) {
             self.upgradeButton.enabled = NO;
         }
         else {
+            [self.upgradeButton setTitle:[NSString stringWithFormat:@"Upgrade: %lu gold",(unsigned long)((TATower *)self.selectedUnit).towerLevel * 10] forState:UIControlStateNormal];
             self.upgradeButton.enabled = YES;
         }
-    }
-    else {
-        TAEnemy *enemy = (TAEnemy *)selectedUnit;
-        [(UILabel *)[self.additionalUnitInfo objectAtIndex:0] setText:[NSString stringWithFormat:@"Health: %lu/%lu",(unsigned long)enemy.currentHealth,(unsigned long)enemy.maximumHealth]];
-        [(UILabel *)[self.additionalUnitInfo objectAtIndex:1] setText:[NSString stringWithFormat:@"+%lu gold on death",(unsigned long)enemy.goldReward]];
-        [(UILabel *)[self.additionalUnitInfo objectAtIndex:2] setText:@""];
-        self.upgradeButton.hidden = YES;
     }
 }
 
 -(void)upgradeSelectedTower
 {
-    if (self.selectedUnit.battleScene.uiOverlay.currentGold >= ((TANonPassiveTower *)self.selectedUnit).towerLevel*10) {
-        self.selectedUnit.battleScene.uiOverlay.currentGold -= ((TANonPassiveTower *)self.selectedUnit).towerLevel*10;
-        ((TANonPassiveTower *)self.selectedUnit).towerLevel++;
-        if (((TANonPassiveTower *)self.selectedUnit).towerLevel == maxTowerLevel) {
-            self.upgradeButton.enabled = NO;
-        }
-        else {
-            [self.upgradeButton setTitle:[NSString stringWithFormat:@"Upgrade: %lu gold",(unsigned long)((TANonPassiveTower *)self.selectedUnit). towerLevel * 10] forState:UIControlStateNormal];
-        }
+    if (self.selectedUnit.battleScene.uiOverlay.currentGold >= ((TATower *)self.selectedUnit).towerLevel*10) {
+        self.selectedUnit.battleScene.uiOverlay.currentGold -= ((TATower *)self.selectedUnit).towerLevel*10;
+        ((TATower *)self.selectedUnit).towerLevel++;
     }
 }
 
@@ -106,8 +124,8 @@
 - (void)drawRect:(CGRect)rect {
     // Drawing code
     CGContextRef c = UIGraphicsGetCurrentContext();
-    CGContextMoveToPoint(c, 224, 8);
-    CGContextAddLineToPoint(c, 224, 73);
+    CGContextMoveToPoint(c, 227, 8);
+    CGContextAddLineToPoint(c, 227, 92);
     CGContextStrokePath(c);
 }
 

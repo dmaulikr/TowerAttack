@@ -14,19 +14,19 @@
 
 @implementation TAFireballTower
 
-NSArray *towerStatsForLevel;
 
 -(id)initWithLocation:(CGPoint)location inScene:(TABattleScene *)sceneParam
 {
     if (self == [super initWithLocation:location inScene:sceneParam]) {
+        self.towerLevel = 1;
         self.imageName = @"Tower";
         self.texture = [SKTexture textureWithImageNamed:self.imageName];
-        towerStatsForLevel = [[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Game Data" ofType:@"plist"]] objectForKey:@"TowerStatsForLevel"];
-        self.timeBetweenAttacks = [[(NSString *)[towerStatsForLevel objectAtIndex:self.towerLevel-1] substringFromIndex:[(NSString *)[towerStatsForLevel objectAtIndex:self.towerLevel-1] rangeOfString:@" "].location] floatValue];
-        self.attackDamage = [[(NSString *)[towerStatsForLevel objectAtIndex:self.towerLevel-1] substringToIndex:[(NSString *)[towerStatsForLevel objectAtIndex:self.towerLevel-1] rangeOfString:@" "].location] integerValue];
+     /*   towerStatsForLevel = [[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Game Data" ofType:@"plist"]] objectForKey:@"TowerStatsForLevel"];
+        super.timeBetweenAttacks = [[(NSString *)[towerStatsForLevel objectAtIndex:self.towerLevel-1] substringFromIndex:[(NSString *)[towerStatsForLevel objectAtIndex:self.towerLevel-1] rangeOfString:@" "].location] floatValue];
+        super.attackDamage = [[(NSString *)[towerStatsForLevel objectAtIndex:self.towerLevel-1] substringToIndex:[(NSString *)[towerStatsForLevel objectAtIndex:self.towerLevel-1] rangeOfString:@" "].location] integerValue];*/
         self.projectileSpeed = 400;
         self.size = CGSizeMake(TATowerSizeFireballTower, TATowerSizeFireballTower);
-        self.description = @"This tower shoots fireballs at enemies";
+        self.description = (NSString *)[[[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Game Data" ofType:@"plist"]] objectForKey:@"TowerDescriptions"] objectAtIndex:TATowerTypeFireballTower];
         self.unitType = @"Fireball Tower";
         self.maximumSimultaneouslyAffectedEnemies = 1;
         self.attackRadius = TATowerAttackRadiusFireballTower;
@@ -34,6 +34,7 @@ NSArray *towerStatsForLevel;
         self.projectileToFire.zPosition = -1;
         [self addChild:self.projectileToFire];
         self.projectileToFire.hidden = YES;
+        [self.infoStrings addObjectsFromArray:[NSArray arrayWithObjects:[NSString stringWithFormat:@"Damage/shot: %ld",(long)self.attackDamage], [NSString stringWithFormat:@"%g shots/second",1.0f/self.timeBetweenAttacks], nil]];
     }
     return self;
 }
@@ -60,14 +61,31 @@ NSArray *towerStatsForLevel;
     }
 }
 
+-(void)setAttackDamage:(NSInteger)attackDamage
+{
+    NSUInteger index = [self.infoStrings indexOfObject:[NSString stringWithFormat:@"Damage/shot: %ld",(long)self.attackDamage]];
+    [super setAttackDamage:attackDamage];
+    if (index != NSNotFound) {
+        [self.infoStrings replaceObjectAtIndex:index withObject:[NSString stringWithFormat:@"Damage/shot: %ld",(long)self.attackDamage]];
+    }
+}
+
+-(void)setTimeBetweenAttacks:(CGFloat)timeBetweenAttacks
+{
+    NSUInteger index = [self.infoStrings indexOfObject:[NSString stringWithFormat:@"%g shot/second",1.0f/self.timeBetweenAttacks]];
+    [super setTimeBetweenAttacks:timeBetweenAttacks];
+    if (index != NSNotFound) {
+        [self.infoStrings replaceObjectAtIndex:index withObject:[NSString stringWithFormat:@"%g shot/second",1.0f/self.timeBetweenAttacks]];
+    }
+}
+
 -(void)setTowerLevel:(NSInteger)towerLevel
 {
+    NSArray *stats = [(NSString *)[[[[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Game Data" ofType:@"plist"]] objectForKey:@"TowerStatsForLevel"] objectAtIndex:TATowerTypeFireballTower] objectAtIndex:towerLevel-1] componentsSeparatedByString:@" "];
+    self.attackDamage = [[stats objectAtIndex:TATowerLevelDataStatPositionAttackDamage] integerValue];
+    self.attackRadius = [[stats objectAtIndex:TATowerLevelDataStatPositionAttackRadius] floatValue];
+    self.timeBetweenAttacks = [[stats objectAtIndex:TATowerLevelDataStatPositionTimeBetweenAttacks] floatValue];
     [super setTowerLevel:towerLevel];
-    self.timeBetweenAttacks = [[(NSString *)[towerStatsForLevel objectAtIndex:self.towerLevel-1] substringFromIndex:[(NSString *)[towerStatsForLevel objectAtIndex:self.towerLevel-1] rangeOfString:@" "].location] floatValue];
-    self.attackDamage = [[(NSString *)[towerStatsForLevel objectAtIndex:self.towerLevel-1] substringToIndex:[(NSString *)[towerStatsForLevel objectAtIndex:self.towerLevel-1] rangeOfString:@" "].location] integerValue];
-    [(UILabel *)[self.battleScene.uiOverlay.infoPanel.additionalUnitInfo objectAtIndex:0] setText:[NSString stringWithFormat:@"Level: %lu",(unsigned long)self.towerLevel]];
-    [(UILabel *)[self.battleScene.uiOverlay.infoPanel.additionalUnitInfo objectAtIndex:1] setText:[NSString stringWithFormat:@"Damage: %lu",(unsigned long)self.attackDamage]];
-    [(UILabel *)[self.battleScene.uiOverlay.infoPanel.additionalUnitInfo objectAtIndex:2] setText:[NSString stringWithFormat:@"%g shots/second",self.timeBetweenAttacks]];
 }
 
 @end

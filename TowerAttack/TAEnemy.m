@@ -17,13 +17,14 @@
 {
     if (self == [super initWithLocation:location inScene:sceneParam]) {
         //init code
-        self.movementSpeed = 40;
-        self.maximumHealth = 100;
-        self.currentHealth = 100;
+        _movementSpeed = arc4random() % 20 + 30;
+        _maximumHealth = 100;
+        _currentHealth = 100;
         self.goldReward = 10;
         self.description = @"Weak but relatively fast, enemies are a common enemy, but not too much of a threat.";
-       // self.unitType = @"Enemy";
+        self.unitType = @"Enemy";
         self.imageName = @"Goblin";
+        [self.infoStrings addObjectsFromArray:[NSArray arrayWithObjects:[NSString stringWithFormat:@"Health: %lu/%lu",(unsigned long)self.currentHealth,(unsigned long)self.maximumHealth], [NSString stringWithFormat:@"Movement Speed: %g",self.movementSpeed * self.speed], nil]];
         self.zPosition = 0.1;
         
         self.texture = [SKTexture textureWithImageNamed:self.imageName];
@@ -31,7 +32,7 @@
         self.size = CGSizeMake(100, 100);
         self.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:self.size.width / 4];
         self.physicsBody.dynamic = YES;
-        self.physicsBody.contactTestBitMask = TAContactTypeProjectile | TAContactTypeDetector;
+        self.physicsBody.contactTestBitMask = TAContactTypeDetector;
         self.physicsBody.categoryBitMask = TAContactTypeEnemy;
         self.physicsBody.collisionBitMask = TAContactTypeNothing;
         
@@ -56,10 +57,13 @@
     return self;
 }
 
--(void)setCurrentHealth:(NSInteger)currentHealth
+-(void)setCurrentHealth:(CGFloat)currentHealth
 {
+    NSUInteger index = [self.infoStrings indexOfObject:[NSString stringWithFormat:@"Health: %lu/%lu",(unsigned long)self.currentHealth,(unsigned long)self.maximumHealth]];
     _currentHealth = currentHealth;
-    [(UILabel *)[self.battleScene.uiOverlay.infoPanel.additionalUnitInfo objectAtIndex:0] setText:[NSString stringWithFormat:@"Health: %lu/%lu",(unsigned long)self.currentHealth,(unsigned long)self.maximumHealth]];
+    if (index != NSNotFound) {
+        [self.infoStrings replaceObjectAtIndex:index withObject:[NSString stringWithFormat:@"Health: %lu/%lu",(unsigned long)self.currentHealth,(unsigned long)self.maximumHealth]];
+    }
     self.healthBarInside.size = CGSizeMake(33.5 * self.currentHealth / self.maximumHealth, self.healthBarInside.size.height);
     if (_currentHealth <= 0 && [self.battleScene.enemiesOnField containsObject:self]) {
         _currentHealth = 0;
@@ -70,7 +74,27 @@
     }
 }
 
--(void)setMaximumHealth:(NSInteger)maximumHealth
+-(void)setSpeed:(CGFloat)speed
+{
+    NSUInteger index = 0;
+  //  if (speed != 1) {
+        index = [self.infoStrings indexOfObject:[NSString stringWithFormat:@"Movement Speed: %g",self.movementSpeed * self.speed]];
+  /*  }
+    else {
+        index = [self.infoStrings indexOfObject:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"Movement Speed: %g",self.movementSpeed * self.speed] attributes:[NSDictionary dictionaryWithObject:[UIColor blueColor] forKey:NSForegroundColorAttributeName]]];
+    }*/
+    [super setSpeed:speed];
+//    if (speed == 1) {
+    if (index != NSNotFound) {
+        [self.infoStrings replaceObjectAtIndex:index withObject:[NSString stringWithFormat:@"Movement Speed: %g",self.movementSpeed * self.speed]];
+    }
+ /*   }
+    else {
+        [self.infoStrings replaceObjectAtIndex:index withObject:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"Movement Speed: %g",self.movementSpeed * self.speed] attributes:[NSDictionary dictionaryWithObject:[UIColor blueColor] forKey:NSForegroundColorAttributeName]]];
+    }*/
+}
+
+-(void)setMaximumHealth:(CGFloat)maximumHealth
 {
     _maximumHealth = maximumHealth;
     self.currentHealth = maximumHealth;

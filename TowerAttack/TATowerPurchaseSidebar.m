@@ -18,8 +18,9 @@
         self.backgroundColor = [UIColor colorWithRed:0.8 green:0.9 blue:0.8 alpha:0.9];
         self.canSelectTowers = YES;
         self.selectedTowerType = TATowerTypeNoTower;
-        self.towerIcons = [NSArray arrayWithObjects:[UIButton buttonWithType:UIButtonTypeCustom], [UIButton buttonWithType:UIButtonTypeCustom], [UIButton buttonWithType:UIButtonTypeCustom], /*[UIButton buttonWithType:UIButtonTypeCustom],*/ nil];
+        self.towerIcons = [NSArray arrayWithObjects:[UIButton buttonWithType:UIButtonTypeCustom], [UIButton buttonWithType:UIButtonTypeCustom], [UIButton buttonWithType:UIButtonTypeCustom], [UIButton buttonWithType:UIButtonTypeCustom], nil];
         int i = 0;
+        CGFloat *labelYs = malloc(sizeof(CGFloat) * [self.towerIcons count]);
         CGFloat yCount = 0.0, bufferThickness = 11.0 / 2.0 + 5.0;
         NSArray *towerImageNames = [TANonPassiveTower towerIconStrings];
         for (UIButton *b in self.towerIcons) {
@@ -31,16 +32,18 @@
             [b setFrame:CGRectMake(12, yCount, dimensions, dimensions)];
             [b setCenter:CGPointMake(self.frame.size.width / 2, yCount)];
             yCount += dimensions / 2 + bufferThickness;
+            labelYs[i] = yCount - bufferThickness + 2;
             [b addTarget:self action:@selector(selectTowerFromButton:) forControlEvents:UIControlEventTouchUpInside];
             [self addSubview:b];
             i++;
         }
-        self.towerLabels = [NSArray arrayWithObjects:[[UILabel alloc] initWithFrame:CGRectMake(0, 62, 70, 11)], [[UILabel alloc] initWithFrame:CGRectMake(0, 123, 70, 11)], [[UILabel alloc] initWithFrame:CGRectMake(0, 190, 70, 11)], /*[[UILabel alloc] initWithFrame:CGRectMake(10, 290, 50, 45)],*/ nil];
+        self.towerLabels = [NSArray arrayWithObjects:[[UILabel alloc] initWithFrame:CGRectMake(0, 62, 70, 11)], [[UILabel alloc] initWithFrame:CGRectMake(0, 123, 70, 11)], [[UILabel alloc] initWithFrame:CGRectMake(0, 190, 70, 11)], [[UILabel alloc] initWithFrame:CGRectMake(10, 290, 50, 45)], nil];
         NSArray *towerNames = [TANonPassiveTower towerNames];
         i = 0;
         for (UILabel *l in self.towerLabels) {
             l.font = [UIFont fontWithName:@"Cochin" size:11];
             l.text = [NSString stringWithFormat:@"%@"/*\n50 Gold"*/,[towerNames objectAtIndex:i]];
+            l.frame = CGRectMake(0, labelYs[i], 70, 11);
             l.adjustsFontSizeToFitWidth = YES;
             l.numberOfLines = 0;
             l.textAlignment = NSTextAlignmentCenter;

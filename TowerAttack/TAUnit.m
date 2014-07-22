@@ -7,6 +7,9 @@
 //
 
 #import "TAUnit.h"
+#import "TABattleScene.h"
+#import "TAUIOverlay.h"
+#import "TATowerInfoPanel.h"
 
 @implementation TAUnit
 
@@ -16,8 +19,19 @@
         //init code
         self.battleScene = sceneParam;
         self.position = location;
+        self.infoStrings = [NSMutableArray array];
     }
     return self;
+}
+
+-(NSMutableArray *)infoStrings
+{
+    if (self.battleScene.uiOverlay.infoPanel.selectedUnit == self) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.001 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [self.battleScene.uiOverlay.infoPanel refreshLabelsWithInfo:_infoStrings];
+        });
+    }
+    return _infoStrings;
 }
 
 @end

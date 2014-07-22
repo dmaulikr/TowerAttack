@@ -17,10 +17,12 @@
 @property (strong, nonatomic) UIImageView *unitIcon;
 @property (strong, nonatomic) UILabel *unitName;
 @property (strong, nonatomic) UILabel *unitDescription;
+@property (strong, nonatomic) UILabel *otherUnitInfo;
 @property (strong, nonatomic) UIButton *upgradeButton;
-@property (strong, nonatomic) NSArray *additionalUnitInfo;
+//@property (strong, nonatomic) NSArray *additionalUnitInfo;
 
 -(id)initWithFrame:(CGRect)frame;
 -(void)upgradeSelectedTower;
+-(void)refreshLabelsWithInfo:(NSArray *)otherUnitInfoStrings;
 
 @end

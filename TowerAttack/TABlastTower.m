@@ -23,13 +23,15 @@
         self.attackRadius = TATowerAttackRadiusBlastTower;
         self.unitType = @"Blast Tower";
         self.maximumSimultaneouslyAffectedEnemies = 0;
-        self.attackDamage = 20;
-        self.timeBetweenAttacks = 1.5;
+        self.description = (NSString *)[[[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Game Data" ofType:@"plist"]] objectForKey:@"TowerDescriptions"] objectAtIndex:TATowerTypeBlastTower];
+        super.attackDamage = 20;
+        super.timeBetweenAttacks = 1.5;
         self.projectileToFire = [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSBundle mainBundle] pathForResource:@"Blast" ofType:@"sks"]];
         self.normalBirthRateOfProjectile = self.projectileToFire.particleBirthRate;
         self.projectileToFire.particleBirthRate = 0;
         self.projectileToFire.zPosition = -1;
         [self addChild:self.projectileToFire];
+        [self.infoStrings addObjectsFromArray:[NSArray arrayWithObjects:[NSString stringWithFormat:@"Damage/blast: %ld",(long)self.attackDamage], [NSString stringWithFormat:@"%g blasts/second",1.0f/self.timeBetweenAttacks], nil]];
     }
     return self;
 }
@@ -50,6 +52,29 @@
     if ([self.enemiesInRange count] <= enemiesToRemove) {
         [self endAttack];
     }
+}
+
+-(void)setAttackDamage:(NSInteger)attackDamage
+{
+    NSUInteger index = [self.infoStrings indexOfObject:[NSString stringWithFormat:@"Damage/blast: %ld",(long)self.attackDamage]];
+    [super setAttackDamage:attackDamage];
+    [self.infoStrings replaceObjectAtIndex:index withObject:[NSString stringWithFormat:@"Damage/blast: %ld",(long)self.attackDamage]];
+}
+
+-(void)setTimeBetweenAttacks:(CGFloat)timeBetweenAttacks
+{
+    NSUInteger index = [self.infoStrings indexOfObject:[NSString stringWithFormat:@"%g blasts/second",1.0f/self.timeBetweenAttacks]];
+    [super setTimeBetweenAttacks:timeBetweenAttacks];
+    [self.infoStrings replaceObjectAtIndex:index withObject:[NSString stringWithFormat:@"%g blasts/second",1.0f/self.timeBetweenAttacks]];
+}
+
+-(void)setTowerLevel:(NSInteger)towerLevel
+{
+    NSArray *stats = [(NSString *)[[[[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Game Data" ofType:@"plist"]] objectForKey:@"TowerStatsForLevel"] objectAtIndex:TATowerTypeBlastTower] objectAtIndex:towerLevel-1] componentsSeparatedByString:@" "];
+    self.attackDamage = [[stats objectAtIndex:TATowerLevelDataStatPositionAttackDamage] integerValue];
+    self.attackRadius = [[stats objectAtIndex:TATowerLevelDataStatPositionAttackRadius] floatValue];
+    self.timeBetweenAttacks = [[stats objectAtIndex:TATowerLevelDataStatPositionTimeBetweenAttacks] floatValue];
+    [super setTowerLevel:towerLevel];
 }
 
 @end

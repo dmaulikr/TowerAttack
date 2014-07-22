@@ -17,19 +17,29 @@ enum TATowerType : NSInteger {
     TATowerTypeFireballTower,
     TATowerTypeFreezeTower,
     TATowerTypeBlastTower,
+    TATowerTypePsychicTower,
     TATowerTypeNoTower
 };
 
 enum TATowerSize : NSInteger {
     TATowerSizeFireballTower = 50,
     TATowerSizeFreezeTower = 40,
-    TATowerSizeBlastTower = 45
+    TATowerSizeBlastTower = 45,
+    TATowerSizePsychicTower = 60
 };
 
 enum TATowerAttackRadius : NSInteger {
     TATowerAttackRadiusFireballTower = 100,
     TATowerAttackRadiusFreezeTower = 70,
-    TATowerAttackRadiusBlastTower = 55
+    TATowerAttackRadiusBlastTower = 55,
+    TATowerAttackRadiusPsychicTower = 150
+};
+
+enum TATowerLevelDataStatPosition : NSInteger {
+    TATowerLevelDataStatPositionAttackDamage,
+    TATowerLevelDataStatPositionAttackRadius,
+    TATowerLevelDataStatPositionTimeBetweenAttacks,
+    TATowerLevelDataStatPositionEnemySpeedMultiplier
 };
 
 @interface TATower : TAUnit

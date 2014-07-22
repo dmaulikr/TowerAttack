@@ -13,7 +13,7 @@
 #import "TAUnit.h"
 #import "TATowerPurchaseSidebar.h"
 
-CGFloat panelY = 240;
+CGFloat const panelY = 240;
 
 @implementation TAUIOverlay
 
@@ -29,7 +29,7 @@ CGFloat panelY = 240;
         [self.displayLabel setFont:[UIFont fontWithName:@"Cochin" size:15]];
         self.displayLabel.numberOfLines = 2;
         [self addSubview:self.displayLabel];
-        self.currentGold = 100;
+        _currentGold = 100;
         self.cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [self.cancelButton setImage:[UIImage imageNamed:@"Cancel"] forState:UIControlStateNormal];
         self.confirmButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -38,13 +38,13 @@ CGFloat panelY = 240;
         self.confirmButton.tag = 0;
         self.cancelButton.tag = 1;
         self.cancelButton.hidden = YES;
-        self.purchaseSidebar = [[TATowerPurchaseSidebar alloc] initWithFrame:CGRectMake(500, 0, 68, 320)];
+        self.purchaseSidebar = [[TATowerPurchaseSidebar alloc] initWithFrame:CGRectMake(screenWidth - 68, 0, 68, 320)];
         [self addSubview:self.purchaseSidebar];
         [self addSubview:self.cancelButton];
         [self addSubview:self.confirmButton];
         [self.cancelButton addTarget:self action:@selector(decideTowerPlacementFromButton:) forControlEvents:UIControlEventTouchUpInside];
         [self.confirmButton addTarget:self action:@selector(decideTowerPlacementFromButton:) forControlEvents:UIControlEventTouchUpInside];
-        self.infoPanel = [[TATowerInfoPanel alloc] initWithFrame:CGRectMake(0, 320, 568, 100)];
+        self.infoPanel = [[TATowerInfoPanel alloc] initWithFrame:CGRectMake(0, 320, screenWidth, 100)];
         [self addSubview:self.infoPanel];
     }
     return self;
@@ -76,42 +76,42 @@ CGFloat panelY = 240;
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (self.infoPanel.frame.origin.y == panelY) {
-        if ([[touches anyObject] locationInView:self].y < panelY) {
+   // if (self.infoPanel.frame.origin.y == panelY) {
+   /* if ([[touches anyObject] locationInView:self].y > panelY) {
             [UIView animateWithDuration:0.25 animations:^(void) {
-                self.infoPanel.frame = CGRectMake(0, 568, 568, 80);
+                self.infoPanel.frame = CGRectMake(0, screenWidth, screenWidth, 80);
                 self.purchaseSidebar.frame = CGRectMake(500, 0, 68, 320);
             }];
         }
         self.shouldPassTouches = NO;
     }
-    else {
+    else {*/
         [self.battleScene touchesBegan:touches withEvent:event];
-    }
+   // }
 }
 
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (self.shouldPassTouches) {
+  //  if (self.shouldPassTouches) {
         [self.battleScene touchesMoved:touches withEvent:event];
-    }
+  //  }
 }
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (self.shouldPassTouches) {
+ //   if (self.shouldPassTouches) {
         [self.battleScene touchesEnded:touches withEvent:event];
-    }
+ /*   }
     else {
         self.shouldPassTouches = YES;
-    }
+    }*/
 }
 
  -(void)setCurrentGold:(NSUInteger)currentGold
 {
-    [self.displayLabel setText:[NSString stringWithFormat:@"Gold: %lu\nLives: %ld",(unsigned long)currentGold,(long)self
+   /* [self.displayLabel setText:[NSString stringWithFormat:@"Gold: %lu\nLives: %ld",(unsigned long)currentGold,(long)self
                                 .livesLeft]];
-    _currentGold = currentGold;
+    _currentGold = currentGold;*/
 }
 
 -(void)setLivesLeft:(NSInteger)livesLeft
@@ -138,10 +138,12 @@ CGFloat panelY = 240;
     _selectedUnit = selectedUnit;
     _selectedNode = selectedUnit;
     self.infoPanel.selectedUnit = selectedUnit;
-    [UIView animateWithDuration:0.25 animations:^(void) {
-        self.infoPanel.frame = CGRectMake(0, panelY, 568, 80);
-        self.purchaseSidebar.frame = CGRectMake(568, 0, 68, 320);
-    }];
+    if (selectedUnit != nil) {
+        [UIView animateWithDuration:0.25 animations:^(void) {
+            self.infoPanel.frame = CGRectMake(0, panelY, screenWidth, 80);
+            self.purchaseSidebar.frame = CGRectMake(screenWidth, 0, 68, 320);
+        }];
+    }
     //code for bringing up tower upgrade / info overlay
 }
 

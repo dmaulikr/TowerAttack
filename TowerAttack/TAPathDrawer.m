@@ -7,6 +7,7 @@
 //
 
 #import "TAPathDrawer.h"
+#import "TAMainMenuViewController.h"
 
 @implementation TAPathDrawer
 
@@ -17,6 +18,7 @@
         // Initialization code
         self.pathToDraw = CGPathCreateCopy(path);
         self.backgroundColor = [UIColor colorWithRed:21.0f/255.0f green:115.0f/255.0f blue:3.0f/255.0f alpha:1.0f];
+        self.userInteractionEnabled = NO;
     }
     return self;
 }

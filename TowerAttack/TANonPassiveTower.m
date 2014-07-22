@@ -38,6 +38,7 @@
 {
     //  NSLog(@"End");
     if ([self.enemiesInRange count] == 0) {
+        NSLog(@"Inv");
         [self.attackUpdate invalidate];
     }
 }

@@ -15,6 +15,8 @@
 @class TAUnit;
 @class TATowerPurchaseSidebar;
 
+extern CGFloat const panelY;
+
 @interface TAUIOverlay : UIView
 
 @property (weak, nonatomic) TABattleScene *battleScene;

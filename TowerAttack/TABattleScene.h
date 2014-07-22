@@ -12,6 +12,8 @@
 @class TAUIOverlay;
 @class TAPathDrawer;
 
+extern NSInteger const screenWidth;
+
 typedef enum : uint8_t {
     TAContactTypeTower             = 1,
     TAContactTypeEnemy             = 2,
@@ -27,7 +29,6 @@ typedef enum : uint8_t {
 @property (nonatomic) CGPoint spawnPoint;
 @property (nonatomic) NSInteger spawnRefreshCount;
 @property (nonatomic) CGPathRef enemyMovementPath;
-@property (nonatomic) CGFloat enemyMovementPathLength;
 @property (nonatomic) BOOL click;
 @property (nonatomic) BOOL isDraggingTowerPlaceholder;
 @property (nonatomic) CGPoint lastPoint;

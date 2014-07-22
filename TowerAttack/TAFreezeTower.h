@@ -10,6 +10,6 @@
 
 @interface TAFreezeTower : TATower
 
-@property (nonatomic, strong) NSMutableArray *affectedEnemyStats;
+@property (nonatomic) CGFloat speedMultiplier;
 
 @end

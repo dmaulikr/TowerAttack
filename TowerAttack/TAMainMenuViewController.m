@@ -54,9 +54,6 @@
         CGPathAddCurveToPoint(pathToDraw, NULL, xC1, yC1, xC2, yC2, x, y);
         CGPathAddCurveToPoint(path, NULL, xC1, self.view.frame.size.height - yC1, xC2, self.view.frame.size.height - yC2, x,self.view.frame.size.height -  y);
     }*/
-
-    CGFloat approximateLength = 0.0f;
-    CGPoint lastPoint = CGPointMake(1200 / 2, 900);
     CGPathMoveToPoint(pathToDraw, NULL, 1200 / 2, 900);
     CGPathMoveToPoint(path, NULL, 1200 / 2, 900 - 900);
     CGFloat x = 1200 / 2, y = 900, xC1, yC1, xC2, yC2;
@@ -67,9 +64,13 @@
         do {
             x = arc4random() % ((int)1200 - 50) + 25;
         }while (x == xC1);
+        
         if (y <= 0) {
             y = 0;
             x = 1200 / 2;
+        }
+        if (x == xC1) {
+            xC1 += 10;
         }
         xC1 = arc4random() % abs((int)(x - xC1)) + MIN(x, xC1);
         yC1 -= arc4random() % (int)(yC1 - y);
@@ -80,7 +81,6 @@
         yC2 = yC1 - arc4random() % (int)(yC1 - y);
         CGPathAddCurveToPoint(pathToDraw, NULL, xC1, yC1, xC2, yC2, x, y);
         CGPathAddCurveToPoint(path, NULL, xC1, 900 - yC1, xC2, 900 - yC2, x,900 -  y);
-        approximateLength += sqrtf(powf(lastPoint.x - x, 2) + powf(lastPoint.y - y, 2));
     }
 
     
@@ -105,7 +105,6 @@
     
     scene.uiOverlay = overLay;
     scene.pathDrawer = pathDrawer;
-    scene.enemyMovementPathLength = approximateLength;
     // Present the scene.
     [skView presentScene:sceneToPresent];
 }
