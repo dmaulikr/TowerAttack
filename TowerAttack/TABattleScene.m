@@ -12,7 +12,6 @@
 #import "TAFreezeTower.h"
 #import "TABlastTower.h"
 #import "TAEnemy.h"
-#import "TAPathDrawer.h"
 #import "TAPsychicTower.h"
 #import "TAUIOverlay.h"
 #import "TATowerPurchaseSidebar.h"
@@ -28,46 +27,50 @@ NSInteger const screenWidth = 568;//480;
         self.spawnRefreshCount = 0;
         self.spawnPoint = point;
         self.click = NO;
+        self.position = CGPointMake((point.x - screenWidth / 2) * -1, 0);
         self.towersOnField = [[NSMutableArray alloc] init];
         self.enemiesOnField = [[NSMutableArray alloc] init];
         self.isDraggingTowerPlaceholder = NO;
         self.enemyMovementPath = CGPathCreateCopy(path);
-        self.pathDrawer.alpha = 0;
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.001 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-            self.pathDrawer.alpha = 1;
-            self.position = CGPointMake(0, 0);
-            self.pathDrawerFrame = CGRectMake(0, 0, 1200, 900);
-            CGFloat deltaX = -(1200 / 2 - screenWidth / 2), deltaY = 1;
-            self.position = CGPointMake(self.position.x + deltaX, self.position.y + deltaY);
-            [self.pathDrawer setFrame:CGRectMake(self.pathDrawerFrame.origin.x + deltaX, self.pathDrawerFrame.origin.y - deltaY, self.pathDrawerFrame.size.width,self.pathDrawerFrame.size.height)];
-            self.pathDrawerFrame = CGRectMake(self.pathDrawerFrame.origin.x + deltaX, self.pathDrawerFrame.origin.y - deltaY, self.pathDrawerFrame.size.width,self.pathDrawerFrame.size.height);
-        });
-    
-        SKNode *n = [SKNode node];
-        n.physicsBody = [SKPhysicsBody bodyWithEdgeChainFromPath:CGPathCreateCopyByStrokingPath(self.enemyMovementPath, NULL, 50, kCGLineCapRound, kCGLineJoinRound, 100)];
-        [self addChild:n];
-        n.physicsBody.categoryBitMask = TAContactTypeTower;
-        n.physicsBody.contactTestBitMask = TAContactTypeTower;
-        n.name = @"Path";
-        n.position = CGPointMake(0, -580);
-        n.physicsBody.collisionBitMask = TAContactTypeNothing;
-        
-     /*   SKSpriteNode *node = [SKSpriteNode spriteNodeWithColor:[UIColor colorWithRed:21.0f/255.0f green:115.0f/255.0f blue:3.0f/255.0f alpha:1.0f] size:size];
-        node.zPosition = -1;
-        node.position = CGPointMake(size.width / 2, 0);
-        [self addChild:node];*/
-        
-    //    SKSpriteNode *pathNode = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImage:pathImage]];
-     //   pathNode.size = size;
-   //     [self addChild:pathNode];
         
         SKShapeNode *pathDrawer = [SKShapeNode node];
         pathDrawer.path = CGPathCreateCopyByStrokingPath(self.enemyMovementPath, NULL, 50, kCGLineCapRound, kCGLineJoinRound, 100);
-  //      [self addChild:pathDrawer];
         pathDrawer.position = CGPointMake(0, -580);
         pathDrawer.strokeColor = [SKColor blackColor];
         pathDrawer.fillColor = [UIColor colorWithRed:250.0f/255.0f green:224.0f/255.0f blue:150.0f/255.0f alpha:1.0f];
-        pathDrawer.lineWidth = 1;
+        pathDrawer.position = CGPointMake(0, -580);
+        pathDrawer.lineWidth = 1.5;
+        pathDrawer.zPosition = -1.5;
+        pathDrawer.physicsBody = [SKPhysicsBody bodyWithEdgeChainFromPath:CGPathCreateCopyByStrokingPath(self.enemyMovementPath, NULL, 50, kCGLineCapRound, kCGLineJoinRound, 100)];
+        pathDrawer.physicsBody.categoryBitMask = TAContactTypeTower;
+        pathDrawer.physicsBody.contactTestBitMask = TAContactTypeTower;
+        pathDrawer.name = @"Path";
+        pathDrawer.physicsBody.collisionBitMask = TAContactTypeNothing;
+        [self addChild:pathDrawer];
+        
+        SKShapeNode *pathFill = [SKShapeNode node];
+        pathFill.path = self.enemyMovementPath;
+        pathFill.strokeColor = [UIColor colorWithRed:250.0f/255.0f green:224.0f/255.0f blue:150.0f/255.0f alpha:1.0f];
+        pathFill.lineWidth = 49;
+        pathFill.lineCap = kCGLineCapRound;
+        pathFill.lineJoin = kCGLineJoinRound;
+        pathFill.position = CGPointMake(0, -580);
+        pathFill.zPosition = -1.4;
+        pathFill.blendMode = SKBlendModeAlpha;
+        [self addChild:pathFill];
+        
+        UIGraphicsBeginImageContext(size);
+        CGContextRef c = UIGraphicsGetCurrentContext();
+        CGContextDrawTiledImage(c, CGRectMake(0, 0, 250, 250), [UIImage imageNamed:@"grass14"].CGImage);
+        UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        SKSpriteNode *background = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImage:image] size:CGSizeMake(1200, 900)];
+        background.zPosition = -2;
+        background.alpha = 1;
+        background.blendMode = SKBlendModeReplace;
+        background.position = CGPointMake(600, -130);
+        [self addChild:background];
     }
     return self;
 }
@@ -100,7 +103,7 @@ NSInteger const screenWidth = 568;//480;
         [self.uiOverlay changeNodeOverlayLocation:CGPointMake(0, 0) andHidden:YES];
     }
     else {
-        CGFloat deltaX = [[touches anyObject] locationInNode:self].x - self.lastPoint.x, deltaY = [[touches anyObject] locationInNode:self].y - self.lastPoint.y;
+     /*   CGFloat deltaX = [[touches anyObject] locationInNode:self].x - self.lastPoint.x, deltaY = [[touches anyObject] locationInNode:self].y - self.lastPoint.y;
         if (self.pathDrawerFrame.origin.x + deltaX > 0) {
             deltaX = (CGFloat)self.pathDrawerFrame.origin.x * -1;
         }
@@ -111,14 +114,35 @@ NSInteger const screenWidth = 568;//480;
             deltaY = self.pathDrawerFrame.origin.y;
         }
         else if (self.pathDrawerFrame.origin.y * -1 + deltaY + self.scene.view.frame.size.height >= 900) {
-            deltaY = (900 + self.pathDrawer.frame.origin.y - self.scene.view.frame.size.height);
+            deltaY = (900 + self.pathDrawerFrame.origin.y - self.scene.view.frame.size.height);
         }
         self.position = CGPointMake(self.position.x + deltaX, self.position.y + deltaY);
-        [self.pathDrawer setFrame:CGRectMake(self.pathDrawerFrame.origin.x + deltaX, self.pathDrawerFrame.origin.y - deltaY, self.pathDrawerFrame.size.width,self.pathDrawerFrame.size.height)];
         self.pathDrawerFrame = CGRectMake(self.pathDrawerFrame.origin.x + deltaX, self.pathDrawerFrame.origin.y - deltaY, self.pathDrawerFrame.size.width,self.pathDrawerFrame.size.height);
         if ([self childNodeWithName:@"Placeholder"] != nil) {
             [self.uiOverlay changeNodeOverlayLocation:CGPointMake(self.uiOverlay.lastOverlayLocation.x + deltaX, self.uiOverlay.lastOverlayLocation.y - deltaY)  andHidden:NO];
+        }*/
+        CGFloat deltaX = [[touches anyObject] locationInNode:self].x - self.lastPoint.x, deltaY = [[touches anyObject] locationInNode:self].y - self.lastPoint.y;
+        if (self.position.x + deltaX > 0) {
+            deltaX = (CGFloat)self.position.x * -1;
         }
+        else if (self.position.x * -1 - deltaX + self.scene.view.frame.size.width >= 1200) {
+            deltaX = (1200 + self.position.x - self.scene.view.frame.size.width) * -1;
+            NSLog(@"%f",deltaX);
+        }
+        if (self.position.y + deltaY < 0) {
+            deltaY = self.position.y * -1;
+        }
+        else if (self.position.y + deltaY + self.scene.view.frame.size.height >= 900) {
+            deltaY = 900 - self.position.y - self.scene.view.frame.size.height;
+        }
+        NSLog(@"%f,%f",self.position.x,self.position.y);
+      //  NSLog(@"%f,%f",deltaX,deltaY);
+        self.position = CGPointMake(self.position.x + deltaX, self.position.y + deltaY);
+   //     self.pathDrawerFrame = CGRectMake(self.pathDrawerFrame.origin.x + deltaX, self.pathDrawerFrame.origin.y - deltaY, self.pathDrawerFrame.size.width,self.pathDrawerFrame.size.height);
+        if ([self childNodeWithName:@"Placeholder"] != nil) {
+            [self.uiOverlay changeNodeOverlayLocation:CGPointMake(self.uiOverlay.lastOverlayLocation.x + deltaX, self.uiOverlay.lastOverlayLocation.y - deltaY)  andHidden:NO];
+        }
+        self.lastPoint = [[touches anyObject] locationInNode:self];
     }
 }
 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C0846E61980335500BB3632 /* grass14.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C0846E51980335500BB3632 /* grass14.png */; };
 		2C08A30F1979B786001A2BCF /* TAPsychicTower.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C08A30E1979B786001A2BCF /* TAPsychicTower.m */; };
 		2C08A3131979BAEA001A2BCF /* SpinTower.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C08A3121979BAEA001A2BCF /* SpinTower.png */; };
 		2C6828BD1976CEB2001FEDFA /* Images.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2C6828BC1976CEB2001FEDFA /* Images.atlas */; };
@@ -44,7 +45,6 @@
 		2CE59DFC196B30B900FF3BD4 /* TAEnemy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE59DFB196B30B900FF3BD4 /* TAEnemy.m */; };
 		2CE6ACD4197EADC9006CAB16 /* PsychicDamage.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2CE6ACD2197EADC9006CAB16 /* PsychicDamage.sks */; };
 		2CE6ACD5197EADC9006CAB16 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CE6ACD3197EADC9006CAB16 /* spark.png */; };
-		2CFF781C196C73A70028F4AD /* TAPathDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CFF781B196C73A70028F4AD /* TAPathDrawer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +58,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2C0846E51980335500BB3632 /* grass14.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grass14.png; sourceTree = "<group>"; };
 		2C08A30D1979B786001A2BCF /* TAPsychicTower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPsychicTower.h; sourceTree = "<group>"; };
 		2C08A30E1979B786001A2BCF /* TAPsychicTower.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPsychicTower.m; sourceTree = "<group>"; };
 		2C08A3121979BAEA001A2BCF /* SpinTower.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SpinTower.png; sourceTree = "<group>"; };
@@ -112,8 +113,6 @@
 		2CE59DFB196B30B900FF3BD4 /* TAEnemy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAEnemy.m; sourceTree = "<group>"; };
 		2CE6ACD2197EADC9006CAB16 /* PsychicDamage.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = PsychicDamage.sks; sourceTree = "<group>"; };
 		2CE6ACD3197EADC9006CAB16 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
-		2CFF781A196C73A70028F4AD /* TAPathDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPathDrawer.h; sourceTree = "<group>"; };
-		2CFF781B196C73A70028F4AD /* TAPathDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPathDrawer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,8 +182,6 @@
 		2C6828CF1976F527001FEDFA /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				2CFF781A196C73A70028F4AD /* TAPathDrawer.h */,
-				2CFF781B196C73A70028F4AD /* TAPathDrawer.m */,
 				2CA3D7E1197568630042BB27 /* TATowerPurchaseSidebar.h */,
 				2CA3D7E2197568630042BB27 /* TATowerPurchaseSidebar.m */,
 				2CA3D7D7197422CE0042BB27 /* TATowerInfoPanel.h */,
@@ -247,6 +244,7 @@
 		2CD8D486196B21E200F4BA87 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				2C0846E51980335500BB3632 /* grass14.png */,
 				2C842E9619782FD500C98606 /* Frost.sks */,
 				2C842E941977255100C98606 /* Blast.sks */,
 				2CE6ACD2197EADC9006CAB16 /* PsychicDamage.sks */,
@@ -367,6 +365,7 @@
 				2CD8D49D196B21E200F4BA87 /* Images.xcassets in Resources */,
 				2CA3D7DE197441F90042BB27 /* TowerPlaced.wav in Resources */,
 				2C842E9719782FD500C98606 /* Frost.sks in Resources */,
+				2C0846E61980335500BB3632 /* grass14.png in Resources */,
 				2CE6ACD5197EADC9006CAB16 /* spark.png in Resources */,
 				2C6828BD1976CEB2001FEDFA /* Images.atlas in Resources */,
 				2CE6ACD4197EADC9006CAB16 /* PsychicDamage.sks in Resources */,
@@ -396,7 +395,6 @@
 				2CD8D499196B21E200F4BA87 /* TABattleScene.m in Sources */,
 				2CE59DFC196B30B900FF3BD4 /* TAEnemy.m in Sources */,
 				2CD8D496196B21E200F4BA87 /* TAMainMenuViewController.m in Sources */,
-				2CFF781C196C73A70028F4AD /* TAPathDrawer.m in Sources */,
 				2C08A30F1979B786001A2BCF /* TAPsychicTower.m in Sources */,
 				2CA3D7DC197437400042BB27 /* TAUnit.m in Sources */,
 				2C7E6CBA1977140A0017BE62 /* TAFireballTower.m in Sources */,

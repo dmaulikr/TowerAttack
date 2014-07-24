@@ -10,7 +10,6 @@
 
 @class TANonPassiveTower;
 @class TAUIOverlay;
-@class TAPathDrawer;
 
 extern NSInteger const screenWidth;
 
@@ -33,7 +32,6 @@ typedef enum : uint8_t {
 @property (nonatomic) BOOL isDraggingTowerPlaceholder;
 @property (nonatomic) CGPoint lastPoint;
 @property (strong, nonatomic) TAUIOverlay *uiOverlay;
-@property (strong, nonatomic) TAPathDrawer *pathDrawer;
 @property (nonatomic) CGRect pathDrawerFrame;
 
 -(CGFloat)distanceFromA:(CGPoint)pointA toB:(CGPoint)pointB;

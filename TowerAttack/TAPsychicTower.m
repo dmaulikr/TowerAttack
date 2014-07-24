@@ -37,6 +37,7 @@
     SKEmitterNode *damageNode = [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSBundle mainBundle] pathForResource:@"PsychicDamage" ofType:@"sks"]];
     [enemy addChild:damageNode];
     damageNode.name = @"PsychicDamage";
+    damageNode.position = CGPointMake(0, 15);
     [self.damageNodes addObject:damageNode];
 }
 

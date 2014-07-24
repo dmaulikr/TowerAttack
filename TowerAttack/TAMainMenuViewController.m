@@ -8,7 +8,6 @@
 
 #import "TAMainMenuViewController.h"
 #import "TABattleScene.h"
-#import "TAPathDrawer.h"
 #import "TAUIOverlay.h"
 
 @implementation TAMainMenuViewController
@@ -21,7 +20,6 @@
     SKView * skView = [[SKView alloc] initWithFrame:self.view.frame];//(SKView *)self.view;
     skView.showsFPS = YES;
     skView.showsNodeCount = YES;
-    skView.allowsTransparency = YES;
   //  skView.showsPhysics = YES;
     [skView setBackgroundColor:nil];
     [self.view setBackgroundColor:nil];
@@ -85,9 +83,6 @@
 
     
     CGPathRef newPath = CGPathCreateCopyByStrokingPath(pathToDraw, NULL, 50, kCGLineCapRound, kCGLineJoinRound, 100);
-    
-    TAPathDrawer *pathDrawer = [[TAPathDrawer alloc] initWithFrame:CGRectMake(0, 0, 1200, 900) andPath:newPath];
-    [self.view addSubview:pathDrawer];
     [self.view bringSubviewToFront:skView];
     
     TABattleScene *scene = [[TABattleScene alloc] initWithSize:CGSizeMake(1200, 900) andPath:path andSpawnPoint:CGPointMake(x, self.view.frame.size.height -  y)];
@@ -104,7 +99,6 @@
     [skView addSubview:overLay];
     
     scene.uiOverlay = overLay;
-    scene.pathDrawer = pathDrawer;
     // Present the scene.
     [skView presentScene:sceneToPresent];
 }
