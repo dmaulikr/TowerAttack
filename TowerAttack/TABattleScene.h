@@ -34,6 +34,7 @@ typedef enum : uint8_t {
 @property (strong, nonatomic) TAUIOverlay *uiOverlay;
 @property (nonatomic) CGRect pathDrawerFrame;
 @property (nonatomic) CGFloat scale;
+@property (strong, nonatomic) NSTimer *updateTimer;
 
 -(CGFloat)distanceFromA:(CGPoint)pointA toB:(CGPoint)pointB;
 -(id)initWithSize:(CGSize)size andPath:(CGPathRef)path andSpawnPoint:(CGPoint)point;

@@ -72,6 +72,8 @@ CGFloat const screenWidth = 480; //480
         self.zPosition = 0;
         self.anchorPoint = CGPointMake(0, 0);
         
+        self.updateTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f/30.0f target:self selector:@selector(didSimulatePhysics) userInfo:nil repeats:YES];
+        
     /*    SKSpriteNode *background = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImage:image] size:CGSizeMake(1200, 900)];
         background.zPosition = -2;
         background.alpha = 1;
@@ -351,6 +353,18 @@ CGFloat const screenWidth = 480; //480
     }
     else
         [(SKSpriteNode *)[self childNodeWithName:@"Placeholder"] setColor:[UIColor greenColor]];
+    for (TATower *tower in [self towersOnField]) {
+        for (TAEnemy *enemy in [self enemiesOnField]) {
+            if ([self distanceFromA:tower.position toB:enemy.position] <= tower.attackRadius) {
+                if (![tower.enemiesInRange containsObject:enemy]) {
+                    [tower.enemiesInRange addObject:enemy];
+                    if ([tower.enemiesInRange count] == 1 || tower.isPassive) {
+                        [tower beginAttack];
+                    }
+                }
+            }
+        }
+    }
 }
 
 @end

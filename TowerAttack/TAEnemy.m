@@ -30,11 +30,11 @@
         self.texture = [SKTexture textureWithImageNamed:self.imageName];
         self.name =  [NSString stringWithFormat:@"Enemy %lu", (unsigned long)[self.battleScene.enemiesOnField count]];
         self.size = CGSizeMake(100, 100);
-        self.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:self.size.width / 4];
+     /*   self.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:self.size.width / 4];
         self.physicsBody.dynamic = YES;
         self.physicsBody.contactTestBitMask = TAContactTypeDetector;
         self.physicsBody.categoryBitMask = TAContactTypeEnemy;
-        self.physicsBody.collisionBitMask = TAContactTypeNothing;
+        self.physicsBody.collisionBitMask = TAContactTypeNothing;*/
         
         SKSpriteNode *outsideBar = [SKSpriteNode spriteNodeWithImageNamed:@"Health_Bar_Outside"];
         outsideBar.size = CGSizeMake(35, 5.6);
