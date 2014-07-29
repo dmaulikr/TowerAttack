@@ -31,9 +31,13 @@ extern CGFloat const panelY;
 @property (strong, nonatomic) TATowerPurchaseSidebar *purchaseSidebar;
 @property (nonatomic) BOOL shouldPassTouches;
 @property (nonatomic) CGPoint lastOverlayLocation;
+@property (nonatomic) CGPoint anchorPoint;
+@property (nonatomic) CGFloat lastScale;
+
 
 -(id)initWithFrame:(CGRect)frame;
 -(void)changeNodeOverlayLocation:(CGPoint)point andHidden:(BOOL)hidden;
 -(void)decideTowerPlacementFromButton:(UIButton *)button;
+-(void)userPinchedWithInfo:(UIPinchGestureRecognizer *)listener;
 
 @end

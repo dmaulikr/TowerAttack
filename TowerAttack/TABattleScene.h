@@ -11,7 +11,7 @@
 @class TANonPassiveTower;
 @class TAUIOverlay;
 
-extern NSInteger const screenWidth;
+extern CGFloat const screenWidth;
 
 typedef enum : uint8_t {
     TAContactTypeTower             = 1,
@@ -21,7 +21,7 @@ typedef enum : uint8_t {
     TAContactTypeNothing           = 0
 } TAContactType;
 
-@interface TABattleScene : SKNode <SKPhysicsContactDelegate>
+@interface TABattleScene : SKSpriteNode <SKPhysicsContactDelegate>
 
 @property (strong, nonatomic) NSMutableArray *towersOnField;
 @property (strong, nonatomic) NSMutableArray *enemiesOnField;
@@ -33,6 +33,7 @@ typedef enum : uint8_t {
 @property (nonatomic) CGPoint lastPoint;
 @property (strong, nonatomic) TAUIOverlay *uiOverlay;
 @property (nonatomic) CGRect pathDrawerFrame;
+@property (nonatomic) CGFloat scale;
 
 -(CGFloat)distanceFromA:(CGPoint)pointA toB:(CGPoint)pointB;
 -(id)initWithSize:(CGSize)size andPath:(CGPathRef)path andSpawnPoint:(CGPoint)point;

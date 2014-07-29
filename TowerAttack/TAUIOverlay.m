@@ -38,6 +38,7 @@ CGFloat const panelY = 240;
         self.confirmButton.tag = 0;
         self.cancelButton.tag = 1;
         self.cancelButton.hidden = YES;
+        self.lastScale = 1.0f;
         self.purchaseSidebar = [[TATowerPurchaseSidebar alloc] initWithFrame:CGRectMake(screenWidth - 68, 0, 68, 320)];
         [self addSubview:self.purchaseSidebar];
         [self addSubview:self.cancelButton];
@@ -46,6 +47,9 @@ CGFloat const panelY = 240;
         [self.confirmButton addTarget:self action:@selector(decideTowerPlacementFromButton:) forControlEvents:UIControlEventTouchUpInside];
         self.infoPanel = [[TATowerInfoPanel alloc] initWithFrame:CGRectMake(0, 320, screenWidth, 100)];
         [self addSubview:self.infoPanel];
+        
+        UIPinchGestureRecognizer *pinchListener = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(userPinchedWithInfo:)];
+        [self addGestureRecognizer:pinchListener];
     }
     return self;
 }
@@ -56,8 +60,10 @@ CGFloat const panelY = 240;
         [self.cancelButton setFrame:CGRectMake(point.x + (float)self.selectedNode.size.width / 15.0f, point.y + (float)self.selectedNode.size.width / (1.0f + 2.0f/3.0f), (float)self.selectedNode.size.width / 2.0f, (float)self.selectedNode.size.width / 2.0f)];
         [self.confirmButton setFrame:CGRectMake(point.x - (float)self.selectedNode.size.width / 2.0f, point.y + (float)self.selectedNode.size.width / (1.0f + 2.0f/3.0f), (float)self.selectedNode.size.width / 2.0f, (float)self.selectedNode.size.width / 2.0f)];
     }
-    self.confirmButton.hidden = hidden;
-    self.cancelButton.hidden = hidden;
+    if (self.confirmButton.hidden != hidden) {
+        self.confirmButton.hidden = hidden;
+        self.cancelButton.hidden = hidden;
+    }
     self.lastOverlayLocation = point;
 }
 
@@ -86,7 +92,14 @@ CGFloat const panelY = 240;
         self.shouldPassTouches = NO;
     }
     else {*/
-        [self.battleScene touchesBegan:touches withEvent:event];
+ //   self.lastScale = sca
+    [self.battleScene touchesBegan:touches withEvent:event];    
+     //self.anchorPoint = [self.battleScene.scene convertPoint:[self.battleScene.scene convertPointFromView:[[touches anyObject] locationInView:self]] toNode:self.battleScene];
+    
+  //  NSLog(@"%f %f",self.anchorPoint.x,self.anchorPoint.y);
+    //  CGPoint anchorPoint = CGPointMake(pointInBattleScene.x, pointInBattleScene.y);
+  //  CGPoint originalPoint = [self.battleScene.scene convertPointFromView:[[touches anyObject] locationInView:self]];
+
    // }
 }
 
@@ -105,6 +118,48 @@ CGFloat const panelY = 240;
     else {
         self.shouldPassTouches = YES;
     }*/
+}
+
+-(void)userPinchedWithInfo:(UIPinchGestureRecognizer *)listener
+{
+    CGPoint touchZero = [listener locationOfTouch:0 inView:self], touchOne = [listener locationOfTouch:0 inView:self];
+    if ([listener numberOfTouches] > 1) {
+        touchOne = [listener locationOfTouch:1 inView:self];
+    }
+    CGFloat scale = listener.scale * self.lastScale;
+    CGPoint point = CGPointMake((touchZero.x + touchOne.x) / 2, (touchZero.y + touchOne.y) / 2);
+    if (listener.state == UIGestureRecognizerStateChanged) {
+        if (1200 * scale < screenWidth) {
+            scale = screenWidth / 1200;
+        }
+        [self.battleScene runAction:[SKAction scaleTo:scale duration:0] completion:^{
+            CGPoint newAnchorPoint = [self.battleScene.scene convertPoint:[self.battleScene.scene convertPointFromView:point] toNode:self.battleScene];
+            CGFloat deltaX = newAnchorPoint.x - self.anchorPoint.x, deltaY = newAnchorPoint.y - self.anchorPoint.y;
+            if (self.battleScene.position.x + deltaX > 0) {
+                deltaX = (CGFloat)self.battleScene.position.x * -1;
+            }
+            else if (self.battleScene.position.x * -1 - deltaX + self.frame.size.width >= 1200 * scale) {
+                deltaX = (1200 * scale + self.battleScene.position.x - self.frame.size.width) * -1;
+            }
+            if (self.battleScene.position.y + deltaY > 0) {
+                deltaY = self.battleScene.position.y * -1;
+            }
+            else if ((self.battleScene.position.y + deltaY) * -1 + self.frame.size.height >= 900 * scale) {
+                deltaY = (900 * scale + self.battleScene.position.y - self.frame.size.height) * -1;
+            }
+            self.battleScene.position = CGPointMake(self.battleScene.position.x + deltaX, self.battleScene.position.y + deltaY);
+            self.battleScene.scale = scale;
+     //       CGPoint pointCheck = [self.battleScene.scene convertPoint:[self.battleScene.scene convertPointFromView:point] toNode:self.battleScene];
+     //       NSLog(@"new: %f %f old: %f %f check: %f %f position: %f %f",newAnchorPoint.x,newAnchorPoint.y,self.anchorPoint.x,self.anchorPoint.y, pointCheck.x, pointCheck.y, self.battleScene.position.x, self.battleScene.position.y);
+     //       NSLog(@"%f",scale);
+        }];
+    }
+    else if (listener.state == UIGestureRecognizerStateBegan) {
+        self.anchorPoint = [self.battleScene.scene convertPoint:[self.battleScene.scene convertPointFromView:point] toNode:self.battleScene];
+    }
+    else if (listener.state == UIGestureRecognizerStateEnded) {
+        self.lastScale = scale;
+    }
 }
 
  -(void)setCurrentGold:(NSUInteger)currentGold

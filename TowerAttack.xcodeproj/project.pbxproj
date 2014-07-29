@@ -10,6 +10,9 @@
 		2C0846E61980335500BB3632 /* grass14.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C0846E51980335500BB3632 /* grass14.png */; };
 		2C08A30F1979B786001A2BCF /* TAPsychicTower.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C08A30E1979B786001A2BCF /* TAPsychicTower.m */; };
 		2C08A3131979BAEA001A2BCF /* SpinTower.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C08A3121979BAEA001A2BCF /* SpinTower.png */; };
+		2C28D0C91986946500E9499C /* LevelStripe.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C28D0C81986946500E9499C /* LevelStripe.png */; };
+		2C28D0CC1986CE7500E9499C /* Cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C28D0CA1986CE7500E9499C /* Cancel.png */; };
+		2C28D0CD1986CE7500E9499C /* Confirm.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C28D0CB1986CE7500E9499C /* Confirm.png */; };
 		2C6828BD1976CEB2001FEDFA /* Images.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2C6828BC1976CEB2001FEDFA /* Images.atlas */; };
 		2C6828BF1976D4F8001FEDFA /* FreezeTower.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C6828BE1976D4F8001FEDFA /* FreezeTower.png */; };
 		2C6828C41976D7A5001FEDFA /* BlastTower.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C6828C11976D7A5001FEDFA /* BlastTower.png */; };
@@ -62,6 +65,9 @@
 		2C08A30D1979B786001A2BCF /* TAPsychicTower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPsychicTower.h; sourceTree = "<group>"; };
 		2C08A30E1979B786001A2BCF /* TAPsychicTower.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPsychicTower.m; sourceTree = "<group>"; };
 		2C08A3121979BAEA001A2BCF /* SpinTower.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SpinTower.png; sourceTree = "<group>"; };
+		2C28D0C81986946500E9499C /* LevelStripe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LevelStripe.png; sourceTree = "<group>"; };
+		2C28D0CA1986CE7500E9499C /* Cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cancel.png; sourceTree = "<group>"; };
+		2C28D0CB1986CE7500E9499C /* Confirm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Confirm.png; sourceTree = "<group>"; };
 		2C6828BC1976CEB2001FEDFA /* Images.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Images.atlas; sourceTree = "<group>"; };
 		2C6828BE1976D4F8001FEDFA /* FreezeTower.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FreezeTower.png; sourceTree = "<group>"; };
 		2C6828C11976D7A5001FEDFA /* BlastTower.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BlastTower.png; sourceTree = "<group>"; };
@@ -244,9 +250,12 @@
 		2CD8D486196B21E200F4BA87 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				2C28D0C81986946500E9499C /* LevelStripe.png */,
 				2C0846E51980335500BB3632 /* grass14.png */,
 				2C842E9619782FD500C98606 /* Frost.sks */,
 				2C842E941977255100C98606 /* Blast.sks */,
+				2C28D0CA1986CE7500E9499C /* Cancel.png */,
+				2C28D0CB1986CE7500E9499C /* Confirm.png */,
 				2CE6ACD2197EADC9006CAB16 /* PsychicDamage.sks */,
 				2CE6ACD3197EADC9006CAB16 /* spark.png */,
 				2C6828BE1976D4F8001FEDFA /* FreezeTower.png */,
@@ -361,8 +370,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C842E951977255100C98606 /* Blast.sks in Resources */,
+				2C28D0C91986946500E9499C /* LevelStripe.png in Resources */,
 				2CD8D48A196B21E200F4BA87 /* InfoPlist.strings in Resources */,
+				2C28D0CC1986CE7500E9499C /* Cancel.png in Resources */,
 				2CD8D49D196B21E200F4BA87 /* Images.xcassets in Resources */,
+				2C28D0CD1986CE7500E9499C /* Confirm.png in Resources */,
 				2CA3D7DE197441F90042BB27 /* TowerPlaced.wav in Resources */,
 				2C842E9719782FD500C98606 /* Frost.sks in Resources */,
 				2C0846E61980335500BB3632 /* grass14.png in Resources */,

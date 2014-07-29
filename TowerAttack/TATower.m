@@ -22,7 +22,7 @@ NSInteger const maxTowerLevel = 5;
     if (self == [super initWithLocation:location inScene:sceneParam]) {
         //init code
         
-        _towerLevel = 1;
+        self.towerLevel = 1;
         _attackRadius = 0;
         self.enemiesInRange = [NSMutableArray array];
         self.purchaseCost = 50;
@@ -48,6 +48,7 @@ NSInteger const maxTowerLevel = 5;
         collisionDetection.physicsBody.categoryBitMask = TAContactTypeDetector;
         collisionDetection.physicsBody.collisionBitMask = TAContactTypeNothing;
         collisionDetection.physicsBody.dynamic = NO;
+        collisionDetection.zPosition = 0.4;
         [self.battleScene addChild:collisionDetection];
         [self runAction:[SKAction playSoundFileNamed:@"TowerPlaced.wav" waitForCompletion:NO]];
     }
@@ -87,7 +88,7 @@ NSInteger const maxTowerLevel = 5;
         [self.infoStrings replaceObjectAtIndex:index withObject:[NSString stringWithFormat:@"%gm attack radius",self.attackRadius]];
     }
     NSUInteger ownTowerNumber = [[self.name substringFromIndex:[self.name rangeOfString:@" "].location + 1] integerValue];
-    SKSpriteNode *detector = (SKSpriteNode *)[self.battleScene childNodeWithName:[NSString stringWithFormat:@"Detector %lu", ownTowerNumber]];
+    SKSpriteNode *detector = (SKSpriteNode *)[self.battleScene childNodeWithName:[NSString stringWithFormat:@"Detector %lu", (unsigned long)ownTowerNumber]];
     detector.size = CGSizeMake(attackRadius * 2 + 20, attackRadius * 2 + 20);
     detector.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:attackRadius];
     detector.physicsBody.contactTestBitMask = TAContactTypeEnemy;
@@ -103,6 +104,11 @@ NSInteger const maxTowerLevel = 5;
     if (index != NSNotFound) {
         [self.infoStrings replaceObjectAtIndex:index withObject:[NSString stringWithFormat:@"Level %ld",(long)self.towerLevel]];
     }
+    SKSpriteNode *levelStripe = [SKSpriteNode spriteNodeWithImageNamed:@"LevelStripe"];
+    levelStripe.size = CGSizeMake(15, 7);
+    levelStripe.zPosition = 0.5;
+    levelStripe.position = CGPointMake(20 + self.position.x, self.position.y - 30 + towerLevel * 3);
+    [self.battleScene addChild:levelStripe];
 }
 
 

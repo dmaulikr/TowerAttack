@@ -25,7 +25,7 @@
         self.unitType = @"Enemy";
         self.imageName = @"Goblin";
         [self.infoStrings addObjectsFromArray:[NSArray arrayWithObjects:[NSString stringWithFormat:@"Health: %lu/%lu",(unsigned long)self.currentHealth,(unsigned long)self.maximumHealth], [NSString stringWithFormat:@"Movement Speed: %g",self.movementSpeed * self.speed], nil]];
-        self.zPosition = 0.1;
+        self.zPosition = 0.4;
         
         self.texture = [SKTexture textureWithImageNamed:self.imageName];
         self.name =  [NSString stringWithFormat:@"Enemy %lu", (unsigned long)[self.battleScene.enemiesOnField count]];
@@ -41,7 +41,8 @@
         outsideBar.anchorPoint = CGPointMake(0, 0.5);
         
         self.healthBarInside = [SKSpriteNode spriteNodeWithImageNamed:@"Health_Bar_Inside"];
-        self.healthBarInside.size = CGSizeMake(33.5, 3.8);
+        self.healthBarInside.size = CGSizeMake(33.5, 3.9);
+        self.healthBarInside.zPosition = 0.4;
         self.healthBarInside.position = CGPointMake(self.position.x - 33.5/2, self.position.y + 20);
         self.healthBarInside.anchorPoint = CGPointMake(0, 0.5);
         [self.healthBarInside addChild:outsideBar];
@@ -53,6 +54,12 @@
             [self.battleScene.enemiesOnField removeObject:self];
         }];
         [self.healthBarInside runAction:[[SKAction followPath:self.battleScene.enemyMovementPath asOffset:YES orientToPath:NO speed:self.movementSpeed] reversedAction]];
+     /*   [self runAction:[[SKAction followPath:self.battleScene.enemyMovementPath asOffset:YES orientToPath:YES duration:60] reversedAction] completion:^{
+            self.battleScene.uiOverlay.livesLeft--;
+            [self.battleScene removeChildrenInArray:[NSArray arrayWithObjects:self, self.healthBarInside, nil]];
+            [self.battleScene.enemiesOnField removeObject:self];
+        }];
+        [self.healthBarInside runAction:[[SKAction followPath:self.battleScene.enemyMovementPath asOffset:YES orientToPath:NO duration:60] reversedAction]];*/
     }
     return self;
 }

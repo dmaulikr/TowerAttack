@@ -81,8 +81,6 @@
         CGPathAddCurveToPoint(path, NULL, xC1, 900 - yC1, xC2, 900 - yC2, x,900 -  y);
     }
 
-    
-    CGPathRef newPath = CGPathCreateCopyByStrokingPath(pathToDraw, NULL, 50, kCGLineCapRound, kCGLineJoinRound, 100);
     [self.view bringSubviewToFront:skView];
     
     TABattleScene *scene = [[TABattleScene alloc] initWithSize:CGSizeMake(1200, 900) andPath:path andSpawnPoint:CGPointMake(x, self.view.frame.size.height -  y)];

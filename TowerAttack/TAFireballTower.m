@@ -18,7 +18,6 @@
 -(id)initWithLocation:(CGPoint)location inScene:(TABattleScene *)sceneParam
 {
     if (self == [super initWithLocation:location inScene:sceneParam]) {
-        self.towerLevel = 1;
         self.imageName = @"Tower";
         self.texture = [SKTexture textureWithImageNamed:self.imageName];
      /*   towerStatsForLevel = [[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Game Data" ofType:@"plist"]] objectForKey:@"TowerStatsForLevel"];
@@ -31,7 +30,7 @@
         self.maximumSimultaneouslyAffectedEnemies = 1;
         self.attackRadius = TATowerAttackRadiusFireballTower;
         self.projectileToFire = [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSBundle mainBundle] pathForResource:@"Projectile" ofType:@"sks"]];
-        self.projectileToFire.zPosition = -1;
+        self.projectileToFire.zPosition = 0.6;
         [self addChild:self.projectileToFire];
         self.projectileToFire.hidden = YES;
         [self.infoStrings addObjectsFromArray:[NSArray arrayWithObjects:[NSString stringWithFormat:@"Damage/shot: %ld",(long)self.attackDamage], [NSString stringWithFormat:@"%g shots/second",1.0f/self.timeBetweenAttacks], nil]];
@@ -41,23 +40,38 @@
 
 -(void)fireProjectile
 {
-    TAEnemy *enemy = (TAEnemy *)[self.enemiesInRange firstObject];
-    self.projectileToFire.position = CGPointMake(0, 0);
-    [self.projectileToFire resetSimulation];
-    self.projectileToFire.hidden = NO;
-    [self.projectileToFire runAction:[SKAction moveTo:CGPointMake(enemy.position.x - self.position.x, enemy.position.y - self.position.y)
-                                        duration:[self.battleScene distanceFromA:self.position
+    if ([self.enemiesInRange count] > 0) {
+        TAEnemy *enemy = (TAEnemy *)[self.enemiesInRange firstObject];
+        SKEmitterNode *projectile;
+        BOOL instance;
+        if (self.projectileToFire.hidden == YES) {
+            projectile = self.projectileToFire;
+            instance = NO;
+            projectile.position = CGPointMake(0, 0);
+            [projectile resetSimulation];
+            projectile.hidden = NO;
+        }
+        else {
+            projectile = [self.projectileToFire copyWithZone:NULL];
+            instance = YES;
+        }
+        [projectile runAction:[SKAction moveTo:CGPointMake(enemy.position.x - self.position.x, enemy.position.y - self.position.y)
+                                duration:[self.battleScene distanceFromA:self.position
                                                                              toB:enemy.position]/ (self.projectileSpeed + 50)]
-                     completion:^{
-                         self.projectileToFire.hidden = YES;
-                         [enemy setCurrentHealth:enemy.currentHealth - self.attackDamage];
-                         // NSLog(@"Hit; enemy health = %d",enemy.currentHealth);
-                         if ([enemy currentHealth] <= 0) {
-                             [self.enemiesInRange removeObject:enemy];
-                         }
+                              completion:^{
+                                  projectile.hidden = YES;
+                                  [enemy setCurrentHealth:enemy.currentHealth - self.attackDamage];
+                                  // NSLog(@"Hit; enemy health = %d",enemy.currentHealth);
+                                  if ([enemy currentHealth] <= 0) {
+                                      [self.enemiesInRange removeObject:enemy];
+                                  }
+                                  if (instance) {
+                                      [projectile removeFromParent];
+                                  }
                      }];
-    if ([self.enemiesInRange count] == 0) {
-        [self endAttack];
+        if ([self.enemiesInRange count] == 0) {
+            [self endAttack];
+        }
     }
 }
 

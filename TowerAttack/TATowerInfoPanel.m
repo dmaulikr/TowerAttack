@@ -74,7 +74,7 @@
 {
     if ([_selectedUnit.name characterAtIndex:0] == 'T') {
         NSUInteger towerNumber = [[_selectedUnit.name substringFromIndex:[_selectedUnit.name rangeOfString:@" "].location + 1] integerValue];
-        SKSpriteNode *detector = (SKSpriteNode *)[_selectedUnit.battleScene childNodeWithName:[NSString stringWithFormat:@"Detector %lu", towerNumber]];
+        SKSpriteNode *detector = (SKSpriteNode *)[_selectedUnit.battleScene childNodeWithName:[NSString stringWithFormat:@"Detector %lu", (unsigned long)towerNumber]];
         detector.alpha = 0.0;
     }
     _selectedUnit = selectedUnit;

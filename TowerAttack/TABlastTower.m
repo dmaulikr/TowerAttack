@@ -29,7 +29,7 @@
         self.projectileToFire = [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSBundle mainBundle] pathForResource:@"Blast" ofType:@"sks"]];
         self.normalBirthRateOfProjectile = self.projectileToFire.particleBirthRate;
         self.projectileToFire.particleBirthRate = 0;
-        self.projectileToFire.zPosition = -1;
+        self.projectileToFire.zPosition = 0.6;
         [self addChild:self.projectileToFire];
         [self.infoStrings addObjectsFromArray:[NSArray arrayWithObjects:[NSString stringWithFormat:@"Damage/blast: %ld",(long)self.attackDamage], [NSString stringWithFormat:@"%g blasts/second",1.0f/self.timeBetweenAttacks], nil]];
     }
@@ -38,19 +38,21 @@
 
 -(void)fireProjectile
 {
-    self.projectileToFire.particleBirthRate = self.normalBirthRateOfProjectile;
-    [self performSelector:@selector(turnOffEmitter) withObject:nil afterDelay:0.15];
-    int enemiesToRemove = 0;
-    for (TAEnemy *enemy in [self enemiesInRange]) {
-        enemy.currentHealth -= self.attackDamage;
-        if (enemy.currentHealth <= 0) {
-            [self.enemiesInRange performSelector:@selector(removeObject:) withObject:enemy afterDelay:0.1];
-            enemiesToRemove++;
-           // [self.enemiesInRange removeObject:enemy];
+    if ([self.enemiesInRange count] > 0) {
+        self.projectileToFire.particleBirthRate = self.normalBirthRateOfProjectile;
+        [self performSelector:@selector(turnOffEmitter) withObject:nil afterDelay:0.15];
+        int enemiesToRemove = 0;
+        for (TAEnemy *enemy in [self enemiesInRange]) {
+            enemy.currentHealth -= self.attackDamage;
+            if (enemy.currentHealth <= 0) {
+                [self.enemiesInRange performSelector:@selector(removeObject:) withObject:enemy afterDelay:0.1];
+                enemiesToRemove++;
+                // [self.enemiesInRange removeObject:enemy];
+            }
         }
-    }
-    if ([self.enemiesInRange count] <= enemiesToRemove) {
-        [self endAttack];
+        if ([self.enemiesInRange count] <= enemiesToRemove) {
+            [self endAttack];
+        }
     }
 }
 
