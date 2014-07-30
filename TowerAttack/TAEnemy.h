@@ -19,4 +19,5 @@
 @property (nonatomic, strong) SKSpriteNode *healthBarInside;
 @property (nonatomic) NSUInteger goldReward;
 
+
 @end

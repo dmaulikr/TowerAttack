@@ -20,9 +20,6 @@
     if (self == [super initWithLocation:location inScene:sceneParam]) {
         self.imageName = @"Tower";
         self.texture = [SKTexture textureWithImageNamed:self.imageName];
-     /*   towerStatsForLevel = [[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Game Data" ofType:@"plist"]] objectForKey:@"TowerStatsForLevel"];
-        super.timeBetweenAttacks = [[(NSString *)[towerStatsForLevel objectAtIndex:self.towerLevel-1] substringFromIndex:[(NSString *)[towerStatsForLevel objectAtIndex:self.towerLevel-1] rangeOfString:@" "].location] floatValue];
-        super.attackDamage = [[(NSString *)[towerStatsForLevel objectAtIndex:self.towerLevel-1] substringToIndex:[(NSString *)[towerStatsForLevel objectAtIndex:self.towerLevel-1] rangeOfString:@" "].location] integerValue];*/
         self.projectileSpeed = 400;
         self.size = CGSizeMake(TATowerSizeFireballTower, TATowerSizeFireballTower);
         self.description = (NSString *)[[[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Game Data" ofType:@"plist"]] objectForKey:@"TowerDescriptions"] objectAtIndex:TATowerTypeFireballTower];
@@ -61,7 +58,6 @@
                               completion:^{
                                   projectile.hidden = YES;
                                   [enemy setCurrentHealth:enemy.currentHealth - self.attackDamage];
-                                  // NSLog(@"Hit; enemy health = %d",enemy.currentHealth);
                                   if ([enemy currentHealth] <= 0) {
                                       [self.enemiesInRange removeObject:enemy];
                                   }

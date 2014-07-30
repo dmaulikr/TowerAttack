@@ -47,7 +47,6 @@
             if (enemy.currentHealth <= 0) {
                 [self.enemiesInRange performSelector:@selector(removeObject:) withObject:enemy afterDelay:0.1];
                 enemiesToRemove++;
-                // [self.enemiesInRange removeObject:enemy];
             }
         }
         if ([self.enemiesInRange count] <= enemiesToRemove) {
@@ -60,14 +59,18 @@
 {
     NSUInteger index = [self.infoStrings indexOfObject:[NSString stringWithFormat:@"Damage/blast: %ld",(long)self.attackDamage]];
     [super setAttackDamage:attackDamage];
-    [self.infoStrings replaceObjectAtIndex:index withObject:[NSString stringWithFormat:@"Damage/blast: %ld",(long)self.attackDamage]];
+    if (index != NSNotFound) {
+        [self.infoStrings replaceObjectAtIndex:index withObject:[NSString stringWithFormat:@"Damage/blast: %ld",(long)self.attackDamage]];
+    }
 }
 
 -(void)setTimeBetweenAttacks:(CGFloat)timeBetweenAttacks
 {
     NSUInteger index = [self.infoStrings indexOfObject:[NSString stringWithFormat:@"%g blasts/second",1.0f/self.timeBetweenAttacks]];
     [super setTimeBetweenAttacks:timeBetweenAttacks];
-    [self.infoStrings replaceObjectAtIndex:index withObject:[NSString stringWithFormat:@"%g blasts/second",1.0f/self.timeBetweenAttacks]];
+    if (index != NSNotFound) {
+        [self.infoStrings replaceObjectAtIndex:index withObject:[NSString stringWithFormat:@"%g blasts/second",1.0f/self.timeBetweenAttacks]];
+    }
 }
 
 -(void)setTowerLevel:(NSInteger)towerLevel

@@ -10,6 +10,8 @@
 
 @class TANonPassiveTower;
 @class TAUIOverlay;
+@class TATower;
+@class TAEnemy;
 
 extern CGFloat const screenWidth;
 
@@ -41,5 +43,7 @@ typedef enum : uint8_t {
 -(void)spawnEnemy;
 -(void)addTower;
 -(void)userClickedAtLocation:(UITouch *)touch;
+-(void)contactBeganBetweenTower:(TATower *)tower andEnemy:(TAEnemy *)enemy;
+-(void)contactEndedBetweenTower:(TATower *)tower andEnemy:(TAEnemy *)enemy;
 
 @end

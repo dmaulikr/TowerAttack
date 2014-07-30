@@ -30,11 +30,6 @@
         self.texture = [SKTexture textureWithImageNamed:self.imageName];
         self.name =  [NSString stringWithFormat:@"Enemy %lu", (unsigned long)[self.battleScene.enemiesOnField count]];
         self.size = CGSizeMake(100, 100);
-     /*   self.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:self.size.width / 4];
-        self.physicsBody.dynamic = YES;
-        self.physicsBody.contactTestBitMask = TAContactTypeDetector;
-        self.physicsBody.categoryBitMask = TAContactTypeEnemy;
-        self.physicsBody.collisionBitMask = TAContactTypeNothing;*/
         
         SKSpriteNode *outsideBar = [SKSpriteNode spriteNodeWithImageNamed:@"Health_Bar_Outside"];
         outsideBar.size = CGSizeMake(35, 5.6);
@@ -84,21 +79,11 @@
 -(void)setSpeed:(CGFloat)speed
 {
     NSUInteger index = 0;
-  //  if (speed != 1) {
-        index = [self.infoStrings indexOfObject:[NSString stringWithFormat:@"Movement Speed: %g",self.movementSpeed * self.speed]];
-  /*  }
-    else {
-        index = [self.infoStrings indexOfObject:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"Movement Speed: %g",self.movementSpeed * self.speed] attributes:[NSDictionary dictionaryWithObject:[UIColor blueColor] forKey:NSForegroundColorAttributeName]]];
-    }*/
+    index = [self.infoStrings indexOfObject:[NSString stringWithFormat:@"Movement Speed: %g",self.movementSpeed * self.speed]];
     [super setSpeed:speed];
-//    if (speed == 1) {
     if (index != NSNotFound) {
         [self.infoStrings replaceObjectAtIndex:index withObject:[NSString stringWithFormat:@"Movement Speed: %g",self.movementSpeed * self.speed]];
     }
- /*   }
-    else {
-        [self.infoStrings replaceObjectAtIndex:index withObject:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"Movement Speed: %g",self.movementSpeed * self.speed] attributes:[NSDictionary dictionaryWithObject:[UIColor blueColor] forKey:NSForegroundColorAttributeName]]];
-    }*/
 }
 
 -(void)setMaximumHealth:(CGFloat)maximumHealth
