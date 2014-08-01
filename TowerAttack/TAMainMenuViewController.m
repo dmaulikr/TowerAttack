@@ -17,10 +17,11 @@
     [super viewWillLayoutSubviews];
 
     // Configure the view.
-    SKView * skView = [[SKView alloc] initWithFrame:self.view.frame];//(SKView *)self.view;
+ //   SKView * skView = [[SKView alloc] initWithFrame:self.view.frame];
+    SKView * skView = [[SKView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 320)];
     skView.showsFPS = YES;
     skView.showsNodeCount = YES;
-  //  skView.showsPhysics = YES;
+ //   skView.showsPhysics = YES;
     [skView setBackgroundColor:nil];
     [self.view setBackgroundColor:nil];
     [self.view addSubview:skView];
@@ -85,14 +86,14 @@
     
     TABattleScene *scene = [[TABattleScene alloc] initWithSize:CGSizeMake(1200, 900) andPath:path andSpawnPoint:CGPointMake(x, self.view.frame.size.height -  y)];
     
-    SKScene *sceneToPresent = [SKScene sceneWithSize:self.view.frame.size];
+    SKScene *sceneToPresent = [SKScene sceneWithSize:skView.frame.size];
     [sceneToPresent setBackgroundColor:nil];
     sceneToPresent.physicsWorld.gravity = CGVectorMake(0, 0);
     sceneToPresent.physicsWorld.contactDelegate = scene;
     sceneToPresent.scaleMode = SKSceneScaleModeAspectFill;
     [sceneToPresent addChild:scene];
     
-    TAUIOverlay *overLay = [[TAUIOverlay alloc] initWithFrame:self.view.frame];
+    TAUIOverlay *overLay = [[TAUIOverlay alloc] initWithFrame:skView.frame];
     overLay.battleScene = scene;
     [skView addSubview:overLay];
     

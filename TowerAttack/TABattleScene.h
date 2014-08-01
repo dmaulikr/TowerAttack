@@ -23,6 +23,16 @@ typedef enum : uint8_t {
     TAContactTypeNothing           = 0
 } TAContactType;
 
+enum TANodeZPosition : NSInteger {
+    TANodeZPositionBackground,
+    TANodeZPositionPath,
+    TANodeZPositionTower,
+    TANodeZPositionEnemy,
+    TANodeZPositionProjectile,
+    TANodeZPositionRadius,
+    TANodeZPositionPlaceholder
+};
+
 @interface TABattleScene : SKSpriteNode <SKPhysicsContactDelegate>
 
 @property (strong, nonatomic) NSMutableArray *towersOnField;
@@ -37,6 +47,7 @@ typedef enum : uint8_t {
 @property (nonatomic) CGRect pathDrawerFrame;
 @property (nonatomic) CGFloat scale;
 @property (strong, nonatomic) NSTimer *updateTimer;
+@property (strong, nonatomic) SKSpriteNode *towerRadiusDisplay;
 
 -(CGFloat)distanceFromA:(CGPoint)pointA toB:(CGPoint)pointB;
 -(id)initWithSize:(CGSize)size andPath:(CGPathRef)path andSpawnPoint:(CGPoint)point;
@@ -45,5 +56,6 @@ typedef enum : uint8_t {
 -(void)userClickedAtLocation:(UITouch *)touch;
 -(void)contactBeganBetweenTower:(TATower *)tower andEnemy:(TAEnemy *)enemy;
 -(void)contactEndedBetweenTower:(TATower *)tower andEnemy:(TAEnemy *)enemy;
+-(void)removeTower:(TATower *)tower;
 
 @end

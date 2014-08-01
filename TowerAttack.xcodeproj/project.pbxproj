@@ -10,6 +10,13 @@
 		2C0846E61980335500BB3632 /* grass14.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C0846E51980335500BB3632 /* grass14.png */; };
 		2C08A30F1979B786001A2BCF /* TAPsychicTower.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C08A30E1979B786001A2BCF /* TAPsychicTower.m */; };
 		2C08A3131979BAEA001A2BCF /* SpinTower.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C08A3121979BAEA001A2BCF /* SpinTower.png */; };
+		2C0D102C198AD7E200795828 /* TAInfoPopUp.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C0D102B198AD7E200795828 /* TAInfoPopUp.m */; };
+		2C0D102F198BDCF600795828 /* TALabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C0D102E198BDCF600795828 /* TALabel.m */; };
+		2C0D1031198BDF3300795828 /* coin.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C0D1030198BDF3300795828 /* coin.png */; };
+		2C0D1035198BE22A00795828 /* coin1.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C0D1034198BE22A00795828 /* coin1.png */; };
+		2C0D1037198BE62700795828 /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C0D1036198BE62700795828 /* heart.png */; };
+		2C0D1039198BE82900795828 /* coin2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C0D1038198BE82900795828 /* coin2.png */; };
+		2C0D103D198C063A00795828 /* TAButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C0D103C198C063A00795828 /* TAButton.m */; };
 		2C28D0C91986946500E9499C /* LevelStripe.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C28D0C81986946500E9499C /* LevelStripe.png */; };
 		2C28D0CC1986CE7500E9499C /* Cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C28D0CA1986CE7500E9499C /* Cancel.png */; };
 		2C28D0CD1986CE7500E9499C /* Confirm.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C28D0CB1986CE7500E9499C /* Confirm.png */; };
@@ -51,6 +58,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		2C0D1028198AA29800795828 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2CD8D472196B21E100F4BA87 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2CD8D479196B21E100F4BA87;
+			remoteInfo = TowerAttack;
+		};
 		2CD8D4A7196B21E200F4BA87 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2CD8D472196B21E100F4BA87 /* Project object */;
@@ -65,6 +79,16 @@
 		2C08A30D1979B786001A2BCF /* TAPsychicTower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPsychicTower.h; sourceTree = "<group>"; };
 		2C08A30E1979B786001A2BCF /* TAPsychicTower.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPsychicTower.m; sourceTree = "<group>"; };
 		2C08A3121979BAEA001A2BCF /* SpinTower.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SpinTower.png; sourceTree = "<group>"; };
+		2C0D102A198AD7E200795828 /* TAInfoPopUp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAInfoPopUp.h; sourceTree = "<group>"; };
+		2C0D102B198AD7E200795828 /* TAInfoPopUp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAInfoPopUp.m; sourceTree = "<group>"; };
+		2C0D102D198BDCF600795828 /* TALabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TALabel.h; sourceTree = "<group>"; };
+		2C0D102E198BDCF600795828 /* TALabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TALabel.m; sourceTree = "<group>"; };
+		2C0D1030198BDF3300795828 /* coin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coin.png; sourceTree = "<group>"; };
+		2C0D1034198BE22A00795828 /* coin1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coin1.png; sourceTree = "<group>"; };
+		2C0D1036198BE62700795828 /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart.png; sourceTree = "<group>"; };
+		2C0D1038198BE82900795828 /* coin2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coin2.png; sourceTree = "<group>"; };
+		2C0D103B198C063A00795828 /* TAButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAButton.h; sourceTree = "<group>"; };
+		2C0D103C198C063A00795828 /* TAButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAButton.m; sourceTree = "<group>"; };
 		2C28D0C81986946500E9499C /* LevelStripe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LevelStripe.png; sourceTree = "<group>"; };
 		2C28D0CA1986CE7500E9499C /* Cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cancel.png; sourceTree = "<group>"; };
 		2C28D0CB1986CE7500E9499C /* Confirm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Confirm.png; sourceTree = "<group>"; };
@@ -146,6 +170,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C0D103A198C062200795828 /* Custom Views */ = {
+			isa = PBXGroup;
+			children = (
+				2C0D102D198BDCF600795828 /* TALabel.h */,
+				2C0D102E198BDCF600795828 /* TALabel.m */,
+				2C0D103B198C063A00795828 /* TAButton.h */,
+				2C0D103C198C063A00795828 /* TAButton.m */,
+			);
+			name = "Custom Views";
+			sourceTree = "<group>";
+		};
 		2C6828CC1976F4AE001FEDFA /* Units */ = {
 			isa = PBXGroup;
 			children = (
@@ -188,6 +223,9 @@
 		2C6828CF1976F527001FEDFA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2C0D103A198C062200795828 /* Custom Views */,
+				2C0D102A198AD7E200795828 /* TAInfoPopUp.h */,
+				2C0D102B198AD7E200795828 /* TAInfoPopUp.m */,
 				2CA3D7E1197568630042BB27 /* TATowerPurchaseSidebar.h */,
 				2CA3D7E2197568630042BB27 /* TATowerPurchaseSidebar.m */,
 				2CA3D7D7197422CE0042BB27 /* TATowerInfoPanel.h */,
@@ -250,7 +288,11 @@
 		2CD8D486196B21E200F4BA87 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				2C0D1036198BE62700795828 /* heart.png */,
+				2C0D1034198BE22A00795828 /* coin1.png */,
+				2C0D1038198BE82900795828 /* coin2.png */,
 				2C28D0C81986946500E9499C /* LevelStripe.png */,
+				2C0D1030198BDF3300795828 /* coin.png */,
 				2C0846E51980335500BB3632 /* grass14.png */,
 				2C842E9619782FD500C98606 /* Frost.sks */,
 				2C842E941977255100C98606 /* Blast.sks */,
@@ -322,6 +364,7 @@
 			);
 			dependencies = (
 				2CD8D4A8196B21E200F4BA87 /* PBXTargetDependency */,
+				2C0D1029198AA29800795828 /* PBXTargetDependency */,
 			);
 			name = TowerAttackTests;
 			productName = TowerAttackTests;
@@ -371,6 +414,7 @@
 			files = (
 				2C842E951977255100C98606 /* Blast.sks in Resources */,
 				2C28D0C91986946500E9499C /* LevelStripe.png in Resources */,
+				2C0D1031198BDF3300795828 /* coin.png in Resources */,
 				2CD8D48A196B21E200F4BA87 /* InfoPlist.strings in Resources */,
 				2C28D0CC1986CE7500E9499C /* Cancel.png in Resources */,
 				2CD8D49D196B21E200F4BA87 /* Images.xcassets in Resources */,
@@ -378,9 +422,12 @@
 				2CA3D7DE197441F90042BB27 /* TowerPlaced.wav in Resources */,
 				2C842E9719782FD500C98606 /* Frost.sks in Resources */,
 				2C0846E61980335500BB3632 /* grass14.png in Resources */,
+				2C0D1035198BE22A00795828 /* coin1.png in Resources */,
 				2CE6ACD5197EADC9006CAB16 /* spark.png in Resources */,
+				2C0D1037198BE62700795828 /* heart.png in Resources */,
 				2C6828BD1976CEB2001FEDFA /* Images.atlas in Resources */,
 				2CE6ACD4197EADC9006CAB16 /* PsychicDamage.sks in Resources */,
+				2C0D1039198BE82900795828 /* coin2.png in Resources */,
 				2C08A3131979BAEA001A2BCF /* SpinTower.png in Resources */,
 				2CD8D493196B21E200F4BA87 /* Main.storyboard in Resources */,
 				2C6828C41976D7A5001FEDFA /* BlastTower.png in Resources */,
@@ -408,6 +455,7 @@
 				2CE59DFC196B30B900FF3BD4 /* TAEnemy.m in Sources */,
 				2CD8D496196B21E200F4BA87 /* TAMainMenuViewController.m in Sources */,
 				2C08A30F1979B786001A2BCF /* TAPsychicTower.m in Sources */,
+				2C0D102F198BDCF600795828 /* TALabel.m in Sources */,
 				2CA3D7DC197437400042BB27 /* TAUnit.m in Sources */,
 				2C7E6CBA1977140A0017BE62 /* TAFireballTower.m in Sources */,
 				2CD8D490196B21E200F4BA87 /* AppDelegate.m in Sources */,
@@ -417,7 +465,9 @@
 				2CA3D7D9197422CE0042BB27 /* TATowerInfoPanel.m in Sources */,
 				2C6ECC6A196DC9BC00053238 /* TAUIOverlay.m in Sources */,
 				2C6828C81976F47B001FEDFA /* TAFreezeTower.m in Sources */,
+				2C0D102C198AD7E200795828 /* TAInfoPopUp.m in Sources */,
 				2CD8D48C196B21E200F4BA87 /* main.m in Sources */,
+				2C0D103D198C063A00795828 /* TAButton.m in Sources */,
 				2CE59DF7196B2A6500FF3BD4 /* TANonPassiveTower.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -433,6 +483,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		2C0D1029198AA29800795828 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2CD8D479196B21E100F4BA87 /* TowerAttack */;
+			targetProxy = 2C0D1028198AA29800795828 /* PBXContainerItemProxy */;
+		};
 		2CD8D4A8196B21E200F4BA87 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 2CD8D479196B21E100F4BA87 /* TowerAttack */;
@@ -548,6 +603,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TowerAttack/TowerAttack-Prefix.pch";
 				INFOPLIST_FILE = "TowerAttack/TowerAttack-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8;
+				IS_IOS_8 = "";
+				"IS_IOS_8[sdk=iphoneos*]" = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
@@ -565,6 +623,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TowerAttack/TowerAttack-Prefix.pch";
 				INFOPLIST_FILE = "TowerAttack/TowerAttack-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8;
+				IS_IOS_8 = "";
+				"IS_IOS_8[sdk=iphoneos*]" = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;

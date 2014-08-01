@@ -46,6 +46,7 @@ enum TATowerLevelDataStatPosition : NSInteger {
 
 @property (nonatomic) CGFloat attackRadius;
 @property (nonatomic, strong) NSMutableArray *enemiesInRange;
+@property (nonatomic, strong) NSMutableArray *levelStripes;
 @property (nonatomic) NSUInteger purchaseCost;
 @property (nonatomic) NSInteger towerLevel;
 @property (nonatomic) BOOL isPassive;

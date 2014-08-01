@@ -14,6 +14,7 @@
 @class TATowerInfoPanel;
 @class TAUnit;
 @class TATowerPurchaseSidebar;
+@class TALabel;
 
 extern CGFloat const panelY;
 
@@ -24,7 +25,7 @@ extern CGFloat const panelY;
 @property (strong, nonatomic) SKSpriteNode *selectedNode;
 @property (nonatomic) NSUInteger currentGold;
 @property (nonatomic) NSInteger livesLeft;
-@property (strong, nonatomic) UILabel *displayLabel;
+@property (strong, nonatomic) TALabel *displayLabel;
 @property (strong, nonatomic) UIButton *cancelButton;
 @property (strong, nonatomic) UIButton *confirmButton;
 @property (strong, nonatomic) TATowerInfoPanel *infoPanel;

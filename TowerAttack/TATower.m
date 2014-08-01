@@ -22,37 +22,30 @@ NSInteger const maxTowerLevel = 5;
     if (self == [super initWithLocation:location inScene:sceneParam]) {
         //init code
         
-        self.towerLevel = 1;
         _attackRadius = 0;
         self.enemiesInRange = [NSMutableArray array];
         self.purchaseCost = 50;
         self.isPassive = YES;
         [self.infoStrings addObjectsFromArray:[NSArray arrayWithObjects:[NSString stringWithFormat:@"Level %ld",(long)self.towerLevel], [NSString stringWithFormat:@"%gm attack radius",self.attackRadius], nil]];
+        self.levelStripes = [NSMutableArray array];
+        self.towerLevel = 1;
         self.name =  [NSString stringWithFormat:@"Tower %lu", (unsigned long)[self.battleScene.towersOnField count]];
         
-        self.zPosition = 0.1;
+        self.zPosition = TANodeZPositionTower;
         self.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:(self.size.width - 4) / 2];
         self.physicsBody.contactTestBitMask = TAContactTypeEnemy;
         self.physicsBody.categoryBitMask = TAContactTypeTower;
         self.physicsBody.collisionBitMask = TAContactTypeNothing;
         self.physicsBody.dynamic = NO;
         
-        SKSpriteNode *collisionDetection = [SKSpriteNode spriteNodeWithImageNamed:@"TowerRadius"];
-   //     collisionDetection.size = CGSizeMake(self.attackRadius * 2, self.attackRadius * 2);
-        collisionDetection.alpha = 0.0;
-   //     collisionDetection.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:self.attackRadius];
-        collisionDetection.name = [NSString stringWithFormat:@"Detector %lu", (unsigned long)[self.battleScene.towersOnField count]];
-        collisionDetection.position = self.position;
-        collisionDetection.anchorPoint = CGPointMake(0.5, 0.5);
-        collisionDetection.physicsBody.contactTestBitMask = TAContactTypeEnemy;
-        collisionDetection.physicsBody.categoryBitMask = TAContactTypeDetector;
-        collisionDetection.physicsBody.collisionBitMask = TAContactTypeNothing;
-        collisionDetection.physicsBody.dynamic = NO;
-        collisionDetection.zPosition = 0.4;
-        [self.battleScene addChild:collisionDetection];
         [self runAction:[SKAction playSoundFileNamed:@"TowerPlaced.wav" waitForCompletion:NO]];
     }
     return self;
+}
+
+-(instancetype)init
+{
+   return [self initWithLocation:CGPointMake(0, 0) inScene:nil];
 }
 
 -(void)beginAttack
@@ -87,14 +80,7 @@ NSInteger const maxTowerLevel = 5;
     if (index != NSNotFound) {
         [self.infoStrings replaceObjectAtIndex:index withObject:[NSString stringWithFormat:@"%gm attack radius",self.attackRadius]];
     }
-    NSUInteger ownTowerNumber = [[self.name substringFromIndex:[self.name rangeOfString:@" "].location + 1] integerValue];
-    SKSpriteNode *detector = (SKSpriteNode *)[self.battleScene childNodeWithName:[NSString stringWithFormat:@"Detector %lu", (unsigned long)ownTowerNumber]];
-    detector.size = CGSizeMake(attackRadius * 2 + 20, attackRadius * 2 + 20);
-    detector.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:attackRadius];
-    detector.physicsBody.contactTestBitMask = TAContactTypeEnemy;
-    detector.physicsBody.categoryBitMask = TAContactTypeDetector;
-    detector.physicsBody.collisionBitMask = TAContactTypeNothing;
-    detector.physicsBody.dynamic = NO;
+    self.battleScene.towerRadiusDisplay.size = CGSizeMake(attackRadius * 2 + 25, attackRadius * 2 + 25);
 }
 
 -(void)setTowerLevel:(NSInteger)towerLevel
@@ -106,9 +92,10 @@ NSInteger const maxTowerLevel = 5;
     }
     SKSpriteNode *levelStripe = [SKSpriteNode spriteNodeWithImageNamed:@"LevelStripe"];
     levelStripe.size = CGSizeMake(15, 7);
-    levelStripe.zPosition = 0.5;
+    levelStripe.zPosition = TANodeZPositionTower;
     levelStripe.position = CGPointMake(20 + self.position.x, self.position.y - 30 + towerLevel * 3);
     [self.battleScene addChild:levelStripe];
+    [self.levelStripes addObject:levelStripe];
 }
 
 

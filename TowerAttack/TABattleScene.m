@@ -15,6 +15,7 @@
 #import "TAPsychicTower.h"
 #import "TAUIOverlay.h"
 #import "TATowerPurchaseSidebar.h"
+#import "TAInfoPopUp.h"
 
 CGFloat const screenWidth = 568; //480
 
@@ -34,13 +35,17 @@ CGFloat const screenWidth = 568; //480
         self.enemyMovementPath = CGPathCreateCopy(path);
         self.size = size;
         self.scale = 1.0f;
+        self.towerRadiusDisplay = [SKSpriteNode spriteNodeWithImageNamed:@"TowerRadius"];
+        self.towerRadiusDisplay.alpha = 0.0;
+        self.towerRadiusDisplay.zPosition = TANodeZPositionRadius;
+        [self addChild:self.towerRadiusDisplay];
         
         SKShapeNode *pathDrawer = [SKShapeNode node];
         pathDrawer.path = CGPathCreateCopyByStrokingPath(self.enemyMovementPath, NULL, 50, kCGLineCapRound, kCGLineJoinRound, 100);
         pathDrawer.strokeColor = [SKColor blackColor];
         pathDrawer.fillColor = [UIColor colorWithRed:250.0f/255.0f green:224.0f/255.0f blue:150.0f/255.0f alpha:1.0f];
         pathDrawer.lineWidth = 1.5;
-        pathDrawer.zPosition = 0.2;
+        pathDrawer.zPosition = TANodeZPositionPath;
         pathDrawer.physicsBody = [SKPhysicsBody bodyWithEdgeChainFromPath:CGPathCreateCopyByStrokingPath(self.enemyMovementPath, NULL, 50, kCGLineCapRound, kCGLineJoinRound, 100)];
         pathDrawer.physicsBody.categoryBitMask = TAContactTypeTower;
         pathDrawer.physicsBody.contactTestBitMask = TAContactTypeTower;
@@ -52,9 +57,16 @@ CGFloat const screenWidth = 568; //480
         pathFill.path = self.enemyMovementPath;
         pathFill.strokeColor = [UIColor colorWithRed:250.0f/255.0f green:224.0f/255.0f blue:150.0f/255.0f alpha:1.0f];
         pathFill.lineWidth = 49;
+        
+        
+#ifdef IS_IOS_8
+        
         pathFill.lineCap = kCGLineCapRound;
         pathFill.lineJoin = kCGLineJoinRound;
-        pathFill.zPosition = 0.3;
+        
+#endif
+        
+        pathFill.zPosition = TANodeZPositionPath;
         [self addChild:pathFill];
         
         
@@ -65,7 +77,7 @@ CGFloat const screenWidth = 568; //480
         UIGraphicsEndImageContext();
         
         self.texture = [SKTexture textureWithImage:image];
-        self.zPosition = 0;
+        self.zPosition = TANodeZPositionBackground;
         self.anchorPoint = CGPointMake(0, 0);
         
         self.updateTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f/30.0f target:self selector:@selector(didSimulatePhysics) userInfo:nil repeats:YES];
@@ -92,12 +104,14 @@ CGFloat const screenWidth = 568; //480
     self.click = NO;
     [self.uiOverlay changeNodeOverlayLocation:CGPointMake(self.uiOverlay.lastOverlayLocation.x, self.uiOverlay.lastOverlayLocation.y) andHidden:YES];
     if (self.isDraggingTowerPlaceholder) {
-        [[self childNodeWithName:@"Placeholder"] setPosition:[[touches anyObject] locationInNode:self]];
-        if ([[[(SKSpriteNode *)[self childNodeWithName:@"Placeholder"] physicsBody] allContactedBodies] count] > 0 || self.uiOverlay.currentGold < 50) {
-            [(SKSpriteNode *)[self childNodeWithName:@"Placeholder"] setColor:[UIColor redColor]];
+        SKSpriteNode *placeholder = (SKSpriteNode *)[self childNodeWithName:@"Placeholder"];
+        [placeholder setPosition:[[touches anyObject] locationInNode:self]];
+        [self.towerRadiusDisplay setPosition:[[touches anyObject] locationInNode:self]];
+        if ([[[placeholder physicsBody] allContactedBodies] count] > 0 || self.uiOverlay.currentGold < 50) {
+            [placeholder setColor:[UIColor redColor]];
         }
         else
-            [(SKSpriteNode *)[self childNodeWithName:@"Placeholder"] setColor:[UIColor greenColor]];
+            [placeholder setColor:[UIColor greenColor]];
     }
     else {
         CGFloat deltaX = ([[touches anyObject] locationInNode:self].x - self.lastPoint.x) * self.scale, deltaY = ([[touches anyObject] locationInNode:self].y - self.lastPoint.y) * self.scale;
@@ -129,7 +143,7 @@ CGFloat const screenWidth = 568; //480
     else if (self.isDraggingTowerPlaceholder) {
         [self.uiOverlay changeNodeOverlayLocation:[[touches anyObject] locationInView:self.uiOverlay] andHidden:NO];
     }
-    else if ([self childNodeWithName:@"Placeholder"] != nil && self.uiOverlay.cancelButton.hidden) {
+    else if ([self childNodeWithName:@"Placeholder"] != nil && self.uiOverlay.cancelButton.alpha == 0) {
         [self.uiOverlay changeNodeOverlayLocation:CGPointMake(self.uiOverlay.lastOverlayLocation.x, self.uiOverlay.lastOverlayLocation.y)  andHidden:NO];
     }
     self.isDraggingTowerPlaceholder = NO;
@@ -140,7 +154,7 @@ CGFloat const screenWidth = 568; //480
     SKNode *nodeTouched = [SKNode node];
     if ([[self nodesAtPoint:[touch locationInNode:self]] count] > 1) {
         for (SKNode *n in [self nodesAtPoint:[touch locationInNode:self]]) {
-            if (([n.name characterAtIndex:0] == 'E' && [nodeTouched.name characterAtIndex:0] != 'T') || ([n.name characterAtIndex:0] == 'T' && [self distanceFromA:n.position toB:[touch locationInNode:self]] <= [(SKSpriteNode *)n size].width)) {
+            if (([n.name characterAtIndex:0] == 'E' && [nodeTouched.name characterAtIndex:0] != 'T' && [nodeTouched.name characterAtIndex:0] != 'P') || ([n.name characterAtIndex:0] == 'T' && [self distanceFromA:n.position toB:[touch locationInNode:self]] <= [(SKSpriteNode *)n size].width  && [nodeTouched.name characterAtIndex:0] != 'P') || [n.name characterAtIndex:0] == 'P') {
                 nodeTouched = n;
             }
         }
@@ -150,13 +164,14 @@ CGFloat const screenWidth = 568; //480
     }
     if ([[nodeTouched name] characterAtIndex:0] == 'E') {
         self.uiOverlay.selectedUnit = (TAEnemy *)nodeTouched;
+        self.towerRadiusDisplay.alpha = 0.0;
     }
     else if ([[nodeTouched name] characterAtIndex:0] == 'T') {
         TATower *tower = (TATower *)nodeTouched;
         self.uiOverlay.selectedUnit = tower;
-        NSUInteger towerNumber = [[tower.name substringFromIndex:[tower.name rangeOfString:@" "].location + 1] integerValue];
-        SKSpriteNode *detector = (SKSpriteNode *)[self childNodeWithName:[NSString stringWithFormat:@"Detector %lu", (unsigned long)towerNumber]];
-        detector.alpha = 0.7;
+        self.towerRadiusDisplay.size = CGSizeMake(tower.attackRadius * 2 + 25, tower.attackRadius * 2 + 25);
+        self.towerRadiusDisplay.position = tower.position;
+        self.towerRadiusDisplay.alpha = 0.7;
     }
     else {
         self.uiOverlay.selectedUnit = nil;
@@ -197,21 +212,22 @@ CGFloat const screenWidth = 568; //480
             towerPlaceHolder.colorBlendFactor = 0.5;
             towerPlaceHolder.name = @"Placeholder";
             towerPlaceHolder.position = [touch locationInNode:self];
-            towerPlaceHolder.zPosition = 0.4;
+            towerPlaceHolder.zPosition = TANodeZPositionPlaceholder;
             towerPlaceHolder.physicsBody.collisionBitMask = TAContactTypeNothing;
             towerPlaceHolder.physicsBody.contactTestBitMask = TAContactTypeTower;
             towerPlaceHolder.physicsBody.categoryBitMask = TAContactTypeTower;
             towerPlaceHolder.physicsBody.dynamic = YES;
             
-            SKSpriteNode *detectorPlaceholder = [SKSpriteNode spriteNodeWithImageNamed:@"TowerRadius"];
-            detectorPlaceholder.size = detectorSize;
-            detectorPlaceholder.alpha = 0.7;
-            detectorPlaceholder.zPosition = 0.4;
-            [towerPlaceHolder addChild:detectorPlaceholder];
+            self.towerRadiusDisplay.size = detectorSize;
+            self.towerRadiusDisplay.position = towerPlaceHolder.position;
+            self.towerRadiusDisplay.alpha = 0.7;
             
             [self addChild:towerPlaceHolder];
             self.uiOverlay.selectedNode = towerPlaceHolder;
             self.uiOverlay.purchaseSidebar.selectedTowerType = TATowerTypeNoTower;
+            [UIView animateWithDuration:0.2 animations:^{
+                self.uiOverlay.purchaseSidebar.infoPopUp.alpha = 0.0;
+            }];
             [self.uiOverlay changeNodeOverlayLocation:[touch locationInView:self.uiOverlay] andHidden:NO];
             for (UIButton *b in self.uiOverlay.purchaseSidebar.towerIcons) {
                 b.selected = NO;
@@ -223,6 +239,9 @@ CGFloat const screenWidth = 568; //480
             else {
                 towerPlaceHolder.color = [UIColor greenColor];
             }
+        }
+        else if ([nodeTouched.name characterAtIndex:0] != 'P') {
+            self.towerRadiusDisplay.alpha = 0.0;
         }
     }
 }
@@ -286,6 +305,13 @@ CGFloat const screenWidth = 568; //480
     }
 }
 
+-(void)removeTower:(TATower *)tower
+{
+    [self.towersOnField removeObject:tower];
+    [tower removeFromParent];
+    [self removeChildrenInArray:tower.levelStripes];
+}
+
 -(void)spawnEnemy
 {
     TAEnemy *enemy = [[TAEnemy alloc] initWithLocation:self.spawnPoint inScene:self];
@@ -300,15 +326,21 @@ CGFloat const screenWidth = 568; //480
     }
     else
         [(SKSpriteNode *)[self childNodeWithName:@"Placeholder"] setColor:[UIColor greenColor]];
-    for (TATower *tower in [self towersOnField]) {
-        for (TAEnemy *enemy in [self enemiesOnField]) {
-            if ([self distanceFromA:tower.position toB:enemy.position] <= tower.attackRadius && ![tower.enemiesInRange containsObject:enemy]) {
-                [self contactBeganBetweenTower:tower andEnemy:enemy];
-            }
-            else if ([self distanceFromA:tower.position toB:enemy.position] > tower.attackRadius && [tower.enemiesInRange containsObject:enemy]) {
-                [self contactEndedBetweenTower:tower andEnemy:enemy];
+    @try {
+        for (TATower *tower in [self towersOnField]) {
+            for (TAEnemy *enemy in [self enemiesOnField]) {
+                if ([self distanceFromA:tower.position toB:enemy.position] - 20 <= tower.attackRadius && ![tower.enemiesInRange containsObject:enemy]) {
+                    [self contactBeganBetweenTower:tower andEnemy:enemy];
+                }
+                else if ([self distanceFromA:tower.position toB:enemy.position] - 20 > tower.attackRadius && [tower.enemiesInRange containsObject:enemy]) {
+                    [self contactEndedBetweenTower:tower andEnemy:enemy];
+                }
             }
         }
+
+    }
+    @catch (NSException *exception) {
+        NSLog(@"%@",exception);
     }
 }
 

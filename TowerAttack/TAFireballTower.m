@@ -27,7 +27,7 @@
         self.maximumSimultaneouslyAffectedEnemies = 1;
         self.attackRadius = TATowerAttackRadiusFireballTower;
         self.projectileToFire = [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSBundle mainBundle] pathForResource:@"Projectile" ofType:@"sks"]];
-        self.projectileToFire.zPosition = 0.6;
+        self.projectileToFire.zPosition = TANodeZPositionProjectile - TANodeZPositionTower;
         [self addChild:self.projectileToFire];
         self.projectileToFire.hidden = YES;
         [self.infoStrings addObjectsFromArray:[NSArray arrayWithObjects:[NSString stringWithFormat:@"Damage/shot: %ld",(long)self.attackDamage], [NSString stringWithFormat:@"%g shots/second",1.0f/self.timeBetweenAttacks], nil]];

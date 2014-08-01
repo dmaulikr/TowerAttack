@@ -26,8 +26,8 @@
         self.description = (NSString *)[[[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Game Data" ofType:@"plist"]] objectForKey:@"TowerDescriptions"] objectAtIndex:TATowerTypeFreezeTower];
         _speedMultiplier = 0.5;
         SKEmitterNode *frost = [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSBundle mainBundle] pathForResource:@"Frost" ofType:@"sks"]];
-        frost.zPosition = 0.4;
-        self.zPosition = 0.5;
+        frost.zPosition = TANodeZPositionProjectile - TANodeZPositionTower;
+      //  self.zPosition = TANodeZPositionTower;
         [self addChild:frost];
         [self.infoStrings addObject:[NSString stringWithFormat:@"Speed of all enemies within range decreased by factor of %g",1.0f / self.speedMultiplier]];
     }

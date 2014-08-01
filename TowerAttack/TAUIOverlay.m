@@ -12,6 +12,7 @@
 #import "TATowerInfoPanel.h"
 #import "TAUnit.h"
 #import "TATowerPurchaseSidebar.h"
+#import "TALabel.h"
 
 CGFloat const panelY = 240;
 
@@ -23,21 +24,26 @@ CGFloat const panelY = 240;
     if (self) {
         // Initialization code
         self.backgroundColor = [UIColor clearColor];
-        self.displayLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 5, 200, 60)];
+        self.displayLabel = [[TALabel alloc] initWithFrame:CGRectMake(15, 5, 30, 60) andFontSize:20];
+        self.displayLabel.textAlignment = NSTextAlignmentRight;
+        [self addSubview:self.displayLabel];
+        UIImageView *heart = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"heart"]];
+        heart.frame = CGRectMake(50, 39, 16, 16);
+        [self addSubview:heart];
+        UIImageView *coin = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"coin2"]];
+        coin.frame = CGRectMake(50, 16, 16, 16);
+        [self addSubview:coin];
         self.livesLeft = 10;
         self.shouldPassTouches = YES;
-        [self.displayLabel setFont:[UIFont fontWithName:@"Cochin" size:15]];
-        self.displayLabel.numberOfLines = 2;
-        [self addSubview:self.displayLabel];
-        _currentGold = 100;
+        self.currentGold = 100;
         self.cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [self.cancelButton setImage:[UIImage imageNamed:@"Cancel"] forState:UIControlStateNormal];
         self.confirmButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [self.confirmButton setImage:[UIImage imageNamed:@"Confirm"] forState:UIControlStateNormal];
-        self.confirmButton.hidden = YES;
+        self.confirmButton.alpha = 0;
         self.confirmButton.tag = 0;
         self.cancelButton.tag = 1;
-        self.cancelButton.hidden = YES;
+        self.cancelButton.alpha = 0;
         self.lastScale = 1.0f;
         self.purchaseSidebar = [[TATowerPurchaseSidebar alloc] initWithFrame:CGRectMake(screenWidth - 68, 0, 68, 320)];
         [self addSubview:self.purchaseSidebar];
@@ -60,9 +66,13 @@ CGFloat const panelY = 240;
         [self.cancelButton setFrame:CGRectMake(point.x + (float)self.selectedNode.size.width / 15.0f, point.y + (float)self.selectedNode.size.width / (1.0f + 2.0f/3.0f), (float)self.selectedNode.size.width / 2.0f, (float)self.selectedNode.size.width / 2.0f)];
         [self.confirmButton setFrame:CGRectMake(point.x - (float)self.selectedNode.size.width / 2.0f, point.y + (float)self.selectedNode.size.width / (1.0f + 2.0f/3.0f), (float)self.selectedNode.size.width / 2.0f, (float)self.selectedNode.size.width / 2.0f)];
     }
-    if (self.confirmButton.hidden != hidden) {
-        self.confirmButton.hidden = hidden;
-        self.cancelButton.hidden = hidden;
+    if (hidden) {
+        self.confirmButton.alpha = 0;
+        self.cancelButton.alpha = 0;
+    }
+    else {
+        self.confirmButton.alpha = 1;
+        self.cancelButton.alpha = 1;
     }
     self.lastOverlayLocation = point;
 }
@@ -73,10 +83,12 @@ CGFloat const panelY = 240;
         [self.battleScene addTower];
         [[self.battleScene childNodeWithName:@"Placeholder"] removeFromParent];
         [self changeNodeOverlayLocation:CGPointMake(0,0) andHidden:YES];
+        self.battleScene.towerRadiusDisplay.alpha = 0.0;
     }
     else if (button.tag == 1) {
         [[self.battleScene childNodeWithName:@"Placeholder"] removeFromParent];
         [self changeNodeOverlayLocation:CGPointMake(0,0) andHidden:YES];
+        self.battleScene.towerRadiusDisplay.alpha = 0.0;
     }
 }
 
@@ -164,19 +176,18 @@ CGFloat const panelY = 240;
 
  -(void)setCurrentGold:(NSUInteger)currentGold
 {
-   /* [self.displayLabel setText:[NSString stringWithFormat:@"Gold: %lu\nLives: %ld",(unsigned long)currentGold,(long)self
+    [self.displayLabel setText:[NSString stringWithFormat:@"%lu\n%ld",(unsigned long)currentGold,(long)self
                                 .livesLeft]];
-    _currentGold = currentGold;*/
+    _currentGold = currentGold;
 }
 
 -(void)setLivesLeft:(NSInteger)livesLeft
 {
-    [self.displayLabel setText:[NSString stringWithFormat:@"Gold: %lu\nLives: %ld",(unsigned long)self.currentGold,(long)livesLeft]];
+    [self.displayLabel setText:[NSString stringWithFormat:@"%lu\n%ld",(unsigned long)self.currentGold,(long)livesLeft]];
     if (livesLeft == 0) {
         [self.battleScene.scene.view setPaused:YES];
-        UILabel *endGame = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width / 2 - 100, self.frame.size.width / 2 - 25, 200, 50)];
+        TALabel *endGame = [[TALabel alloc] initWithFrame:CGRectMake(self.frame.size.width / 2 - 100, self.frame.size.width / 2 - 25, 200, 50) andFontSize:30];
         [endGame setText:@"YOU LOSE"];
-        [endGame setFont:[UIFont fontWithName:@"Cochin" size:30]];
         [self addSubview:endGame];
     }
     _livesLeft = livesLeft;
@@ -197,6 +208,12 @@ CGFloat const panelY = 240;
         [UIView animateWithDuration:0.25 animations:^(void) {
             self.infoPanel.frame = CGRectMake(0, panelY, screenWidth, 80);
             self.purchaseSidebar.frame = CGRectMake(screenWidth, 0, 68, 320);
+        }];
+    }
+    else {
+        [UIView animateWithDuration:0.25 animations:^(void) {
+            self.infoPanel.frame = CGRectMake(0, 320, screenWidth, 80);
+            self.purchaseSidebar.frame = CGRectMake(screenWidth - 68, 0, 68, 320);
         }];
     }
     //code for bringing up tower upgrade / info overlay

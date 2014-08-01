@@ -12,6 +12,9 @@
 #import "TAEnemy.h"
 #import "TABattleScene.h"
 #import "TAUIOverlay.h"
+#import "TAInfoPopUp.h"
+#import "TALabel.h"
+#import "TAButton.h"
 
 @implementation TATowerInfoPanel
 
@@ -24,48 +27,25 @@
         self.unitIcon = [[UIImageView alloc] initWithFrame:CGRectMake(18, 9, 45, 45)];
         [self addSubview:self.unitIcon];
         
-        self.unitName = [[UILabel alloc] initWithFrame:CGRectMake(10, 54, 70, 21)];
-        self.unitName.font = [UIFont fontWithName:@"Cochin" size:13];
-        self.unitName.adjustsFontSizeToFitWidth = YES;
-        self.unitName.minimumScaleFactor = 0.5;
-        self.unitName.textAlignment = NSTextAlignmentCenter;
+        self.unitName = [[TALabel alloc] initWithFrame:CGRectMake(10, 54, 70, 21) andFontSize:13];
         [self.unitName setCenter:CGPointMake(self.unitIcon.center.x, self.unitName.center.y)];
         [self addSubview:self.unitName];
         
-        self.unitDescription = [[UILabel alloc] initWithFrame:CGRectMake(74, 7, 151, 66)];
-        self.unitDescription.font = [UIFont fontWithName:@"Cochin" size:12];
-        self.unitDescription.numberOfLines = 0;
-        self.unitDescription.textAlignment = NSTextAlignmentCenter;
-        self.unitDescription.adjustsFontSizeToFitWidth = YES;
-        self.unitDescription.minimumScaleFactor = 0.5;
+        self.unitDescription = [[TALabel alloc] initWithFrame:CGRectMake(74, 7, 151, 66) andFontSize:12];
         [self addSubview:self.unitDescription];
         
-       /* self.additionalUnitInfo = [NSArray arrayWithObjects:[[UILabel alloc] initWithFrame:CGRectMake(236, 9, 150, 21)], [[UILabel alloc] initWithFrame:CGRectMake(236, 29, 150, 21)], [[UILabel alloc] initWithFrame:CGRectMake(236, 49, 150, 21)], nil];
-        for (UILabel *l in self.additionalUnitInfo) {
-            l.font = [UIFont fontWithName:@"Cochin" size:14];
-            l.adjustsFontSizeToFitWidth = YES;
-            l.minimumScaleFactor = 2;
-            [self addSubview:l];
-        }*/
-        
-        self.otherUnitInfo = [[UILabel alloc] initWithFrame:CGRectMake(245, 10, 200, 80)];
-        self.otherUnitInfo.numberOfLines = 0;
-        self.otherUnitInfo.textAlignment = NSTextAlignmentCenter;
-        self.otherUnitInfo.font = [UIFont fontWithName:@"Cochin" size:12];
-        self.otherUnitInfo.adjustsFontSizeToFitWidth = YES;
-        self.otherUnitInfo.minimumScaleFactor = 0.5;
-        self.otherUnitInfo.lineBreakMode = NSLineBreakByWordWrapping;
+        self.otherUnitInfo = [[TALabel alloc] initWithFrame:CGRectMake(245, 10, 200, 80) andFontSize:12];
         [self addSubview:self.otherUnitInfo];
         
-        self.upgradeButton = [UIButton buttonWithType:UIButtonTypeSystem]; //[[UIButton alloc] initWithFrame:CGRectMake(428, 12, 126, 56)];
-        self.upgradeButton.frame = CGRectMake(428, 12, 126, 56);
-        self.upgradeButton.backgroundColor = [UIColor colorWithRed:0.5 green:0.7 blue:0.4 alpha:0.9];
-        self.upgradeButton.titleLabel.font = [UIFont fontWithName:@"Cochin" size:15];
-        [self.upgradeButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        self.upgradeButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+        self.upgradeButton = [[TAButton alloc] initWithFrame:CGRectMake(428, 8, 126, 30) andFontSize:15];
         [self.upgradeButton setTitle:@"Max Level" forState:UIControlStateDisabled];
         [self.upgradeButton addTarget:self action:@selector(upgradeSelectedTower) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.upgradeButton];
+        
+        self.sellButton = [[TAButton alloc] initWithFrame:CGRectMake(428, 41, 126, 30) andFontSize:15];
+        [self.sellButton setTitle:@"Can't Sell" forState:UIControlStateDisabled];
+        [self.sellButton addTarget:self action:@selector(sellSelectedTower) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:self.sellButton];
     }
     return self;
 }
@@ -73,9 +53,7 @@
 -(void)setSelectedUnit:(TAUnit *)selectedUnit
 {
     if ([_selectedUnit.name characterAtIndex:0] == 'T') {
-        NSUInteger towerNumber = [[_selectedUnit.name substringFromIndex:[_selectedUnit.name rangeOfString:@" "].location + 1] integerValue];
-        SKSpriteNode *detector = (SKSpriteNode *)[_selectedUnit.battleScene childNodeWithName:[NSString stringWithFormat:@"Detector %lu", (unsigned long)towerNumber]];
-        detector.alpha = 0.0;
+        self.selectedUnit.battleScene.towerRadiusDisplay.alpha = 0.0;
     }
     _selectedUnit = selectedUnit;
     if (_selectedUnit != nil) {
@@ -98,9 +76,12 @@
     [self.otherUnitInfo setCenter:CGPointMake((self.upgradeButton.frame.origin.x + 224) / 2, self.frame.size.height / 2)];
     if ([self.selectedUnit.unitType characterAtIndex:0] == 'E') {
         self.upgradeButton.hidden = YES;
+        self.sellButton.hidden = YES;
     }
     else {
         self.upgradeButton.hidden = NO;
+        self.sellButton.hidden = NO;
+        [self.sellButton setTitle:[NSString stringWithFormat:@"Sell: %ld gold",(long)[self sellCostForTower:(TATower *)self.selectedUnit]] forState:UIControlStateNormal];
         if (((TATower *)self.selectedUnit).towerLevel == maxTowerLevel) {
             self.upgradeButton.enabled = NO;
         }
@@ -109,6 +90,19 @@
             self.upgradeButton.enabled = YES;
         }
     }
+}
+
+-(NSInteger)sellCostForTower:(TATower *)tower
+{
+    NSInteger x = tower.towerLevel - 1;
+    return 2.5 * x * x + 2.5 * x + tower.purchaseCost / 3;
+}
+
+-(void)sellSelectedTower
+{
+    [self.selectedUnit.battleScene removeTower:(TATower *)self.selectedUnit];
+    self.selectedUnit.battleScene.uiOverlay.currentGold += [self sellCostForTower:(TATower *)self.selectedUnit];
+    self.selectedUnit.battleScene.uiOverlay.selectedUnit = nil;
 }
 
 -(void)upgradeSelectedTower

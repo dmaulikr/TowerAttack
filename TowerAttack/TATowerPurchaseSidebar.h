@@ -8,13 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@class TAInfoPopUp;
+
 @interface TATowerPurchaseSidebar : UIScrollView
 
 @property (nonatomic) BOOL canSelectTowers;
 @property (nonatomic) NSInteger selectedTowerType;
 @property (strong, nonatomic) UIScrollView *towerScrollView;
-@property (strong, nonatomic) NSArray *towerIcons;
-@property (strong, nonatomic) NSArray *towerLabels;
+@property (strong, nonatomic) NSMutableArray *towerIcons;
+@property (strong, nonatomic) NSMutableArray *towerLabels;
+@property (strong, nonatomic) TAInfoPopUp *infoPopUp;
+@property (strong, nonatomic) NSArray *towers;
 
 -(void)selectTowerFromButton:(UIButton *)button;
 

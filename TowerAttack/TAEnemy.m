@@ -11,6 +11,8 @@
 #import "TAUIOverlay.h"
 #import "TATowerInfoPanel.h"
 
+#define IS_IOS_8 2
+
 @implementation TAEnemy
 
 -(id)initWithLocation:(CGPoint)location inScene:(TABattleScene *)sceneParam
@@ -25,7 +27,7 @@
         self.unitType = @"Enemy";
         self.imageName = @"Goblin";
         [self.infoStrings addObjectsFromArray:[NSArray arrayWithObjects:[NSString stringWithFormat:@"Health: %lu/%lu",(unsigned long)self.currentHealth,(unsigned long)self.maximumHealth], [NSString stringWithFormat:@"Movement Speed: %g",self.movementSpeed * self.speed], nil]];
-        self.zPosition = 0.4;
+        self.zPosition = TANodeZPositionEnemy;
         
         self.texture = [SKTexture textureWithImageNamed:self.imageName];
         self.name =  [NSString stringWithFormat:@"Enemy %lu", (unsigned long)[self.battleScene.enemiesOnField count]];
@@ -37,24 +39,28 @@
         
         self.healthBarInside = [SKSpriteNode spriteNodeWithImageNamed:@"Health_Bar_Inside"];
         self.healthBarInside.size = CGSizeMake(33.5, 3.9);
-        self.healthBarInside.zPosition = 0.4;
+        self.healthBarInside.zPosition = TANodeZPositionEnemy;
         self.healthBarInside.position = CGPointMake(self.position.x - 33.5/2, self.position.y + 20);
         self.healthBarInside.anchorPoint = CGPointMake(0, 0.5);
         [self.healthBarInside addChild:outsideBar];
         [self.battleScene addChild:self.healthBarInside];
         
+#ifdef IS_IOS_8
         [self runAction:[[SKAction followPath:self.battleScene.enemyMovementPath asOffset:YES orientToPath:YES speed:self.movementSpeed] reversedAction] completion:^{
             self.battleScene.uiOverlay.livesLeft--;
             [self.battleScene removeChildrenInArray:[NSArray arrayWithObjects:self, self.healthBarInside, nil]];
             [self.battleScene.enemiesOnField removeObject:self];
         }];
         [self.healthBarInside runAction:[[SKAction followPath:self.battleScene.enemyMovementPath asOffset:YES orientToPath:NO speed:self.movementSpeed] reversedAction]];
-     /*   [self runAction:[[SKAction followPath:self.battleScene.enemyMovementPath asOffset:YES orientToPath:YES duration:60] reversedAction] completion:^{
+#endif
+#ifndef IS_IOS_8
+        [self runAction:[[SKAction followPath:self.battleScene.enemyMovementPath asOffset:YES orientToPath:YES duration:40] reversedAction] completion:^{
             self.battleScene.uiOverlay.livesLeft--;
             [self.battleScene removeChildrenInArray:[NSArray arrayWithObjects:self, self.healthBarInside, nil]];
             [self.battleScene.enemiesOnField removeObject:self];
         }];
-        [self.healthBarInside runAction:[[SKAction followPath:self.battleScene.enemyMovementPath asOffset:YES orientToPath:NO duration:60] reversedAction]];*/
+        [self.healthBarInside runAction:[[SKAction followPath:self.battleScene.enemyMovementPath asOffset:YES orientToPath:NO duration:40] reversedAction]];
+#endif
     }
     return self;
 }
