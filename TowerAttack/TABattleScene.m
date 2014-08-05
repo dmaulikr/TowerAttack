@@ -41,12 +41,13 @@ CGFloat const screenWidth = 568; //480
         [self addChild:self.towerRadiusDisplay];
         
         SKShapeNode *pathDrawer = [SKShapeNode node];
-        pathDrawer.path = CGPathCreateCopyByStrokingPath(self.enemyMovementPath, NULL, 50, kCGLineCapRound, kCGLineJoinRound, 100);
+        pathDrawer.path = CGPathCreateCopyByStrokingPath(self.enemyMovementPath, NULL, 40, kCGLineCapRound, kCGLineJoinRound, 100);
         pathDrawer.strokeColor = [SKColor blackColor];
         pathDrawer.fillColor = [UIColor colorWithRed:250.0f/255.0f green:224.0f/255.0f blue:150.0f/255.0f alpha:1.0f];
         pathDrawer.lineWidth = 1.5;
         pathDrawer.zPosition = TANodeZPositionPath;
-        pathDrawer.physicsBody = [SKPhysicsBody bodyWithEdgeChainFromPath:CGPathCreateCopyByStrokingPath(self.enemyMovementPath, NULL, 50, kCGLineCapRound, kCGLineJoinRound, 100)];
+        pathDrawer.physicsBody = [SKPhysicsBody bodyWithEdgeChainFromPath:CGPathCreateCopyByStrokingPath(self.enemyMovementPath, NULL, 40, kCGLineCapRound, kCGLineJoinRound, 100)];
+      //  pathDrawer.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:CGPathCreateCopyByStrokingPath(self.enemyMovementPath, NULL, 50, kCGLineCapRound, kCGLineJoinRound, 100)];
         pathDrawer.physicsBody.categoryBitMask = TAContactTypeTower;
         pathDrawer.physicsBody.contactTestBitMask = TAContactTypeTower;
         pathDrawer.name = @"Path";
@@ -56,7 +57,7 @@ CGFloat const screenWidth = 568; //480
         SKShapeNode *pathFill = [SKShapeNode node];
         pathFill.path = self.enemyMovementPath;
         pathFill.strokeColor = [UIColor colorWithRed:250.0f/255.0f green:224.0f/255.0f blue:150.0f/255.0f alpha:1.0f];
-        pathFill.lineWidth = 49;
+        pathFill.lineWidth = 39;
         
         
 #ifdef IS_IOS_8
@@ -72,7 +73,7 @@ CGFloat const screenWidth = 568; //480
         
         UIGraphicsBeginImageContext(size);
         CGContextRef c = UIGraphicsGetCurrentContext();
-        CGContextDrawTiledImage(c, CGRectMake(0, 0, 250, 250), [UIImage imageNamed:@"grass14"].CGImage);
+        CGContextDrawTiledImage(c, CGRectMake(0, 0, 240, 240), [UIImage imageNamed:@"Grass.jpg"].CGImage);
         UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
         
@@ -80,7 +81,7 @@ CGFloat const screenWidth = 568; //480
         self.zPosition = TANodeZPositionBackground;
         self.anchorPoint = CGPointMake(0, 0);
         
-        self.updateTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f/30.0f target:self selector:@selector(didSimulatePhysics) userInfo:nil repeats:YES];
+        self.updateTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f/15.0f target:self selector:@selector(didSimulatePhysics) userInfo:nil repeats:YES];
     }
     return self;
 }

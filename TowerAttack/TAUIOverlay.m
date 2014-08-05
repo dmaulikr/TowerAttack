@@ -24,7 +24,7 @@ CGFloat const panelY = 240;
     if (self) {
         // Initialization code
         self.backgroundColor = [UIColor clearColor];
-        self.displayLabel = [[TALabel alloc] initWithFrame:CGRectMake(15, 5, 30, 60) andFontSize:20];
+        self.displayLabel = [[TALabel alloc] initWithFrame:CGRectMake(0, 5, 45, 60) andFontSize:20];
         self.displayLabel.textAlignment = NSTextAlignmentRight;
         [self addSubview:self.displayLabel];
         UIImageView *heart = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"heart"]];

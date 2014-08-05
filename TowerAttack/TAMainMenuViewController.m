@@ -15,9 +15,6 @@
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
-
-    // Configure the view.
- //   SKView * skView = [[SKView alloc] initWithFrame:self.view.frame];
     SKView * skView = [[SKView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 320)];
     skView.showsFPS = YES;
     skView.showsNodeCount = YES;
@@ -26,33 +23,8 @@
     [self.view setBackgroundColor:nil];
     [self.view addSubview:skView];
     
-    // Create and configure the scene.
-    
     CGMutablePathRef pathToDraw = CGPathCreateMutable();
     CGMutablePathRef path = CGPathCreateMutable();
- /*   CGPathMoveToPoint(pathToDraw, NULL, self.view.frame.size.width / 2, self.view.frame.size.height);
-    CGPathMoveToPoint(path, NULL, self.view.frame.size.width / 2, self.view.frame.size.height - self.view.frame.size.height);
-    CGFloat x = self.view.frame.size.width / 2, y = self.view.frame.size.height, xC1, yC1, xC2, yC2;
-    while (y > 0) {
-        xC1 = x;
-        yC1 = y;
-        do {
-            x = arc4random() % ((int)self.view.frame.size.width - 50) + 25;
-        }while (x == xC1);
-        y -= arc4random() % (int)self.view.frame.size.height / 2 + 10;
-        if (y <= 0) {
-            y = 0;
-        }
-        xC1 = arc4random() % abs((int)(x - xC1)) + MIN(x, xC1);
-        yC1 -= arc4random() % (int)(yC1 - y);
-        if (x == xC1) {
-            xC1 += 10;
-        }
-        xC2 = arc4random() % abs((int)(x - xC1)) + MIN(x, xC1);
-        yC2 = yC1 - arc4random() % (int)(yC1 - y);
-        CGPathAddCurveToPoint(pathToDraw, NULL, xC1, yC1, xC2, yC2, x, y);
-        CGPathAddCurveToPoint(path, NULL, xC1, self.view.frame.size.height - yC1, xC2, self.view.frame.size.height - yC2, x,self.view.frame.size.height -  y);
-    }*/
     CGPathMoveToPoint(pathToDraw, NULL, 1200 / 2, 900);
     CGPathMoveToPoint(path, NULL, 1200 / 2, 900 - 900);
     CGFloat x = 1200 / 2, y = 900, xC1, yC1, xC2, yC2;
