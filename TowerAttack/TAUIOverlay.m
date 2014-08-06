@@ -130,6 +130,7 @@ CGFloat const panelY = 240;
     else {
         self.shouldPassTouches = YES;
     }*/
+
 }
 
 -(void)userPinchedWithInfo:(UIPinchGestureRecognizer *)listener
@@ -172,6 +173,21 @@ CGFloat const panelY = 240;
     else if (listener.state == UIGestureRecognizerStateEnded) {
         self.lastScale = scale;
     }
+}
+
+-(void)popText:(NSString *)text withColour:(UIColor *)colour overNode:(SKNode *)node completion:(void (^)(void))block
+{
+    SKLabelNode *label = [SKLabelNode labelNodeWithFontNamed:@"Cochin-Bold"];
+    label.fontColor = colour;
+    label.fontSize = 13;
+    label.text = text;
+    label.zPosition = TANodeZPositionPlaceholder + 1;
+    label.position = node.position;
+    [self.battleScene addChild:label];
+    [label runAction:[SKAction group:@[[SKAction moveBy:CGVectorMake(0, 20) duration:1.5],[SKAction fadeAlphaTo:0 duration:1.5]]] completion:^{
+        [label removeFromParent];
+        if (block) { block(); }
+    }];
 }
 
  -(void)setCurrentGold:(NSUInteger)currentGold

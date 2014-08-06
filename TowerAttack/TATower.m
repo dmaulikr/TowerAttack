@@ -65,12 +65,12 @@ NSInteger const maxTowerLevel = 5;
 
 +(NSArray *)towerIconStrings
 {
-    return [NSArray arrayWithObjects:@"50Tower", @"40FreezeTower", @"45BlastTower", @"60SpinTower", nil]; //hardcoded
+    return [NSArray arrayWithObjects:@"50Fire", @"40FreezeTower", @"45BlastTower", @"60SpinTower", nil]; //hardcoded
 }
 
 +(NSArray *)towerNames
 {
-    return [NSArray arrayWithObjects:@"Tower", @"Freeze Tower", @"Blast Tower", @"Psychic Tower", nil]; //hardcoded
+    return [NSArray arrayWithObjects:@"Fireball Tower", @"Freeze Tower", @"Blast Tower", @"Psychic Tower", nil]; //hardcoded
 }
 
 -(void)setAttackRadius:(CGFloat)attackRadius

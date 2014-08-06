@@ -22,7 +22,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        self.backgroundColor = [UIColor colorWithRed:0.8 green:0.9 blue:0.8 alpha:0.9];
+        self.backgroundColor = [UIColor colorWithRed:0.8 green:0.9 blue:0.8 alpha:0.7];
         
         self.unitIcon = [[UIImageView alloc] initWithFrame:CGRectMake(18, 9, 45, 45)];
         [self addSubview:self.unitIcon];
@@ -74,7 +74,7 @@
     self.otherUnitInfo.text = [self.otherUnitInfo.text substringToIndex:self.otherUnitInfo.text.length-1];
   //  [self.otherUnitInfo sizeToFit];
     [self.otherUnitInfo setCenter:CGPointMake((self.upgradeButton.frame.origin.x + 224) / 2, self.frame.size.height / 2)];
-    if ([self.selectedUnit.unitType characterAtIndex:0] == 'E') {
+    if ([self.selectedUnit.name  characterAtIndex:0] == 'E') {
         self.upgradeButton.hidden = YES;
         self.sellButton.hidden = YES;
     }

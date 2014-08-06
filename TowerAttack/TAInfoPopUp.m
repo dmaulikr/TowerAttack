@@ -46,7 +46,7 @@
     [pathToDraw addLineToPoint:CGPointMake(self.frame.size.width, self.frame.size.height / 2 + triangleRightSideOffset)];
     [pathToDraw addLineToPoint:CGPointMake(self.frame.size.width, self.frame.size.height / 2 - triangleRightSideOffset)];
     [pathToDraw addLineToPoint:CGPointMake(rectLeftSide, self.frame.size.height / 2 - triangleLeftSideOffset)];
-    [[UIColor colorWithRed:0.8 green:0.9 blue:0.8 alpha:0.9] setFill];
+    [[UIColor colorWithRed:0.8 green:0.9 blue:0.8 alpha:0.7] setFill];
  //   [[UIColor brownColor] setFill];;
     [[UIColor blackColor] setStroke];
     pathToDraw.lineWidth = 2;

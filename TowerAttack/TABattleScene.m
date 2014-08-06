@@ -16,14 +16,18 @@
 #import "TAUIOverlay.h"
 #import "TATowerPurchaseSidebar.h"
 #import "TAInfoPopUp.h"
+#import "TAAttacker.h"
+#import "TAProtector.h"
+#import "TADemon.h"
+#import "TANinja.h"
 
+//#ifdef __IPHONE_
 CGFloat const screenWidth = 568; //480
 
 @implementation TABattleScene
 
 -(id)initWithSize:(CGSize)size andPath:(CGPathRef)path andSpawnPoint:(CGPoint)point {
     if (self = [super init]) {
-        /* Setup your scene here */
         
         self.spawnRefreshCount = 0;
         self.spawnPoint = CGPointMake(point.x, 900);//point;
@@ -40,36 +44,14 @@ CGFloat const screenWidth = 568; //480
         self.towerRadiusDisplay.zPosition = TANodeZPositionRadius;
         [self addChild:self.towerRadiusDisplay];
         
-        SKShapeNode *pathDrawer = [SKShapeNode node];
-        pathDrawer.path = CGPathCreateCopyByStrokingPath(self.enemyMovementPath, NULL, 40, kCGLineCapRound, kCGLineJoinRound, 100);
-        pathDrawer.strokeColor = [SKColor blackColor];
-        pathDrawer.fillColor = [UIColor colorWithRed:250.0f/255.0f green:224.0f/255.0f blue:150.0f/255.0f alpha:1.0f];
-        pathDrawer.lineWidth = 1.5;
+        SKNode *pathDrawer = [SKNode node];
         pathDrawer.zPosition = TANodeZPositionPath;
         pathDrawer.physicsBody = [SKPhysicsBody bodyWithEdgeChainFromPath:CGPathCreateCopyByStrokingPath(self.enemyMovementPath, NULL, 40, kCGLineCapRound, kCGLineJoinRound, 100)];
-      //  pathDrawer.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:CGPathCreateCopyByStrokingPath(self.enemyMovementPath, NULL, 50, kCGLineCapRound, kCGLineJoinRound, 100)];
         pathDrawer.physicsBody.categoryBitMask = TAContactTypeTower;
         pathDrawer.physicsBody.contactTestBitMask = TAContactTypeTower;
         pathDrawer.name = @"Path";
         pathDrawer.physicsBody.collisionBitMask = TAContactTypeNothing;
         [self addChild:pathDrawer];
-        
-        SKShapeNode *pathFill = [SKShapeNode node];
-        pathFill.path = self.enemyMovementPath;
-        pathFill.strokeColor = [UIColor colorWithRed:250.0f/255.0f green:224.0f/255.0f blue:150.0f/255.0f alpha:1.0f];
-        pathFill.lineWidth = 39;
-        
-        
-#ifdef IS_IOS_8
-        
-        pathFill.lineCap = kCGLineCapRound;
-        pathFill.lineJoin = kCGLineJoinRound;
-        
-#endif
-        
-        pathFill.zPosition = TANodeZPositionPath;
-        [self addChild:pathFill];
-        
         
         UIGraphicsBeginImageContext(size);
         CGContextRef c = UIGraphicsGetCurrentContext();
@@ -78,6 +60,40 @@ CGFloat const screenWidth = 568; //480
         UIGraphicsEndImageContext();
         
         self.texture = [SKTexture textureWithImage:image];
+        
+        UIGraphicsBeginImageContext(size);
+        c = UIGraphicsGetCurrentContext();
+        CGContextAddPath(c, CGPathCreateCopyByStrokingPath(self.enemyMovementPath, NULL, 40, kCGLineCapRound, kCGLineJoinRound, 100));
+        CGContextClip(c);
+        CGContextDrawTiledImage(c, CGRectMake(0, 0, 240, 240), [UIImage imageNamed:@"sand.jpg"].CGImage);
+        image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        SKSpriteNode *pathFill = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImage:image]];
+        pathFill.zPosition = TANodeZPositionPath;
+        pathFill.size = self.size;
+        pathFill.yScale = -1.0;
+        pathFill.colorBlendFactor = 1;
+        pathFill.color = [UIColor colorWithRed:1 green:226.0/255.0 blue:145.0f/255.0f alpha:1];
+        pathFill.position = CGPointMake(600, 450);
+        [self addChild:pathFill];
+        
+        UIGraphicsBeginImageContext(size);
+        c = UIGraphicsGetCurrentContext();
+        CGContextAddPath(c, CGPathCreateCopyByStrokingPath(self.enemyMovementPath, NULL, 42, kCGLineCapRound, kCGLineJoinRound, 100));
+        CGContextClip(c);
+        CGContextSetRGBFillColor(c, 0, 0, 0, 1);
+        CGContextFillRect(c, CGRectMake(0, 0, 1200, 900));
+        image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        SKSpriteNode *pathOutline = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImage:image]];
+        pathOutline.zPosition = TANodeZPositionPath - 0.1;
+        pathOutline.size = self.size;
+        pathOutline.yScale = -1.0;
+        pathOutline.position = CGPointMake(600, 450);
+        [self addChild:pathOutline];
+        
         self.zPosition = TANodeZPositionBackground;
         self.anchorPoint = CGPointMake(0, 0);
         
@@ -155,7 +171,7 @@ CGFloat const screenWidth = 568; //480
     SKNode *nodeTouched = [SKNode node];
     if ([[self nodesAtPoint:[touch locationInNode:self]] count] > 1) {
         for (SKNode *n in [self nodesAtPoint:[touch locationInNode:self]]) {
-            if (([n.name characterAtIndex:0] == 'E' && [nodeTouched.name characterAtIndex:0] != 'T' && [nodeTouched.name characterAtIndex:0] != 'P') || ([n.name characterAtIndex:0] == 'T' && [self distanceFromA:n.position toB:[touch locationInNode:self]] <= [(SKSpriteNode *)n size].width  && [nodeTouched.name characterAtIndex:0] != 'P') || [n.name characterAtIndex:0] == 'P') {
+            if (([n.name characterAtIndex:0] == 'E' && [nodeTouched.name characterAtIndex:0] != 'T' && [nodeTouched.name characterAtIndex:1] != 'l') || ([n.name characterAtIndex:0] == 'T' && [self distanceFromA:n.position toB:[touch locationInNode:self]] <= [(SKSpriteNode *)n size].width  && [nodeTouched.name characterAtIndex:1] != 'l') || [n.name characterAtIndex:1] == 'l') {
                 nodeTouched = n;
             }
         }
@@ -190,7 +206,7 @@ CGFloat const screenWidth = 568; //480
             CGSize detectorSize;
             switch (self.uiOverlay.purchaseSidebar.selectedTowerType) { //hardcoded
                 case TATowerTypeFireballTower:
-                    towerPlaceHolder = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImageNamed:@"Tower"] size:CGSizeMake(TATowerSizeFireballTower, TATowerSizeFireballTower)];
+                    towerPlaceHolder = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImageNamed:@"Fire"] size:CGSizeMake(TATowerSizeFireballTower, TATowerSizeFireballTower)];
                     towerPlaceHolder.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:TATowerSizeFireballTower / 2];
                     detectorSize = CGSizeMake(TATowerAttackRadiusFireballTower * 2 + 25, TATowerAttackRadiusFireballTower * 2 + 25);
                     break;
@@ -315,9 +331,32 @@ CGFloat const screenWidth = 568; //480
 
 -(void)spawnEnemy
 {
-    TAEnemy *enemy = [[TAEnemy alloc] initWithLocation:self.spawnPoint inScene:self];
-    [self addChild:enemy];
-    [self.enemiesOnField addObject:enemy];
+    switch (/*arc4random() % 4*/3) { //hardcoded
+        case 0: {
+            TAAttacker *enemy = [[TAAttacker alloc] initWithLocation:self.spawnPoint inScene:self];
+            [self addChild:enemy];
+            [self.enemiesOnField addObject:enemy];
+        }
+            break;
+        case 1: {
+            TAProtector *enemy = [[TAProtector alloc] initWithLocation:self.spawnPoint inScene:self];
+            [self addChild:enemy];
+            [self.enemiesOnField addObject:enemy];
+        }
+            break;
+        case 2: {
+            TADemon *enemy = [[TADemon alloc] initWithLocation:self.spawnPoint inScene:self];
+            [self addChild:enemy];
+            [self.enemiesOnField addObject:enemy];
+        }
+            break;
+        case 3: {
+            TANinja *enemy = [[TANinja alloc] initWithLocation:self.spawnPoint inScene:self];
+            [self addChild:enemy];
+            [self.enemiesOnField addObject:enemy];
+        }
+            break;
+    }
 }
 
 -(void)didSimulatePhysics
@@ -327,22 +366,22 @@ CGFloat const screenWidth = 568; //480
     }
     else
         [(SKSpriteNode *)[self childNodeWithName:@"Placeholder"] setColor:[UIColor greenColor]];
-    @try {
+ //   @try {
         for (TATower *tower in [self towersOnField]) {
             for (TAEnemy *enemy in [self enemiesOnField]) {
-                if ([self distanceFromA:tower.position toB:enemy.position] - 20 <= tower.attackRadius && ![tower.enemiesInRange containsObject:enemy]) {
+                if ([self distanceFromA:tower.position toB:enemy.position] - enemy.size.width / 2 <= tower.attackRadius && ![tower.enemiesInRange containsObject:enemy]) {
                     [self contactBeganBetweenTower:tower andEnemy:enemy];
                 }
-                else if ([self distanceFromA:tower.position toB:enemy.position] - 20 > tower.attackRadius && [tower.enemiesInRange containsObject:enemy]) {
+                else if ([self distanceFromA:tower.position toB:enemy.position] - enemy.size.width > tower.attackRadius && [tower.enemiesInRange containsObject:enemy]) {
                     [self contactEndedBetweenTower:tower andEnemy:enemy];
                 }
             }
         }
 
-    }
-    @catch (NSException *exception) {
+ //   }
+/*    @catch (NSException *exception) {
         NSLog(@"%@",exception);
-    }
+    }*/
 }
 
 @end

@@ -41,20 +41,18 @@
     if ([self.enemiesInRange count] > 0) {
         self.projectileToFire.particleBirthRate = self.normalBirthRateOfProjectile;
         [self performSelector:@selector(turnOffEmitter) withObject:nil afterDelay:0.15];
-        int enemiesToRemove = 0;
-        @try {
-            for (TAEnemy *enemy in [self enemiesInRange]) {
-                enemy.currentHealth -= self.attackDamage;
-                if (enemy.currentHealth <= 0) {
-                    [self.enemiesInRange performSelector:@selector(removeObject:) withObject:enemy afterDelay:0.1];
-                    enemiesToRemove++;
-                }
+        NSMutableArray *enemiesToRemove = [NSMutableArray array];
+        for (TAEnemy *enemy in [self enemiesInRange]) {
+            enemy.currentHealth -= self.attackDamage;
+            if (enemy.currentHealth <= 0) {
+              //  [self.enemiesInRange removeObject:enemy];
+                [enemiesToRemove addObject:enemy];
             }
         }
-        @catch (NSException *exception) {
-            NSLog(@"%@",exception);
+        for (TAEnemy *enemy in enemiesToRemove) {
+            [self.enemiesInRange removeObject:enemy];
         }
-        if ([self.enemiesInRange count] <= enemiesToRemove) {
+        if ([self.enemiesInRange count] == 0) {
             [self endAttack];
         }
     }

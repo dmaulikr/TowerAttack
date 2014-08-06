@@ -8,7 +8,8 @@
 
 #import "TAPsychicTower.h"
 #import "TAEnemy.h"
-//#import "TABattleScene.h"
+#import "TABattleScene.h"
+#import "TAUIOverlay.h"
 
 @implementation TAPsychicTower
 
@@ -26,6 +27,7 @@
         self.description = (NSString *)[[[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Game Data" ofType:@"plist"]] objectForKey:@"TowerDescriptions"] objectAtIndex:TATowerTypePsychicTower];
         self.damageNodes = [NSMutableArray array];
         [self runAction:[SKAction repeatActionForever:[SKAction rotateByAngle:360 duration:5]]];
+        [self.infoStrings addObject:[NSString stringWithFormat:@"DPS: %g",self.attackDamage / self.timeBetweenAttacks]];
     }
     return self;
 }
@@ -33,13 +35,19 @@
 -(void)beginAttack
 {
     TAEnemy *enemy = (TAEnemy *)[self.enemiesInRange lastObject];
-    NSTimer *enemyDamageTimer = [NSTimer scheduledTimerWithTimeInterval:self.timeBetweenAttacks target:self selector:@selector(damageEnemyFromTimer:) userInfo:enemy repeats:YES];
-    [self.damageTimers addObject:enemyDamageTimer];
-    SKEmitterNode *damageNode = [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSBundle mainBundle] pathForResource:@"PsychicDamage" ofType:@"sks"]];
-    [enemy addChild:damageNode];
-    damageNode.name = @"PsychicDamage";
-    damageNode.position = CGPointMake(0, 15);
-    [self.damageNodes addObject:damageNode];
+    if (arc4random() % 2  || ![enemy.unitType isEqual:@"Ninja"]) {
+        NSTimer *enemyDamageTimer = [NSTimer scheduledTimerWithTimeInterval:self.timeBetweenAttacks target:self selector:@selector(damageEnemyFromTimer:) userInfo:enemy repeats:YES];
+        [self.damageTimers addObject:enemyDamageTimer];
+        SKEmitterNode *damageNode = [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSBundle mainBundle] pathForResource:@"PsychicDamage" ofType:@"sks"]];
+        [enemy addChild:damageNode];
+        damageNode.name = @"PsychicDamage";
+        damageNode.position = CGPointMake(0, 15);
+        [self.damageNodes addObject:damageNode];
+    }
+    else {
+        [self.battleScene.uiOverlay popText:@"Dodge" withColour:[UIColor blueColor] overNode:enemy completion:nil];
+        [self.enemiesInRange removeObject:enemy];
+    }
 }
 
 -(void)damageEnemyFromTimer:(NSTimer *)timer
@@ -61,6 +69,24 @@
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
             [enemy removeChildrenInArray:@[damageNode]];
         });
+    }
+}
+
+-(void)setTimeBetweenAttacks:(CGFloat)timeBetweenAttacks
+{
+    NSUInteger index = [self.infoStrings indexOfObject:[NSString stringWithFormat:@"DPS: %g",self.attackDamage / self.timeBetweenAttacks]];
+    _timeBetweenAttacks = timeBetweenAttacks;
+    if (index != NSNotFound) {
+        [self.infoStrings replaceObjectAtIndex:index withObject:[NSString stringWithFormat:@"DPS: %g",self.attackDamage / self.timeBetweenAttacks]];
+    }
+}
+
+-(void)setAttackDamage:(CGFloat)attackDamage
+{
+    NSUInteger index = [self.infoStrings indexOfObject:[NSString stringWithFormat:@"DPS: %g",self.attackDamage / self.timeBetweenAttacks]];
+    _attackDamage = attackDamage;
+    if (index != NSNotFound) {
+        [self.infoStrings replaceObjectAtIndex:index withObject:[NSString stringWithFormat:@"DPS: %g",self.attackDamage / self.timeBetweenAttacks]];
     }
 }
 

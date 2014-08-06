@@ -40,5 +40,6 @@ extern CGFloat const panelY;
 -(void)changeNodeOverlayLocation:(CGPoint)point andHidden:(BOOL)hidden;
 -(void)decideTowerPlacementFromButton:(UIButton *)button;
 -(void)userPinchedWithInfo:(UIPinchGestureRecognizer *)listener;
+-(void)popText:(NSString *)text withColour:(UIColor *)colour overNode:(SKNode *)node completion:(void (^)(void))block;
 
 @end

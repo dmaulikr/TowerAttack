@@ -18,6 +18,16 @@
 		2C0D1039198BE82900795828 /* coin2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C0D1038198BE82900795828 /* coin2.png */; };
 		2C0D103D198C063A00795828 /* TAButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C0D103C198C063A00795828 /* TAButton.m */; };
 		2C0D103F198C0DA300795828 /* Grass@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2C0D103E198C0DA300795828 /* Grass@2x.jpg */; };
+		2C0D1042199127E700795828 /* TAAttacker.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C0D1041199127E700795828 /* TAAttacker.m */; };
+		2C0D10441991310F00795828 /* Attacker.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C0D10431991310F00795828 /* Attacker.png */; };
+		2C0D104719915CED00795828 /* TAProtector.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C0D104619915CED00795828 /* TAProtector.m */; };
+		2C0D104A199166E300795828 /* Protector.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C0D1049199166E300795828 /* Protector.png */; };
+		2C0D104D19916B8200795828 /* TADemon.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C0D104C19916B8200795828 /* TADemon.m */; };
+		2C0D104F19916D0F00795828 /* Demon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C0D104E19916D0F00795828 /* Demon.png */; };
+		2C0D105219926C1200795828 /* TANinja.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C0D105119926C1200795828 /* TANinja.m */; };
+		2C0D1054199272A300795828 /* Ninja.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C0D1053199272A300795828 /* Ninja.png */; };
+		2C0D1056199287F300795828 /* sand@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2C0D1055199287F300795828 /* sand@2x.jpg */; };
+		2C0D10591992A13100795828 /* Fire.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C0D10581992A13100795828 /* Fire.png */; };
 		2C28D0C91986946500E9499C /* LevelStripe.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C28D0C81986946500E9499C /* LevelStripe.png */; };
 		2C28D0CC1986CE7500E9499C /* Cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C28D0CA1986CE7500E9499C /* Cancel.png */; };
 		2C28D0CD1986CE7500E9499C /* Confirm.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C28D0CB1986CE7500E9499C /* Confirm.png */; };
@@ -91,6 +101,20 @@
 		2C0D103B198C063A00795828 /* TAButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAButton.h; sourceTree = "<group>"; };
 		2C0D103C198C063A00795828 /* TAButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAButton.m; sourceTree = "<group>"; };
 		2C0D103E198C0DA300795828 /* Grass@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Grass@2x.jpg"; sourceTree = "<group>"; };
+		2C0D1040199127E700795828 /* TAAttacker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAAttacker.h; sourceTree = "<group>"; };
+		2C0D1041199127E700795828 /* TAAttacker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAAttacker.m; sourceTree = "<group>"; };
+		2C0D10431991310F00795828 /* Attacker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Attacker.png; sourceTree = "<group>"; };
+		2C0D104519915CED00795828 /* TAProtector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAProtector.h; sourceTree = "<group>"; };
+		2C0D104619915CED00795828 /* TAProtector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAProtector.m; sourceTree = "<group>"; };
+		2C0D1049199166E300795828 /* Protector.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Protector.png; sourceTree = "<group>"; };
+		2C0D104B19916B8200795828 /* TADemon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TADemon.h; sourceTree = "<group>"; };
+		2C0D104C19916B8200795828 /* TADemon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TADemon.m; sourceTree = "<group>"; };
+		2C0D104E19916D0F00795828 /* Demon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Demon.png; sourceTree = "<group>"; };
+		2C0D105019926C1200795828 /* TANinja.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TANinja.h; sourceTree = "<group>"; };
+		2C0D105119926C1200795828 /* TANinja.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TANinja.m; sourceTree = "<group>"; };
+		2C0D1053199272A300795828 /* Ninja.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Ninja.png; sourceTree = "<group>"; };
+		2C0D1055199287F300795828 /* sand@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "sand@2x.jpg"; sourceTree = "<group>"; };
+		2C0D10581992A13100795828 /* Fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Fire.png; sourceTree = "<group>"; };
 		2C28D0C81986946500E9499C /* LevelStripe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LevelStripe.png; sourceTree = "<group>"; };
 		2C28D0CA1986CE7500E9499C /* Cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cancel.png; sourceTree = "<group>"; };
 		2C28D0CB1986CE7500E9499C /* Confirm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Confirm.png; sourceTree = "<group>"; };
@@ -218,6 +242,14 @@
 			children = (
 				2CE59DFA196B30B900FF3BD4 /* TAEnemy.h */,
 				2CE59DFB196B30B900FF3BD4 /* TAEnemy.m */,
+				2C0D1040199127E700795828 /* TAAttacker.h */,
+				2C0D1041199127E700795828 /* TAAttacker.m */,
+				2C0D104519915CED00795828 /* TAProtector.h */,
+				2C0D104619915CED00795828 /* TAProtector.m */,
+				2C0D104B19916B8200795828 /* TADemon.h */,
+				2C0D104C19916B8200795828 /* TADemon.m */,
+				2C0D105019926C1200795828 /* TANinja.h */,
+				2C0D105119926C1200795828 /* TANinja.m */,
 			);
 			name = Enemies;
 			sourceTree = "<group>";
@@ -290,6 +322,12 @@
 		2CD8D486196B21E200F4BA87 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				2C0D1055199287F300795828 /* sand@2x.jpg */,
+				2C0D10581992A13100795828 /* Fire.png */,
+				2C0D1053199272A300795828 /* Ninja.png */,
+				2C0D104E19916D0F00795828 /* Demon.png */,
+				2C0D10431991310F00795828 /* Attacker.png */,
+				2C0D1049199166E300795828 /* Protector.png */,
 				2C0D1036198BE62700795828 /* heart.png */,
 				2C0D1034198BE22A00795828 /* coin1.png */,
 				2C0D1038198BE82900795828 /* coin2.png */,
@@ -415,9 +453,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C0D1054199272A300795828 /* Ninja.png in Resources */,
 				2C842E951977255100C98606 /* Blast.sks in Resources */,
+				2C0D1056199287F300795828 /* sand@2x.jpg in Resources */,
 				2C28D0C91986946500E9499C /* LevelStripe.png in Resources */,
 				2C0D1031198BDF3300795828 /* coin.png in Resources */,
+				2C0D10441991310F00795828 /* Attacker.png in Resources */,
 				2CD8D48A196B21E200F4BA87 /* InfoPlist.strings in Resources */,
 				2C28D0CC1986CE7500E9499C /* Cancel.png in Resources */,
 				2CD8D49D196B21E200F4BA87 /* Images.xcassets in Resources */,
@@ -432,11 +473,14 @@
 				2C6828BD1976CEB2001FEDFA /* Images.atlas in Resources */,
 				2CE6ACD4197EADC9006CAB16 /* PsychicDamage.sks in Resources */,
 				2C0D1039198BE82900795828 /* coin2.png in Resources */,
+				2C0D104A199166E300795828 /* Protector.png in Resources */,
 				2C08A3131979BAEA001A2BCF /* SpinTower.png in Resources */,
 				2CD8D493196B21E200F4BA87 /* Main.storyboard in Resources */,
 				2C6828C41976D7A5001FEDFA /* BlastTower.png in Resources */,
 				2CA3D7E019745F220042BB27 /* Game Data.plist in Resources */,
+				2C0D10591992A13100795828 /* Fire.png in Resources */,
 				2C6828BF1976D4F8001FEDFA /* FreezeTower.png in Resources */,
+				2C0D104F19916D0F00795828 /* Demon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -468,11 +512,15 @@
 				2C6828CB1976F499001FEDFA /* TABlastTower.m in Sources */,
 				2CA3D7D9197422CE0042BB27 /* TATowerInfoPanel.m in Sources */,
 				2C6ECC6A196DC9BC00053238 /* TAUIOverlay.m in Sources */,
+				2C0D105219926C1200795828 /* TANinja.m in Sources */,
+				2C0D104D19916B8200795828 /* TADemon.m in Sources */,
 				2C6828C81976F47B001FEDFA /* TAFreezeTower.m in Sources */,
 				2C0D102C198AD7E200795828 /* TAInfoPopUp.m in Sources */,
+				2C0D104719915CED00795828 /* TAProtector.m in Sources */,
 				2CD8D48C196B21E200F4BA87 /* main.m in Sources */,
 				2C0D103D198C063A00795828 /* TAButton.m in Sources */,
 				2CE59DF7196B2A6500FF3BD4 /* TANonPassiveTower.m in Sources */,
+				2C0D1042199127E700795828 /* TAAttacker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -607,9 +655,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TowerAttack/TowerAttack-Prefix.pch";
 				INFOPLIST_FILE = "TowerAttack/TowerAttack-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8;
-				IS_IOS_8 = "";
-				"IS_IOS_8[sdk=iphoneos*]" = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
@@ -627,9 +673,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TowerAttack/TowerAttack-Prefix.pch";
 				INFOPLIST_FILE = "TowerAttack/TowerAttack-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8;
-				IS_IOS_8 = "";
-				"IS_IOS_8[sdk=iphoneos*]" = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;

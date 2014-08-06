@@ -18,7 +18,7 @@
 -(id)initWithLocation:(CGPoint)location inScene:(TABattleScene *)sceneParam
 {
     if (self == [super initWithLocation:location inScene:sceneParam]) {
-        self.imageName = @"Tower";
+        self.imageName = @"Fire";
         self.texture = [SKTexture textureWithImageNamed:self.imageName];
         self.projectileSpeed = 400;
         self.size = CGSizeMake(TATowerSizeFireballTower, TATowerSizeFireballTower);

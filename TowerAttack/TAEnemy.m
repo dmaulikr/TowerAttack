@@ -19,19 +19,19 @@
 {
     if (self == [super initWithLocation:location inScene:sceneParam]) {
         //init code
-        _movementSpeed = arc4random() % 20 + 30;
-        _maximumHealth = 100;
-        _currentHealth = 100;
-        self.goldReward = 10;
+        _movementSpeed = 0;
+        _maximumHealth = 0;
+        _currentHealth = 0;
+        self.goldReward = 0;
         self.description = @"Weak but relatively fast, enemies are a common enemy, but not too much of a threat.";
         self.unitType = @"Enemy";
-        self.imageName = @"Goblin";
+        self.imageName = @"Attacker";
         [self.infoStrings addObjectsFromArray:[NSArray arrayWithObjects:[NSString stringWithFormat:@"Health: %lu/%lu",(unsigned long)self.currentHealth,(unsigned long)self.maximumHealth], [NSString stringWithFormat:@"Movement Speed: %g",self.movementSpeed * self.speed], nil]];
         self.zPosition = TANodeZPositionEnemy;
         
         self.texture = [SKTexture textureWithImageNamed:self.imageName];
         self.name =  [NSString stringWithFormat:@"Enemy %lu", (unsigned long)[self.battleScene.enemiesOnField count]];
-        self.size = CGSizeMake(100, 100);
+        self.size = CGSizeMake(40, 40);
         
         SKSpriteNode *outsideBar = [SKSpriteNode spriteNodeWithImageNamed:@"Health_Bar_Outside"];
         outsideBar.size = CGSizeMake(35, 5.6);
@@ -39,35 +39,58 @@
         
         self.healthBarInside = [SKSpriteNode spriteNodeWithImageNamed:@"Health_Bar_Inside"];
         self.healthBarInside.size = CGSizeMake(33.5, 3.9);
-        self.healthBarInside.zPosition = TANodeZPositionEnemy;
-        self.healthBarInside.position = CGPointMake(self.position.x - 33.5/2, self.position.y + 20);
+        self.healthBarInside.zPosition = TANodeZPositionEnemy + 1;
+        self.healthBarInside.position = CGPointMake(self.position.x - 33.5/2, self.position.y + self.size.height * 3 / 4);
         self.healthBarInside.anchorPoint = CGPointMake(0, 0.5);
         [self.healthBarInside addChild:outsideBar];
         [self.battleScene addChild:self.healthBarInside];
         
-#ifdef IS_IOS_8
-        [self runAction:[[SKAction followPath:self.battleScene.enemyMovementPath asOffset:YES orientToPath:YES speed:self.movementSpeed] reversedAction] completion:^{
-            self.battleScene.uiOverlay.livesLeft--;
-            [self.battleScene removeChildrenInArray:[NSArray arrayWithObjects:self, self.healthBarInside, nil]];
-            [self.battleScene.enemiesOnField removeObject:self];
+        SKAction *action;
+        SKAction *actionHealthBar;
+        
+        if ([[SKAction class] respondsToSelector:@selector(followPath:asOffset:orientToPath:speed:)]) {
+            action = [[SKAction followPath:self.battleScene.enemyMovementPath asOffset:YES orientToPath:YES speed:[self movementSpeed]] reversedAction];
+            actionHealthBar = [[SKAction followPath:self.battleScene.enemyMovementPath asOffset:YES orientToPath:NO speed:[self movementSpeed]] reversedAction];
+        }
+        else {
+            action = [[SKAction followPath:self.battleScene.enemyMovementPath asOffset:YES orientToPath:YES duration:40] reversedAction];
+            actionHealthBar = [[SKAction followPath:self.battleScene.enemyMovementPath asOffset:YES orientToPath:NO duration:40] reversedAction];
+        }
+        
+        [self runAction:action completion:^{
+            [self finishPath];
         }];
-        [self.healthBarInside runAction:[[SKAction followPath:self.battleScene.enemyMovementPath asOffset:YES orientToPath:NO speed:self.movementSpeed] reversedAction]];
-#endif
-#ifndef IS_IOS_8
-        [self runAction:[[SKAction followPath:self.battleScene.enemyMovementPath asOffset:YES orientToPath:YES duration:40] reversedAction] completion:^{
+        [self.healthBarInside runAction:actionHealthBar];
+
+      /*  [self runAction:[[SKAction followPath:self.battleScene.enemyMovementPath asOffset:YES orientToPath:YES duration:40] reversedAction] completion:^{
             self.battleScene.uiOverlay.livesLeft--;
             [self.battleScene removeChildrenInArray:[NSArray arrayWithObjects:self, self.healthBarInside, nil]];
             [self.battleScene.enemiesOnField removeObject:self];
         }];
         [self.healthBarInside runAction:[[SKAction followPath:self.battleScene.enemyMovementPath asOffset:YES orientToPath:NO duration:40] reversedAction]];
-#endif
+*/
     }
     return self;
 }
 
+-(void)finishPath
+{
+    self.battleScene.uiOverlay.livesLeft--;
+    [self.battleScene removeChildrenInArray:[NSArray arrayWithObjects:self, self.healthBarInside, nil]];
+    [self.battleScene.enemiesOnField removeObject:self];
+}
+
 -(void)setCurrentHealth:(CGFloat)currentHealth
 {
-    NSUInteger index = [self.infoStrings indexOfObject:[NSString stringWithFormat:@"Health: %lu/%lu",(unsigned long)self.currentHealth,(unsigned long)self.maximumHealth]];
+//    NSUInteger index = [self.infoStrings indexOfObject:[NSString stringWithFormat:@"Health: %lu/%lu",(unsigned long)self.currentHealth,(unsigned long)self.maximumHealth]];
+    NSUInteger index = [self.infoStrings indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+        if ([[(NSString *)obj substringToIndex:6] isEqualToString:@"Health"]) {
+            return YES;
+        }
+        else {
+            return NO;
+        }
+    }];
     _currentHealth = currentHealth;
     if (index != NSNotFound) {
         [self.infoStrings replaceObjectAtIndex:index withObject:[NSString stringWithFormat:@"Health: %lu/%lu",(unsigned long)self.currentHealth,(unsigned long)self.maximumHealth]];
@@ -78,6 +101,7 @@
         [self.battleScene removeChildrenInArray:[NSArray arrayWithObjects:self, self.healthBarInside, nil]];
         [self.battleScene.enemiesOnField removeObject:self];
         self.battleScene.uiOverlay.currentGold += self.goldReward;
+        [self.battleScene.uiOverlay popText:[NSString stringWithFormat:@"+%lu",(unsigned long)self.goldReward] withColour:[UIColor colorWithRed:255.0f/255.0f green:208.0f/255.0f blue:0.0f/255.0f alpha:1.0f] overNode:self completion:nil];
         [self removeAllActions];
     }
 }

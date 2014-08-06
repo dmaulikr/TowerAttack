@@ -39,7 +39,7 @@
 -(void)beginAttack
 {
     TAEnemy *enemy = (TAEnemy *)[self.enemiesInRange lastObject];
-    [enemy setColor:[SKColor whiteColor]];//[UIColor colorWithRed:155.0f/255.0f green:255.0f/255.0f blue:239.0f/255.0f alpha:1.0f]];
+    [enemy setColor:[UIColor colorWithRed:155.0f/255.0f green:235.0f/255.0f blue:249.0f/255.0f alpha:1.0f]];
     [enemy setColorBlendFactor:1.0];
     //enemy.movementSpeed /= 2;
     enemy.speed *= self.speedMultiplier;
