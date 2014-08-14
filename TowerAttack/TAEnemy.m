@@ -10,6 +10,7 @@
 #import "TABattleScene.h"
 #import "TAUIOverlay.h"
 #import "TATowerInfoPanel.h"
+#import "TAPLayerProfile.h"
 
 #define IS_IOS_8 2
 
@@ -78,6 +79,20 @@
     self.battleScene.uiOverlay.livesLeft--;
     [self.battleScene removeChildrenInArray:[NSArray arrayWithObjects:self, self.healthBarInside, nil]];
     [self.battleScene.enemiesOnField removeObject:self];
+    [self.battleScene checkForWaveOver];
+}
+
+-(void)die
+{
+    _currentHealth = 0;
+    [self.battleScene removeChildrenInArray:[NSArray arrayWithObjects:self, self.healthBarInside, nil]];
+    [self.battleScene.enemiesOnField removeObject:self];
+    [self.battleScene checkForWaveOver];
+    self.battleScene.uiOverlay.currentGold += self.goldReward;
+    [TAPlayerProfile sharedInstance].currentLevelXP += self.xpReward;
+    [self.battleScene.uiOverlay configureBottomLabel];
+    [self.battleScene.uiOverlay popText:[NSString stringWithFormat:@"+%lu",(unsigned long)self.goldReward] withColour:[UIColor colorWithRed:255.0f/255.0f green:208.0f/255.0f blue:0.0f/255.0f alpha:1.0f] overPoint:self.position completion:nil];
+    [self removeAllActions];
 }
 
 -(void)setCurrentHealth:(CGFloat)currentHealth
@@ -97,12 +112,7 @@
     }
     self.healthBarInside.size = CGSizeMake(33.5 * self.currentHealth / self.maximumHealth, self.healthBarInside.size.height);
     if (_currentHealth <= 0 && [self.battleScene.enemiesOnField containsObject:self]) {
-        _currentHealth = 0;
-        [self.battleScene removeChildrenInArray:[NSArray arrayWithObjects:self, self.healthBarInside, nil]];
-        [self.battleScene.enemiesOnField removeObject:self];
-        self.battleScene.uiOverlay.currentGold += self.goldReward;
-        [self.battleScene.uiOverlay popText:[NSString stringWithFormat:@"+%lu",(unsigned long)self.goldReward] withColour:[UIColor colorWithRed:255.0f/255.0f green:208.0f/255.0f blue:0.0f/255.0f alpha:1.0f] overNode:self completion:nil];
-        [self removeAllActions];
+        [self die];
     }
 }
 

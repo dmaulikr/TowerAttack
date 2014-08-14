@@ -13,5 +13,8 @@
 @property (nonatomic) CGFloat fontSize;
 
 -(instancetype)initWithFrame:(CGRect)frame andFontSize:(CGFloat)size;
+-(instancetype)initWithFontSize:(CGFloat)size;
+-(void)configurePropertiesWithSize:(CGFloat)size;
+-(CGFloat)bestFontSize;
 
 @end

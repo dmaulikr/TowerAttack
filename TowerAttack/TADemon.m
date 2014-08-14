@@ -18,6 +18,7 @@
         self.size = CGSizeMake(40, 40);
         self.healthBarInside.position = CGPointMake(self.position.x - 33.5/2, self.position.y + self.size.height * 3 / 4);
         self.goldReward = TAEnemyGoldRewardDemon;
+        self.xpReward = TAEnemyXPRewardDemon;
         self.movementSpeed = arc4random() % 10 + TAEnemyMovementSpeedDemon;
         self.maximumHealth = TAEnemyMaximumHealthDemon;
         self.description = @"Demons are dangerously fast - don't let one get through: they take an extra life if they do!";

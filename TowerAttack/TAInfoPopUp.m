@@ -18,8 +18,10 @@
         self.originPoint = origin;
         self.backgroundColor = [UIColor clearColor];
         self.clipsToBounds = NO;
-        self.infoLabel = [[TALabel alloc] initWithFrame:CGRectMake(4, 4, self.frame.size.width - 34, self.frame.size.height - 30) andFontSize:12];
+        self.infoLabel = [[TALabel alloc] initWithFrame:CGRectMake(4, 4, self.frame.size.width - 34, self.frame.size.height - 30) andFontSize:10];
         [self addSubview:self.infoLabel];
+        self.infoLabel.adjustsFontSizeToFitWidth = YES;
+        self.infoLabel.minimumScaleFactor = 0.1;
         self.goldCostLabel = [[TALabel alloc] initWithFrame:CGRectMake(0, 0, 30, 15) andFontSize:10];
         self.goldCostLabel.center = CGPointMake((self.frame.size.width - 25) / 2 - 6, self.infoLabel.frame.size.height / 2 + self.frame.size.height / 2);
         [self addSubview:self.goldCostLabel];
@@ -36,6 +38,7 @@
 -(void)setText:(NSString *)text andGoldCost:(NSInteger)goldCost
 {
     self.infoLabel.text = text;
+    self.infoLabel.fontSize = [self.infoLabel bestFontSize];
     self.goldCostLabel.text = [NSString stringWithFormat:@"%ld",(long)goldCost];
 }
 

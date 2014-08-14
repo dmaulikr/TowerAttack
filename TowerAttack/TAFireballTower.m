@@ -30,6 +30,7 @@
         self.projectileToFire.zPosition = TANodeZPositionProjectile - TANodeZPositionTower;
         [self addChild:self.projectileToFire];
         self.projectileToFire.hidden = YES;
+        self.towerType = TATowerTypeFireballTower;
         [self.infoStrings addObjectsFromArray:[NSArray arrayWithObjects:[NSString stringWithFormat:@"Damage/shot: %ld",(long)self.attackDamage], [NSString stringWithFormat:@"%g shots/second",1.0f/self.timeBetweenAttacks], nil]];
     }
     return self;

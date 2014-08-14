@@ -13,8 +13,12 @@
 #import "TAUnit.h"
 #import "TATowerPurchaseSidebar.h"
 #import "TALabel.h"
+#import "TAButton.h"
+#import "TAPLayerProfile.h"
+#import "TAMainMenuViewController.h"
 
 CGFloat const panelY = 240;
+CGFloat const purchaseBarWidth = 68;
 
 @implementation TAUIOverlay
 
@@ -22,40 +26,75 @@ CGFloat const panelY = 240;
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+        self.topDisplayLabel = [[TALabel alloc] initWithFrame:CGRectMake(0, 5, 45, 60) andFontSize:20];
+        self.topDisplayLabel.textAlignment = NSTextAlignmentRight;
+        [self addSubview:self.topDisplayLabel];
+        
+        self.currentGold = 100;
+        self.lastScale = 1.0f;
+        self.scenePoint = self.battleScene.position;
+        self.sceneScale = 1.0f;
+        self.livesLeft = 10;
+        self.shouldPassTouches = YES;
         self.backgroundColor = [UIColor clearColor];
-        self.displayLabel = [[TALabel alloc] initWithFrame:CGRectMake(0, 5, 45, 60) andFontSize:20];
-        self.displayLabel.textAlignment = NSTextAlignmentRight;
-        [self addSubview:self.displayLabel];
+        
+        self.bottomDisplayLabel = [[TALabel alloc] initWithFrame:CGRectMake(6, self.frame.size.height - 20, 400, 20) andFontSize:14];
+        self.bottomDisplayLabel.textAlignment = NSTextAlignmentLeft;
+        self.bottomDisplayLabel.numberOfLines = 1;
+        [self addSubview:self.bottomDisplayLabel];
+        
+        self.xpBar = [[UIProgressView alloc] initWithFrame:CGRectMake(-1, self.frame.size.height - 5, 120, 4)];
+        self.xpBar.progressTintColor = [UIColor colorWithRed:22.0f / 255.0f green:87.0f / 255.0f blue:0.0f / 255.0f alpha:1.0f];
+        self.xpBar.trackTintColor = [UIColor colorWithRed:255.0f / 255.0f green:254.0f / 255.0f blue:201.0f / 255.0f alpha:0.7f];
+        [self addSubview:self.xpBar];
+        self.xpBar.center = CGPointMake(self.xpBar.center.x, self.bottomDisplayLabel.center.y);
+        
+        [self configureBottomLabel];
+    
         UIImageView *heart = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"heart"]];
         heart.frame = CGRectMake(50, 39, 16, 16);
         [self addSubview:heart];
         UIImageView *coin = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"coin2"]];
         coin.frame = CGRectMake(50, 16, 16, 16);
         [self addSubview:coin];
-        self.livesLeft = 10;
-        self.shouldPassTouches = YES;
-        self.currentGold = 100;
+        
+        self.startWaveButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.startWaveButton setFrame:CGRectMake(screenWidth - purchaseBarWidth - 3 - 25, 2 + 25 + 2, 25, 25)];
+        self.startWaveButton.adjustsImageWhenHighlighted = NO;
+        [self.startWaveButton setImage:[UIImage imageNamed:@"StartWave"] forState:UIControlStateNormal];
+    //    self.startWaveButton.alpha = 0.7;
+        [self.startWaveButton addTarget:self action:@selector(startWave) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:self.startWaveButton];
+        
+        self.pauseButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.pauseButton setFrame:CGRectMake(screenWidth - purchaseBarWidth - 3 - 25, 2, 25, 25)];
+        [self.pauseButton setImage:[UIImage imageNamed:@"PauseButton"] forState:UIControlStateNormal];
+        [self.pauseButton addTarget:self action:@selector(pauseGame) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:self.pauseButton];
+        
         self.cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [self.cancelButton setImage:[UIImage imageNamed:@"Cancel"] forState:UIControlStateNormal];
+        self.cancelButton.tag = 1;
+        self.cancelButton.alpha = 0;
+        [self addSubview:self.cancelButton];
+        [self.cancelButton addTarget:self action:@selector(decideTowerPlacementFromButton:) forControlEvents:UIControlEventTouchUpInside];
+
         self.confirmButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [self.confirmButton setImage:[UIImage imageNamed:@"Confirm"] forState:UIControlStateNormal];
         self.confirmButton.alpha = 0;
         self.confirmButton.tag = 0;
-        self.cancelButton.tag = 1;
-        self.cancelButton.alpha = 0;
-        self.lastScale = 1.0f;
-        self.purchaseSidebar = [[TATowerPurchaseSidebar alloc] initWithFrame:CGRectMake(screenWidth - 68, 0, 68, 320)];
-        [self addSubview:self.purchaseSidebar];
-        [self addSubview:self.cancelButton];
         [self addSubview:self.confirmButton];
-        [self.cancelButton addTarget:self action:@selector(decideTowerPlacementFromButton:) forControlEvents:UIControlEventTouchUpInside];
         [self.confirmButton addTarget:self action:@selector(decideTowerPlacementFromButton:) forControlEvents:UIControlEventTouchUpInside];
-        self.infoPanel = [[TATowerInfoPanel alloc] initWithFrame:CGRectMake(0, 320, screenWidth, 100)];
+        
+        self.infoPanel = [[TATowerInfoPanel alloc] initWithFrame:CGRectMake(0, 320, screenWidth, 80)];
         [self addSubview:self.infoPanel];
+        
+        self.purchaseSidebar = [[TATowerPurchaseSidebar alloc] initWithFrame:CGRectMake(screenWidth - purchaseBarWidth, 0, purchaseBarWidth, 320)];
+        [self addSubview:self.purchaseSidebar];
         
         UIPinchGestureRecognizer *pinchListener = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(userPinchedWithInfo:)];
         [self addGestureRecognizer:pinchListener];
+        
     }
     return self;
 }
@@ -63,8 +102,8 @@ CGFloat const panelY = 240;
 -(void)changeNodeOverlayLocation:(CGPoint)point andHidden:(BOOL)hidden
 {
     if (!hidden) {
-        [self.cancelButton setFrame:CGRectMake(point.x + (float)self.selectedNode.size.width / 15.0f, point.y + (float)self.selectedNode.size.width / (1.0f + 2.0f/3.0f), (float)self.selectedNode.size.width / 2.0f, (float)self.selectedNode.size.width / 2.0f)];
-        [self.confirmButton setFrame:CGRectMake(point.x - (float)self.selectedNode.size.width / 2.0f, point.y + (float)self.selectedNode.size.width / (1.0f + 2.0f/3.0f), (float)self.selectedNode.size.width / 2.0f, (float)self.selectedNode.size.width / 2.0f)];
+        [self.cancelButton setFrame:CGRectMake(point.x + (float)self.selectedNode.size.width / 15.0f * self.battleScene.scale, point.y + (float)self.selectedNode.size.width / (1.0f + 2.0f/3.0f) * self.battleScene.scale, (float)self.selectedNode.size.width / 2.0f * self.battleScene.scale, (float)self.selectedNode.size.width / 2.0f * self.battleScene.scale)];
+        [self.confirmButton setFrame:CGRectMake(point.x - (float)self.selectedNode.size.width / 2.0f * self.battleScene.scale, point.y + (float)self.selectedNode.size.width / (1.0f + 2.0f/3.0f) * self.battleScene.scale, (float)self.selectedNode.size.width / 2.0f * self.battleScene.scale, (float)self.selectedNode.size.width / 2.0f * self.battleScene.scale)];
     }
     if (hidden) {
         self.confirmButton.alpha = 0;
@@ -75,6 +114,25 @@ CGFloat const panelY = 240;
         self.cancelButton.alpha = 1;
     }
     self.lastOverlayLocation = point;
+}
+
+-(void)configureBottomLabel
+{
+    TAPlayerProfile *profile = [TAPlayerProfile sharedInstance];
+
+    self.bottomDisplayLabel.text = [NSString stringWithFormat:@"Area %lu Wave %lu | %@: Level %lu (%luxp / %luxp)",(unsigned long)self.battleScene.currentArea, (unsigned long)self.battleScene.currentWave,profile.name,(unsigned long)profile.level,(unsigned long)profile.currentLevelXP,(unsigned long)profile.totalLevelXP];
+    [self.bottomDisplayLabel sizeToFit];
+    
+    NSInteger xpGained = [profile currentLevelXP] - self.xpBar.progress * [profile totalLevelXP];
+    if (self.xpBar.frame.origin.x > 0) {
+        [self popText:[NSString stringWithFormat:@"%ldXP",(long)xpGained] withColour:self.xpBar.progressTintColor overPoint:[self.battleScene convertPoint:[self.battleScene.scene convertPointFromView:CGPointMake(CGRectGetMaxX(self.bottomDisplayLabel.frame) + 20, self.xpBar.frame.origin.y - 10)] fromNode:self.battleScene.scene]  completion:nil];
+        [self.xpBar setProgress:(CGFloat)[profile currentLevelXP] / (CGFloat)[profile totalLevelXP] animated:YES];
+    }
+    else {
+        [self.xpBar setProgress:(CGFloat)[profile currentLevelXP] / (CGFloat)[profile totalLevelXP]];
+    }
+    
+    self.xpBar.frame = CGRectMake(CGRectGetMaxX(self.bottomDisplayLabel.frame) + 6, self.xpBar.frame.origin.y, self.xpBar.frame.size.width, self.xpBar.frame.size.height);
 }
 
 -(void)decideTowerPlacementFromButton:(UIButton *)button
@@ -94,43 +152,23 @@ CGFloat const panelY = 240;
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-   // if (self.infoPanel.frame.origin.y == panelY) {
-   /* if ([[touches anyObject] locationInView:self].y > panelY) {
-            [UIView animateWithDuration:0.25 animations:^(void) {
-                self.infoPanel.frame = CGRectMake(0, screenWidth, screenWidth, 80);
-                self.purchaseSidebar.frame = CGRectMake(500, 0, 68, 320);
-            }];
-        }
-        self.shouldPassTouches = NO;
+    if (![self.battleScene isPaused]) {
+        [self.battleScene touchesBegan:touches withEvent:event];
     }
-    else {*/
- //   self.lastScale = sca
-    [self.battleScene touchesBegan:touches withEvent:event];    
-     //self.anchorPoint = [self.battleScene.scene convertPoint:[self.battleScene.scene convertPointFromView:[[touches anyObject] locationInView:self]] toNode:self.battleScene];
-    
-  //  NSLog(@"%f %f",self.anchorPoint.x,self.anchorPoint.y);
-    //  CGPoint anchorPoint = CGPointMake(pointInBattleScene.x, pointInBattleScene.y);
-  //  CGPoint originalPoint = [self.battleScene.scene convertPointFromView:[[touches anyObject] locationInView:self]];
-
-   // }
 }
 
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-  //  if (self.shouldPassTouches) {
+    if (![self.battleScene isPaused]) {
         [self.battleScene touchesMoved:touches withEvent:event];
-  //  }
+    }
 }
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
- //   if (self.shouldPassTouches) {
+    if (![self.battleScene isPaused]) {
         [self.battleScene touchesEnded:touches withEvent:event];
- /*   }
-    else {
-        self.shouldPassTouches = YES;
-    }*/
-
+    }
 }
 
 -(void)userPinchedWithInfo:(UIPinchGestureRecognizer *)listener
@@ -145,6 +183,7 @@ CGFloat const panelY = 240;
         if (1200 * scale < screenWidth) {
             scale = screenWidth / 1200;
         }
+        [self changeNodeOverlayLocation:CGPointMake(0, 0) andHidden:YES];
         [self.battleScene runAction:[SKAction scaleTo:scale duration:0] completion:^{
             CGPoint newAnchorPoint = [self.battleScene.scene convertPoint:[self.battleScene.scene convertPointFromView:point] toNode:self.battleScene];
             CGFloat deltaX = newAnchorPoint.x - self.anchorPoint.x, deltaY = newAnchorPoint.y - self.anchorPoint.y;
@@ -160,8 +199,10 @@ CGFloat const panelY = 240;
             else if ((self.battleScene.position.y + deltaY) * -1 + self.frame.size.height >= 900 * scale) {
                 deltaY = (900 * scale + self.battleScene.position.y - self.frame.size.height) * -1;
             }
-            self.battleScene.position = CGPointMake(self.battleScene.position.x + deltaX, self.battleScene.position.y + deltaY);
-            self.battleScene.scale = scale;
+   //         self.battleScene.position = CGPointMake(self.battleScene.position.x + deltaX, self.battleScene.position.y + deltaY);
+   //         self.battleScene.scale = scale;
+            self.sceneScale = scale;
+            self.scenePoint = CGPointMake(self.battleScene.position.x + deltaX, self.battleScene.position.y + deltaY);
      //       CGPoint pointCheck = [self.battleScene.scene convertPoint:[self.battleScene.scene convertPointFromView:point] toNode:self.battleScene];
      //       NSLog(@"new: %f %f old: %f %f check: %f %f position: %f %f",newAnchorPoint.x,newAnchorPoint.y,self.anchorPoint.x,self.anchorPoint.y, pointCheck.x, pointCheck.y, self.battleScene.position.x, self.battleScene.position.y);
      //       NSLog(@"%f",scale);
@@ -172,17 +213,137 @@ CGFloat const panelY = 240;
     }
     else if (listener.state == UIGestureRecognizerStateEnded) {
         self.lastScale = scale;
+        [self changeNodeOverlayLocation:[self.battleScene.scene convertPointToView:[self.battleScene convertPoint:[[self.battleScene childNodeWithName:@"Placeholder"] position] toNode:self.battleScene.scene]] andHidden:NO];
     }
 }
 
--(void)popText:(NSString *)text withColour:(UIColor *)colour overNode:(SKNode *)node completion:(void (^)(void))block
+-(void)startWave
+{
+    self.battleScene.waveIsSpawning = YES;
+    [UIView animateWithDuration:0.3 animations:^{
+        self.startWaveButton.alpha = 0;
+    }];
+}
+
+-(void)presentNotificationWithText:(NSString *)text
+{
+    CGFloat x = self.frame.size.width / 2 - 150, y = -80, width = self.frame.size.width - x * 2, height = y * -1;
+    TAButton *notification = [[TAButton alloc] initWithFrame:CGRectMake(x, y, width, height) andFontSize:40];
+    [notification setTitle:text forState:UIControlStateNormal];
+    [self addSubview:notification];
+    [UIView animateWithDuration:1
+                          delay:0
+         usingSpringWithDamping:1
+          initialSpringVelocity:0
+                        options:UIViewAnimationOptionTransitionNone
+                     animations:^{
+                         notification.frame = CGRectMake(notification.frame.origin.x, self.frame.size.height / 2 - notification.frame.size.height / 2, notification.frame.size.width, notification.frame.size.height);
+                         self.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.7];
+                     }
+                     completion:nil];
+}
+
+-(void)pauseGame
+{
+    [self.battleScene setPaused:YES];
+    
+    UIView *grayCover = [[UIView alloc] initWithFrame:self.frame];
+    grayCover.tag = 20;
+    grayCover.backgroundColor = [UIColor colorWithWhite:0.1 alpha:1.0];
+    grayCover.alpha = 0;
+    [self addSubview:grayCover];
+    
+    TAButton *resume = [[TAButton alloc] initWithFrame:CGRectMake(0, 0, 100, 40) andFontSize:20];
+    [resume setTitle:@"Resume" forState:UIControlStateNormal];
+    resume.center = self.center;
+    resume.tag = 21;
+    resume.alpha = 0;
+    [self addSubview:resume];
+    [resume addTarget:self action:@selector(resumeGame) forControlEvents:UIControlEventTouchUpInside];
+    
+    TAButton *settings = [[TAButton alloc] initWithFrame:resume.frame andFontSize:20];
+    [settings setTitle:@"Settings" forState:UIControlStateNormal];
+    settings.tag = 22;
+    settings.alpha = 0;
+    [self addSubview:settings];
+    
+    TAButton *exit = [[TAButton alloc] initWithFrame:resume.frame andFontSize:20];
+    [exit setTitle:@"Exit" forState:UIControlStateNormal];
+    exit.tag = 23;
+    exit.alpha = 0;
+    [self addSubview:exit];
+    [exit addTarget:self action:@selector(endGame) forControlEvents:UIControlEventTouchUpInside];
+    
+    TALabel *pauseLabel = [[TALabel alloc] initWithFrame:CGRectMake(screenWidth / 2 - 160 / 2, 20, 160, 50) andFontSize:45];
+    pauseLabel.text = @"Paused";
+    pauseLabel.textColor = [UIColor whiteColor];
+    pauseLabel.alpha = 0;
+    pauseLabel.tag = 24;
+    [self addSubview:pauseLabel];
+    
+    [UIView animateWithDuration:0.3
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         CGFloat bufferSpace = 15;
+                         resume.frame = CGRectMake(resume.frame.origin.x, resume.frame
+                                                   .origin.y - resume.frame.size.height - bufferSpace, resume.frame.size.width, resume.frame.size.height);
+                         exit.frame = CGRectMake(exit.frame.origin.x, exit.frame
+                                                   .origin.y + exit.frame.size.height + bufferSpace, exit.frame.size.width, exit.frame.size.height);
+                         grayCover.alpha = 0.4;
+                         resume.alpha = 1.0;
+                         settings.alpha = 1.0;
+                         exit.alpha = 1.0;
+                         pauseLabel.alpha = 0.7;
+                     }completion:nil];
+}
+
+-(void)resumeGame
+{
+    UIView *grayCover = [self viewWithTag:20];
+    TAButton *resume = (TAButton *)[self viewWithTag:21];
+    TAButton *settings = (TAButton *)[self viewWithTag:22];
+    TAButton *exit = (TAButton *)[self viewWithTag:23];
+    TALabel *pauseLabel = (TALabel *)[self viewWithTag:24];
+    
+    [UIView animateWithDuration:0.3
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         resume.frame = settings.frame;
+                         exit.frame = settings.frame;
+                         grayCover.alpha = 0;
+                         resume.alpha = 0;
+                         settings.alpha = 0;
+                         exit.alpha = 0;
+                         pauseLabel.alpha = 0;
+                     }completion:^(BOOL finished) {
+                         [grayCover removeFromSuperview];
+                         [resume removeFromSuperview];
+                         [settings removeFromSuperview];
+                         [exit removeFromSuperview];
+                         [pauseLabel removeFromSuperview];
+                         [self.battleScene setPaused:NO];
+                     }];
+}
+
+-(void)endGame
+{
+ //   [self.battleScene.scene.view presentScene:nil];
+    TAMainMenuViewController *v = (TAMainMenuViewController *)[self.battleScene.scene.view.superview nextResponder];
+    [self.battleScene.scene.view removeFromSuperview];
+    [v.view setBackgroundColor:[UIColor whiteColor]];
+    NSLog(@"%@",v.view.backgroundColor);
+}
+
+-(void)popText:(NSString *)text withColour:(UIColor *)colour overPoint:(CGPoint)point completion:(void (^)(void))block
 {
     SKLabelNode *label = [SKLabelNode labelNodeWithFontNamed:@"Cochin-Bold"];
     label.fontColor = colour;
     label.fontSize = 13;
     label.text = text;
     label.zPosition = TANodeZPositionPlaceholder + 1;
-    label.position = node.position;
+    label.position = point;
     [self.battleScene addChild:label];
     [label runAction:[SKAction group:@[[SKAction moveBy:CGVectorMake(0, 20) duration:1.5],[SKAction fadeAlphaTo:0 duration:1.5]]] completion:^{
         [label removeFromParent];
@@ -192,14 +353,14 @@ CGFloat const panelY = 240;
 
  -(void)setCurrentGold:(NSUInteger)currentGold
 {
-    [self.displayLabel setText:[NSString stringWithFormat:@"%lu\n%ld",(unsigned long)currentGold,(long)self
+    [self.topDisplayLabel setText:[NSString stringWithFormat:@"%lu\n%ld",(unsigned long)currentGold,(long)self
                                 .livesLeft]];
     _currentGold = currentGold;
 }
 
 -(void)setLivesLeft:(NSInteger)livesLeft
 {
-    [self.displayLabel setText:[NSString stringWithFormat:@"%lu\n%ld",(unsigned long)self.currentGold,(long)livesLeft]];
+    [self.topDisplayLabel setText:[NSString stringWithFormat:@"%lu\n%ld",(unsigned long)self.currentGold,(long)livesLeft]];
     if (livesLeft == 0) {
         [self.battleScene.scene.view setPaused:YES];
         TALabel *endGame = [[TALabel alloc] initWithFrame:CGRectMake(self.frame.size.width / 2 - 100, self.frame.size.width / 2 - 25, 200, 50) andFontSize:30];
@@ -222,14 +383,20 @@ CGFloat const panelY = 240;
     self.infoPanel.selectedUnit = selectedUnit;
     if (selectedUnit != nil) {
         [UIView animateWithDuration:0.25 animations:^(void) {
-            self.infoPanel.frame = CGRectMake(0, panelY, screenWidth, 80);
-            self.purchaseSidebar.frame = CGRectMake(screenWidth, 0, 68, 320);
+            self.infoPanel.frame = CGRectMake(0, self.frame.size.height - self.infoPanel.frame.size.height, screenWidth, self.infoPanel.frame.size.height);
+            self.bottomDisplayLabel.frame = CGRectMake(self.bottomDisplayLabel.frame.origin.x, self.infoPanel.frame.origin.y - self.bottomDisplayLabel.frame.size.height, self.bottomDisplayLabel.frame.size.width, self.bottomDisplayLabel.frame.size.height);
+            self.purchaseSidebar.frame = CGRectMake(screenWidth, 0, purchaseBarWidth, self.frame.size.height);
+            self.pauseButton.frame = CGRectMake(screenWidth - 2 - 25, self.pauseButton.frame.origin.y, self.pauseButton.frame.size.width, self.pauseButton.frame.size.height);
+            self.startWaveButton.frame = CGRectMake(screenWidth - 2 - 25, self.startWaveButton.frame.origin.y, self.startWaveButton.frame.size.width, self.startWaveButton.frame.size.height);
         }];
     }
     else {
         [UIView animateWithDuration:0.25 animations:^(void) {
-            self.infoPanel.frame = CGRectMake(0, 320, screenWidth, 80);
-            self.purchaseSidebar.frame = CGRectMake(screenWidth - 68, 0, 68, 320);
+            self.infoPanel.frame = CGRectMake(0, self.frame.size.height, screenWidth, self.infoPanel.frame.size.height);
+            self.bottomDisplayLabel.frame = CGRectMake(self.bottomDisplayLabel.frame.origin.x, self.frame.size.height - self.bottomDisplayLabel.frame.size.height, self.bottomDisplayLabel.frame.size.width, self.bottomDisplayLabel.frame.size.height);
+            self.purchaseSidebar.frame = CGRectMake(screenWidth - purchaseBarWidth, 0, purchaseBarWidth, self.frame.size.height);
+            self.pauseButton.frame = CGRectMake(screenWidth - 2 - purchaseBarWidth - 25, self.pauseButton.frame.origin.y, self.pauseButton.frame.size.width, self.pauseButton.frame.size.height);
+            self.startWaveButton.frame = CGRectMake(screenWidth - 2 - purchaseBarWidth - 25, self.startWaveButton.frame.origin.y, self.startWaveButton.frame.size.width, self.startWaveButton.frame.size.height);
         }];
     }
     //code for bringing up tower upgrade / info overlay

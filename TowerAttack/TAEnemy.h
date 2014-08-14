@@ -18,6 +18,13 @@ enum TAEnemyGoldReward : NSUInteger {
     TAEnemyGoldRewardNinja = 30
 };
 
+enum TAEnemyXPReward : NSUInteger {
+    TAEnemyXPRewardAttacker = 3,
+    TAEnemyXPRewardProtector = 5,
+    TAEnemyXPRewardDemon = 10,
+    TAEnemyXPRewardNinja = 6
+};
+
 enum TAEnemyMovementSpeed : NSUInteger {
     TAEnemyMovementSpeedAttacker = 30,
     TAEnemyMovementSpeedProtector = 15,
@@ -32,6 +39,13 @@ enum TAEnemyMaximumHealth : NSUInteger {
     TAEnemyMaximumHealthNinja = 90
 };
 
+enum TAEnemyType : NSUInteger {
+    TAEnemyTypeAttacker,
+    TAEnemyTypeProtector,
+    TAEnemyTypeDemon,
+    TAEnemyTypeNinja
+};
+
 @interface TAEnemy : TAUnit
 
 @property (nonatomic) CGFloat movementSpeed;
@@ -39,8 +53,9 @@ enum TAEnemyMaximumHealth : NSUInteger {
 @property (nonatomic) CGFloat currentHealth;
 @property (nonatomic, strong) SKSpriteNode *healthBarInside;
 @property (nonatomic) NSUInteger goldReward;
-
+@property (nonatomic) NSUInteger xpReward;
 
 -(void)finishPath;
+-(void)die;
 
 @end

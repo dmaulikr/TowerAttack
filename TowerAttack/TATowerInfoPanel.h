@@ -22,6 +22,7 @@
 @property (strong, nonatomic) TALabel *otherUnitInfo;
 @property (strong, nonatomic) TAButton *upgradeButton;
 @property (strong, nonatomic) TAButton *sellButton;
+@property (strong, nonatomic) NSLayoutConstraint *aspectConstraint;
 //@property (strong, nonatomic) NSArray *additionalUnitInfo;
 
 -(id)initWithFrame:(CGRect)frame;

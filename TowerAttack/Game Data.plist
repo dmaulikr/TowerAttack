@@ -5,7 +5,7 @@
 	<key>TowerStatsForLevel</key>
 	<array>
 		<array>
-			<string>10 100 0.5 1</string>
+			<string>50 100 0.5 1</string>
 			<string>12 110 0.4 1</string>
 			<string>15 120 0.35 1</string>
 			<string>18 125 0.3 1</string>
@@ -39,6 +39,19 @@
 		<string>This tower creates a frigid, icy aura around itself, slowing all enemies that enter it.</string>
 		<string>This tower fires off powerful blasts, doing heavy damage to all enemies in the danger zone.</string>
 		<string>The psychic tower emits constant psychic waves, causing the health of all enemies within its large area of effect to continuously drop.</string>
+	</array>
+	<key>WaveInfo</key>
+	<array>
+		<string>000001110002200111022333002133000</string>
+		<string>0011103302330220111000221102302222011222033110302002213</string>
+	</array>
+	<key>LevelXPs</key>
+	<array>
+		<string>100</string>
+		<string>120</string>
+		<string>150</string>
+		<string>200</string>
+		<string>280</string>
 	</array>
 </dict>
 </plist>

@@ -13,7 +13,8 @@
 @class TATower;
 @class TAEnemy;
 
-extern CGFloat const screenWidth;
+#define screenWidth [[UIScreen mainScreen] bounds].size.width
+
 
 typedef enum : uint8_t {
     TAContactTypeTower             = 1,
@@ -33,15 +34,27 @@ enum TANodeZPosition : NSInteger {
     TANodeZPositionPlaceholder
 };
 
+enum TAArea : NSInteger {
+    TAAreaGrassy
+};
+
+@interface TAScene : SKScene
+
+@end
+
 @interface TABattleScene : SKSpriteNode <SKPhysicsContactDelegate>
 
 @property (strong, nonatomic) NSMutableArray *towersOnField;
 @property (strong, nonatomic) NSMutableArray *enemiesOnField;
+@property (strong, nonatomic) NSArray *waveInfo;
 @property (nonatomic) CGPoint spawnPoint;
-@property (nonatomic) NSInteger spawnRefreshCount;
+@property (nonatomic) NSUInteger currentWave;
+@property (nonatomic) NSUInteger currentArea;
+@property (nonatomic) NSUInteger enemyCount;
 @property (nonatomic) CGPathRef enemyMovementPath;
 @property (nonatomic) BOOL click;
 @property (nonatomic) BOOL isDraggingTowerPlaceholder;
+@property (nonatomic) BOOL waveIsSpawning;
 @property (nonatomic) CGPoint lastPoint;
 @property (strong, nonatomic) TAUIOverlay *uiOverlay;
 @property (nonatomic) CGRect pathDrawerFrame;
@@ -51,11 +64,13 @@ enum TANodeZPosition : NSInteger {
 
 -(CGFloat)distanceFromA:(CGPoint)pointA toB:(CGPoint)pointB;
 -(id)initWithSize:(CGSize)size andPath:(CGPathRef)path andSpawnPoint:(CGPoint)point;
--(void)spawnEnemy;
+-(void)spawnEnemyOfType:(NSUInteger)enemyType;
 -(void)addTower;
 -(void)userClickedAtLocation:(UITouch *)touch;
+-(void)checkForWaveOver;
 -(void)contactBeganBetweenTower:(TATower *)tower andEnemy:(TAEnemy *)enemy;
 -(void)contactEndedBetweenTower:(TATower *)tower andEnemy:(TAEnemy *)enemy;
 -(void)removeTower:(TATower *)tower;
+-(void)configurePathsForSize:(CGSize)size;
 
 @end

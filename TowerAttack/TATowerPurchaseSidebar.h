@@ -14,7 +14,6 @@
 
 @property (nonatomic) BOOL canSelectTowers;
 @property (nonatomic) NSInteger selectedTowerType;
-@property (strong, nonatomic) UIScrollView *towerScrollView;
 @property (strong, nonatomic) NSMutableArray *towerIcons;
 @property (strong, nonatomic) NSMutableArray *towerLabels;
 @property (strong, nonatomic) TAInfoPopUp *infoPopUp;

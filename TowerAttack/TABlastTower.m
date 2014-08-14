@@ -31,6 +31,7 @@
         self.projectileToFire.particleBirthRate = 0;
         self.projectileToFire.zPosition = TANodeZPositionProjectile - TANodeZPositionTower;
         [self addChild:self.projectileToFire];
+        self.towerType = TATowerTypeBlastTower;
         [self.infoStrings addObjectsFromArray:[NSArray arrayWithObjects:[NSString stringWithFormat:@"Damage/blast: %ld",(long)self.attackDamage], [NSString stringWithFormat:@"%g blasts/second",1.0f/self.timeBetweenAttacks], nil]];
     }
     return self;

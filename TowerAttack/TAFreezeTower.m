@@ -28,6 +28,7 @@
         SKEmitterNode *frost = [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSBundle mainBundle] pathForResource:@"Frost" ofType:@"sks"]];
         frost.zPosition = TANodeZPositionProjectile - TANodeZPositionTower;
       //  self.zPosition = TANodeZPositionTower;
+        self.towerType = TATowerTypeFreezeTower;
         [self addChild:frost];
         [self.infoStrings addObject:[NSString stringWithFormat:@"Speed of all enemies within range decreased by factor of %g",1.0f / self.speedMultiplier]];
     }

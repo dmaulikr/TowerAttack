@@ -31,9 +31,13 @@
 		2C28D0C91986946500E9499C /* LevelStripe.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C28D0C81986946500E9499C /* LevelStripe.png */; };
 		2C28D0CC1986CE7500E9499C /* Cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C28D0CA1986CE7500E9499C /* Cancel.png */; };
 		2C28D0CD1986CE7500E9499C /* Confirm.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C28D0CB1986CE7500E9499C /* Confirm.png */; };
+		2C427258199A6A9F00B3E7C6 /* TAProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C427257199A6A9F00B3E7C6 /* TAProfileViewController.m */; };
+		2C42725A199BDC1000B3E7C6 /* Projectile.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2C427259199BDC1000B3E7C6 /* Projectile.sks */; };
+		2C42725E199D09AE00B3E7C6 /* StartWave@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C42725D199D09AE00B3E7C6 /* StartWave@2x.png */; };
+		2C427260199D09B500B3E7C6 /* PauseButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C42725F199D09B500B3E7C6 /* PauseButton@2x.png */; };
 		2C6828BD1976CEB2001FEDFA /* Images.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2C6828BC1976CEB2001FEDFA /* Images.atlas */; };
 		2C6828BF1976D4F8001FEDFA /* FreezeTower.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C6828BE1976D4F8001FEDFA /* FreezeTower.png */; };
-		2C6828C41976D7A5001FEDFA /* BlastTower.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C6828C11976D7A5001FEDFA /* BlastTower.png */; };
+		2C6828C41976D7A5001FEDFA /* BlastTower@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C6828C11976D7A5001FEDFA /* BlastTower@2x.png */; };
 		2C6828C81976F47B001FEDFA /* TAFreezeTower.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C6828C71976F47B001FEDFA /* TAFreezeTower.m */; };
 		2C6828CB1976F499001FEDFA /* TABlastTower.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C6828CA1976F499001FEDFA /* TABlastTower.m */; };
 		2C6828D21977105B001FEDFA /* TATower.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C6828D11977105B001FEDFA /* TATower.m */; };
@@ -41,6 +45,7 @@
 		2C7E6CBA1977140A0017BE62 /* TAFireballTower.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C7E6CB91977140A0017BE62 /* TAFireballTower.m */; };
 		2C842E951977255100C98606 /* Blast.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2C842E941977255100C98606 /* Blast.sks */; };
 		2C842E9719782FD500C98606 /* Frost.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2C842E9619782FD500C98606 /* Frost.sks */; };
+		2C9D2806199A549200B10538 /* TAPlayerProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C9D2805199A549200B10538 /* TAPlayerProfile.m */; };
 		2CA3D7D9197422CE0042BB27 /* TATowerInfoPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CA3D7D8197422CE0042BB27 /* TATowerInfoPanel.m */; };
 		2CA3D7DC197437400042BB27 /* TAUnit.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CA3D7DB197437400042BB27 /* TAUnit.m */; };
 		2CA3D7DE197441F90042BB27 /* TowerPlaced.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2CA3D7DD197441F90042BB27 /* TowerPlaced.wav */; };
@@ -118,9 +123,14 @@
 		2C28D0C81986946500E9499C /* LevelStripe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LevelStripe.png; sourceTree = "<group>"; };
 		2C28D0CA1986CE7500E9499C /* Cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cancel.png; sourceTree = "<group>"; };
 		2C28D0CB1986CE7500E9499C /* Confirm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Confirm.png; sourceTree = "<group>"; };
+		2C427256199A6A9F00B3E7C6 /* TAProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAProfileViewController.h; sourceTree = "<group>"; };
+		2C427257199A6A9F00B3E7C6 /* TAProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAProfileViewController.m; sourceTree = "<group>"; };
+		2C427259199BDC1000B3E7C6 /* Projectile.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Projectile.sks; path = Images.atlas/Projectile.sks; sourceTree = "<group>"; };
+		2C42725D199D09AE00B3E7C6 /* StartWave@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "StartWave@2x.png"; sourceTree = "<group>"; };
+		2C42725F199D09B500B3E7C6 /* PauseButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PauseButton@2x.png"; sourceTree = "<group>"; };
 		2C6828BC1976CEB2001FEDFA /* Images.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Images.atlas; sourceTree = "<group>"; };
 		2C6828BE1976D4F8001FEDFA /* FreezeTower.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FreezeTower.png; sourceTree = "<group>"; };
-		2C6828C11976D7A5001FEDFA /* BlastTower.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BlastTower.png; sourceTree = "<group>"; };
+		2C6828C11976D7A5001FEDFA /* BlastTower@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlastTower@2x.png"; sourceTree = "<group>"; };
 		2C6828C61976F47B001FEDFA /* TAFreezeTower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAFreezeTower.h; sourceTree = "<group>"; };
 		2C6828C71976F47B001FEDFA /* TAFreezeTower.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAFreezeTower.m; sourceTree = "<group>"; };
 		2C6828C91976F499001FEDFA /* TABlastTower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TABlastTower.h; sourceTree = "<group>"; };
@@ -133,6 +143,8 @@
 		2C7E6CB91977140A0017BE62 /* TAFireballTower.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAFireballTower.m; sourceTree = "<group>"; };
 		2C842E941977255100C98606 /* Blast.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Blast.sks; path = Images.atlas/Blast.sks; sourceTree = "<group>"; };
 		2C842E9619782FD500C98606 /* Frost.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Frost.sks; path = Images.atlas/Frost.sks; sourceTree = "<group>"; };
+		2C9D2804199A549200B10538 /* TAPlayerProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPlayerProfile.h; sourceTree = "<group>"; };
+		2C9D2805199A549200B10538 /* TAPlayerProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPlayerProfile.m; sourceTree = "<group>"; };
 		2CA3D7D7197422CE0042BB27 /* TATowerInfoPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TATowerInfoPanel.h; sourceTree = "<group>"; };
 		2CA3D7D8197422CE0042BB27 /* TATowerInfoPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TATowerInfoPanel.m; sourceTree = "<group>"; };
 		2CA3D7DA197437400042BB27 /* TAUnit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAUnit.h; sourceTree = "<group>"; };
@@ -207,6 +219,18 @@
 			name = "Custom Views";
 			sourceTree = "<group>";
 		};
+		2C427255199A6A4000B3E7C6 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				2CD8D494196B21E200F4BA87 /* TAMainMenuViewController.h */,
+				2CD8D495196B21E200F4BA87 /* TAMainMenuViewController.m */,
+				2C427256199A6A9F00B3E7C6 /* TAProfileViewController.h */,
+				2C427257199A6A9F00B3E7C6 /* TAProfileViewController.m */,
+				2CD8D491196B21E200F4BA87 /* Main.storyboard */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
 		2C6828CC1976F4AE001FEDFA /* Units */ = {
 			isa = PBXGroup;
 			children = (
@@ -270,6 +294,15 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		2C9D2803199A546700B10538 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2C9D2804199A549200B10538 /* TAPlayerProfile.h */,
+				2C9D2805199A549200B10538 /* TAPlayerProfile.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		2CD8D471196B21E100F4BA87 = {
 			isa = PBXGroup;
 			children = (
@@ -306,13 +339,12 @@
 			children = (
 				2CD8D48E196B21E200F4BA87 /* AppDelegate.h */,
 				2CD8D48F196B21E200F4BA87 /* AppDelegate.m */,
-				2CD8D494196B21E200F4BA87 /* TAMainMenuViewController.h */,
-				2CD8D495196B21E200F4BA87 /* TAMainMenuViewController.m */,
-				2CD8D491196B21E200F4BA87 /* Main.storyboard */,
 				2CD8D497196B21E200F4BA87 /* TABattleScene.h */,
 				2CD8D498196B21E200F4BA87 /* TABattleScene.m */,
-				2C6828CC1976F4AE001FEDFA /* Units */,
+				2C9D2803199A546700B10538 /* Model */,
+				2C427255199A6A4000B3E7C6 /* View Controllers */,
 				2C6828CF1976F527001FEDFA /* Views */,
+				2C6828CC1976F4AE001FEDFA /* Units */,
 				2CD8D49C196B21E200F4BA87 /* Images.xcassets */,
 				2CD8D486196B21E200F4BA87 /* Supporting Files */,
 			);
@@ -322,6 +354,8 @@
 		2CD8D486196B21E200F4BA87 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				2C42725D199D09AE00B3E7C6 /* StartWave@2x.png */,
+				2C42725F199D09B500B3E7C6 /* PauseButton@2x.png */,
 				2C0D1055199287F300795828 /* sand@2x.jpg */,
 				2C0D10581992A13100795828 /* Fire.png */,
 				2C0D1053199272A300795828 /* Ninja.png */,
@@ -342,8 +376,9 @@
 				2CE6ACD2197EADC9006CAB16 /* PsychicDamage.sks */,
 				2CE6ACD3197EADC9006CAB16 /* spark.png */,
 				2C6828BE1976D4F8001FEDFA /* FreezeTower.png */,
-				2C6828C11976D7A5001FEDFA /* BlastTower.png */,
+				2C6828C11976D7A5001FEDFA /* BlastTower@2x.png */,
 				2C08A3121979BAEA001A2BCF /* SpinTower.png */,
+				2C427259199BDC1000B3E7C6 /* Projectile.sks */,
 				2C6828BC1976CEB2001FEDFA /* Images.atlas */,
 				2CD8D487196B21E200F4BA87 /* TowerAttack-Info.plist */,
 				2CA3D7DD197441F90042BB27 /* TowerPlaced.wav */,
@@ -464,6 +499,7 @@
 				2CD8D49D196B21E200F4BA87 /* Images.xcassets in Resources */,
 				2C28D0CD1986CE7500E9499C /* Confirm.png in Resources */,
 				2CA3D7DE197441F90042BB27 /* TowerPlaced.wav in Resources */,
+				2C42725A199BDC1000B3E7C6 /* Projectile.sks in Resources */,
 				2C842E9719782FD500C98606 /* Frost.sks in Resources */,
 				2C0846E61980335500BB3632 /* grass14.png in Resources */,
 				2C0D103F198C0DA300795828 /* Grass@2x.jpg in Resources */,
@@ -476,11 +512,13 @@
 				2C0D104A199166E300795828 /* Protector.png in Resources */,
 				2C08A3131979BAEA001A2BCF /* SpinTower.png in Resources */,
 				2CD8D493196B21E200F4BA87 /* Main.storyboard in Resources */,
-				2C6828C41976D7A5001FEDFA /* BlastTower.png in Resources */,
+				2C6828C41976D7A5001FEDFA /* BlastTower@2x.png in Resources */,
+				2C427260199D09B500B3E7C6 /* PauseButton@2x.png in Resources */,
 				2CA3D7E019745F220042BB27 /* Game Data.plist in Resources */,
 				2C0D10591992A13100795828 /* Fire.png in Resources */,
 				2C6828BF1976D4F8001FEDFA /* FreezeTower.png in Resources */,
 				2C0D104F19916D0F00795828 /* Demon.png in Resources */,
+				2C42725E199D09AE00B3E7C6 /* StartWave@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -502,11 +540,13 @@
 				2CD8D499196B21E200F4BA87 /* TABattleScene.m in Sources */,
 				2CE59DFC196B30B900FF3BD4 /* TAEnemy.m in Sources */,
 				2CD8D496196B21E200F4BA87 /* TAMainMenuViewController.m in Sources */,
+				2C9D2806199A549200B10538 /* TAPlayerProfile.m in Sources */,
 				2C08A30F1979B786001A2BCF /* TAPsychicTower.m in Sources */,
 				2C0D102F198BDCF600795828 /* TALabel.m in Sources */,
 				2CA3D7DC197437400042BB27 /* TAUnit.m in Sources */,
 				2C7E6CBA1977140A0017BE62 /* TAFireballTower.m in Sources */,
 				2CD8D490196B21E200F4BA87 /* AppDelegate.m in Sources */,
+				2C427258199A6A9F00B3E7C6 /* TAProfileViewController.m in Sources */,
 				2C6828D21977105B001FEDFA /* TATower.m in Sources */,
 				2CA3D7E3197568630042BB27 /* TATowerPurchaseSidebar.m in Sources */,
 				2C6828CB1976F499001FEDFA /* TABlastTower.m in Sources */,

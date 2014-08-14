@@ -23,6 +23,7 @@
         self.unitType = @"Psychic Tower";
         self.imageName = @"SpinTower";
         self.attackDamage = 0.2;
+        self.towerType = TATowerTypePsychicTower;
         self.damageTimers = [NSMutableArray array];
         self.description = (NSString *)[[[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Game Data" ofType:@"plist"]] objectForKey:@"TowerDescriptions"] objectAtIndex:TATowerTypePsychicTower];
         self.damageNodes = [NSMutableArray array];
@@ -45,7 +46,7 @@
         [self.damageNodes addObject:damageNode];
     }
     else {
-        [self.battleScene.uiOverlay popText:@"Dodge" withColour:[UIColor blueColor] overNode:enemy completion:nil];
+        [self.battleScene.uiOverlay popText:@"Dodge" withColour:[UIColor blueColor] overPoint:enemy.position completion:nil];
         [self.enemiesInRange removeObject:enemy];
     }
 }

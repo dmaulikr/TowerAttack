@@ -10,6 +10,11 @@
 
 @interface TAButton : UIButton
 
+@property (nonatomic, strong) UIColor *defaultColor;
+@property (nonatomic, strong) UIColor *highlightedColor;
+
 -(instancetype)initWithFrame:(CGRect)frame andFontSize:(CGFloat)size;
+-(instancetype)initWithFontSize:(CGFloat)size;
+-(void)configurePropertiesWithTextSize:(CGFloat)size;
 
 @end

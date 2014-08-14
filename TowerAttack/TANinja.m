@@ -18,6 +18,7 @@
         self.size = CGSizeMake(60, 40);
         self.healthBarInside.position = CGPointMake(self.position.x - 33.5/2, self.position.y + self.size.height * 3 / 4);
         self.goldReward = TAEnemyGoldRewardNinja;
+        self.xpReward = TAEnemyXPRewardNinja;
         self.movementSpeed = arc4random() % 10 + TAEnemyMovementSpeedNinja;
         self.maximumHealth = TAEnemyMaximumHealthNinja;
         self.description = @"Killing a ninja is never a sure thing, because they have a chance to dodge any damaging attack!";
@@ -42,7 +43,7 @@
         [super setCurrentHealth:currentHealth];
     }
     else {
-        [self.battleScene.uiOverlay popText:@"Dodge" withColour:[UIColor blueColor] overNode:self completion:nil];
+        [self.battleScene.uiOverlay popText:@"Dodge" withColour:[UIColor blueColor] overPoint:self.position completion:nil];
     }
 }
 

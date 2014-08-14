@@ -15,6 +15,7 @@
 @class TAUnit;
 @class TATowerPurchaseSidebar;
 @class TALabel;
+@class TAButton;
 
 extern CGFloat const panelY;
 
@@ -25,7 +26,11 @@ extern CGFloat const panelY;
 @property (strong, nonatomic) SKSpriteNode *selectedNode;
 @property (nonatomic) NSUInteger currentGold;
 @property (nonatomic) NSInteger livesLeft;
-@property (strong, nonatomic) TALabel *displayLabel;
+@property (strong, nonatomic) TALabel *topDisplayLabel;
+@property (strong, nonatomic) TALabel *bottomDisplayLabel;
+@property (strong, nonatomic) UIProgressView *xpBar;
+@property (strong, nonatomic) UIButton *startWaveButton;
+@property (strong, nonatomic) UIButton *pauseButton;
 @property (strong, nonatomic) UIButton *cancelButton;
 @property (strong, nonatomic) UIButton *confirmButton;
 @property (strong, nonatomic) TATowerInfoPanel *infoPanel;
@@ -33,13 +38,21 @@ extern CGFloat const panelY;
 @property (nonatomic) BOOL shouldPassTouches;
 @property (nonatomic) CGPoint lastOverlayLocation;
 @property (nonatomic) CGPoint anchorPoint;
+@property (nonatomic) CGPoint scenePoint;
 @property (nonatomic) CGFloat lastScale;
+@property (nonatomic) CGFloat sceneScale;
 
 
 -(id)initWithFrame:(CGRect)frame;
 -(void)changeNodeOverlayLocation:(CGPoint)point andHidden:(BOOL)hidden;
 -(void)decideTowerPlacementFromButton:(UIButton *)button;
 -(void)userPinchedWithInfo:(UIPinchGestureRecognizer *)listener;
--(void)popText:(NSString *)text withColour:(UIColor *)colour overNode:(SKNode *)node completion:(void (^)(void))block;
+-(void)startWave;
+-(void)pauseGame;
+-(void)resumeGame;
+-(void)endGame;
+-(void)presentNotificationWithText:(NSString *)text;
+-(void)configureBottomLabel;
+-(void)popText:(NSString *)text withColour:(UIColor *)colour overPoint:(CGPoint)point completion:(void (^)(void))block;
 
 @end

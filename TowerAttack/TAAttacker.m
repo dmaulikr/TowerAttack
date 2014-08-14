@@ -16,6 +16,7 @@
         self.size = CGSizeMake(40, 40);
         self.healthBarInside.position = CGPointMake(self.position.x - 33.5/2, self.position.y + self.size.height * 3 / 4);
         self.goldReward = TAEnemyGoldRewardAttacker;
+        self.xpReward = TAEnemyXPRewardAttacker;
         self.maximumHealth = TAEnemyMaximumHealthAttacker;
         self.description = @"Weak but relatively fast, attackers are common enemies, but not too much of a threat.";
         self.unitType = @"Attacker";

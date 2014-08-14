@@ -9,8 +9,19 @@
 #import <UIKit/UIKit.h>
 #import <SpriteKit/SpriteKit.h>
 
+@class TAButton;
+@class TALabel;
+
 @interface TAMainMenuViewController : UIViewController
 
 @property (nonatomic) BOOL scenePresented;
+@property (nonatomic, strong) IBOutlet TAButton *playButton;
+@property (nonatomic, strong) IBOutlet TAButton *profileButton;
+@property (nonatomic, strong) IBOutlet TAButton *settingsButton;
+@property (nonatomic, strong) IBOutlet TALabel *titleLabel;
+
+
+-(IBAction)unwindToMainScreenFromSegue:(UIStoryboardSegue *)segue;
+-(IBAction)startGame:(id)sender;
 
 @end
