@@ -7,6 +7,7 @@
 //
 
 #import "TAButton.h"
+#import "TAPLayerProfile.h"
 
 @implementation TAButton
 
@@ -40,7 +41,7 @@
 
 -(void)configurePropertiesWithTextSize:(CGFloat)size
 {
-    [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [self setTitleColor:[[TAPlayerProfile sharedInstance] colorForClass:TAClassLabelText] forState:UIControlStateNormal];
     self.titleLabel.font = [UIFont fontWithName:@"Cochin" size:12];
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.titleLabel.adjustsFontSizeToFitWidth = YES;
@@ -49,9 +50,7 @@
     self.titleLabel.minimumScaleFactor = 0.5;
     self.titleEdgeInsets = UIEdgeInsetsMake(10, 5, 10, 5);
     
-    self.defaultColor = [UIColor colorWithRed:0.5 green:0.7 blue:0.4 alpha:0.9];
-    self.highlightedColor = [UIColor colorWithRed:0.41 green:0.54 blue:0.34 alpha:0.9];
-    self.backgroundColor = self.defaultColor;
+    self.defaultColor = [[TAPlayerProfile sharedInstance] colorForClass:TAClassButton];//[UIColor colorWithRed:0.5 green:0.7 blue:0.4 alpha:0.9];
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -70,6 +69,15 @@
 {
     CGSize size = [super intrinsicContentSize];
     return CGSizeMake(size.width + self.titleEdgeInsets.left + self.titleEdgeInsets.right, size.height + self.titleEdgeInsets.top + self.titleEdgeInsets.bottom);
+}
+
+-(void)setDefaultColor:(UIColor *)defaultColor
+{
+    _defaultColor = defaultColor;
+    CGFloat h,s,b,a;
+    [defaultColor getHue:&h saturation:&s brightness:&b alpha:&a];
+    self.highlightedColor = [UIColor colorWithHue:h saturation:s brightness:b * 0.75 alpha:a];
+    self.backgroundColor = defaultColor;
 }
 
 /*

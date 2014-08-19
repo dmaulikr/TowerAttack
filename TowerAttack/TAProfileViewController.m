@@ -21,6 +21,7 @@
 //    [self.view setTranslatesAutoresizingMaskIntoConstraints:NO];
 //    [self.view setNeedsUpdateConstraints];
     [self configureViews];
+    self.view.backgroundColor = [[TAPlayerProfile sharedInstance] colorForClass:TAClassMainMenuBackground];
 //    self.levelLabel.textAlignment = NSTextAlignmentLeft;
 //    self.xpLabel.textAlignment = NSTextAlignmentLeft;
     

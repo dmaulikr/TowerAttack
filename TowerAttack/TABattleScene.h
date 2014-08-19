@@ -13,7 +13,10 @@
 @class TATower;
 @class TAEnemy;
 
-#define screenWidth [[UIScreen mainScreen] bounds].size.width
+#define IOS8 ([[[UIDevice currentDevice] systemVersion] characterAtIndex:0] == '8')
+#define screenWidth [[UIScreen mainScreen] bounds].size.height
+#define areaWidth 1200
+#define areaHeight 900
 
 
 typedef enum : uint8_t {
@@ -35,7 +38,8 @@ enum TANodeZPosition : NSInteger {
 };
 
 enum TAArea : NSInteger {
-    TAAreaGrassy
+    TAAreaGrassy,
+    TAAreaFire
 };
 
 @interface TAScene : SKScene
@@ -63,7 +67,7 @@ enum TAArea : NSInteger {
 @property (strong, nonatomic) SKSpriteNode *towerRadiusDisplay;
 
 -(CGFloat)distanceFromA:(CGPoint)pointA toB:(CGPoint)pointB;
--(id)initWithSize:(CGSize)size andPath:(CGPathRef)path andSpawnPoint:(CGPoint)point;
+-(id)initWithSize:(CGSize)size path:(CGPathRef)path spawnPoint:(CGPoint)point;
 -(void)spawnEnemyOfType:(NSUInteger)enemyType;
 -(void)addTower;
 -(void)userClickedAtLocation:(UITouch *)touch;

@@ -35,6 +35,16 @@
 		2C42725A199BDC1000B3E7C6 /* Projectile.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2C427259199BDC1000B3E7C6 /* Projectile.sks */; };
 		2C42725E199D09AE00B3E7C6 /* StartWave@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C42725D199D09AE00B3E7C6 /* StartWave@2x.png */; };
 		2C427260199D09B500B3E7C6 /* PauseButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C42725F199D09B500B3E7C6 /* PauseButton@2x.png */; };
+		2C427263199E4AAE00B3E7C6 /* TAArrowTower.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C427262199E4AAE00B3E7C6 /* TAArrowTower.m */; };
+		2C427266199E4BEB00B3E7C6 /* TASingleTargetTower.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C427265199E4BEB00B3E7C6 /* TASingleTargetTower.m */; };
+		2C427268199E4FB900B3E7C6 /* Tower.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C427267199E4FB900B3E7C6 /* Tower.png */; };
+		2C42726B199E51F600B3E7C6 /* Arrow.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2C427269199E51F600B3E7C6 /* Arrow.sks */; };
+		2C42726E199E522900B3E7C6 /* ArrowSprite.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C42726D199E522900B3E7C6 /* ArrowSprite.png */; };
+		2C42727519A250D300B3E7C6 /* FireArea@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2C42727419A250D300B3E7C6 /* FireArea@2x.jpg */; };
+		2C42727819A26FC900B3E7C6 /* TAAreaSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C42727719A26FC900B3E7C6 /* TAAreaSelectViewController.m */; };
+		2C42727B19A2787800B3E7C6 /* TACell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C42727A19A2787800B3E7C6 /* TACell.m */; };
+		2C42727F19A27ACE00B3E7C6 /* TACell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C42727E19A27ACE00B3E7C6 /* TACell.xib */; };
+		2C42728219A394BB00B3E7C6 /* TASettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C42728119A394BB00B3E7C6 /* TASettingsViewController.m */; };
 		2C6828BD1976CEB2001FEDFA /* Images.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2C6828BC1976CEB2001FEDFA /* Images.atlas */; };
 		2C6828BF1976D4F8001FEDFA /* FreezeTower.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C6828BE1976D4F8001FEDFA /* FreezeTower.png */; };
 		2C6828C41976D7A5001FEDFA /* BlastTower@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C6828C11976D7A5001FEDFA /* BlastTower@2x.png */; };
@@ -128,6 +138,21 @@
 		2C427259199BDC1000B3E7C6 /* Projectile.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Projectile.sks; path = Images.atlas/Projectile.sks; sourceTree = "<group>"; };
 		2C42725D199D09AE00B3E7C6 /* StartWave@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "StartWave@2x.png"; sourceTree = "<group>"; };
 		2C42725F199D09B500B3E7C6 /* PauseButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PauseButton@2x.png"; sourceTree = "<group>"; };
+		2C427261199E4AAE00B3E7C6 /* TAArrowTower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAArrowTower.h; sourceTree = "<group>"; };
+		2C427262199E4AAE00B3E7C6 /* TAArrowTower.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAArrowTower.m; sourceTree = "<group>"; };
+		2C427264199E4BEB00B3E7C6 /* TASingleTargetTower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TASingleTargetTower.h; sourceTree = "<group>"; };
+		2C427265199E4BEB00B3E7C6 /* TASingleTargetTower.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TASingleTargetTower.m; sourceTree = "<group>"; };
+		2C427267199E4FB900B3E7C6 /* Tower.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Tower.png; path = Images.atlas/Tower.png; sourceTree = "<group>"; };
+		2C427269199E51F600B3E7C6 /* Arrow.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Arrow.sks; sourceTree = "<group>"; };
+		2C42726D199E522900B3E7C6 /* ArrowSprite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArrowSprite.png; sourceTree = "<group>"; };
+		2C42727419A250D300B3E7C6 /* FireArea@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "FireArea@2x.jpg"; sourceTree = "<group>"; };
+		2C42727619A26FC900B3E7C6 /* TAAreaSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAAreaSelectViewController.h; sourceTree = "<group>"; };
+		2C42727719A26FC900B3E7C6 /* TAAreaSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAAreaSelectViewController.m; sourceTree = "<group>"; };
+		2C42727919A2787800B3E7C6 /* TACell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TACell.h; sourceTree = "<group>"; };
+		2C42727A19A2787800B3E7C6 /* TACell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TACell.m; sourceTree = "<group>"; };
+		2C42727E19A27ACE00B3E7C6 /* TACell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TACell.xib; path = ../TACell.xib; sourceTree = "<group>"; };
+		2C42728019A394BB00B3E7C6 /* TASettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TASettingsViewController.h; sourceTree = "<group>"; };
+		2C42728119A394BB00B3E7C6 /* TASettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TASettingsViewController.m; sourceTree = "<group>"; };
 		2C6828BC1976CEB2001FEDFA /* Images.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Images.atlas; sourceTree = "<group>"; };
 		2C6828BE1976D4F8001FEDFA /* FreezeTower.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FreezeTower.png; sourceTree = "<group>"; };
 		2C6828C11976D7A5001FEDFA /* BlastTower@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlastTower@2x.png"; sourceTree = "<group>"; };
@@ -215,6 +240,9 @@
 				2C0D102E198BDCF600795828 /* TALabel.m */,
 				2C0D103B198C063A00795828 /* TAButton.h */,
 				2C0D103C198C063A00795828 /* TAButton.m */,
+				2C42727919A2787800B3E7C6 /* TACell.h */,
+				2C42727A19A2787800B3E7C6 /* TACell.m */,
+				2C42727E19A27ACE00B3E7C6 /* TACell.xib */,
 			);
 			name = "Custom Views";
 			sourceTree = "<group>";
@@ -226,6 +254,10 @@
 				2CD8D495196B21E200F4BA87 /* TAMainMenuViewController.m */,
 				2C427256199A6A9F00B3E7C6 /* TAProfileViewController.h */,
 				2C427257199A6A9F00B3E7C6 /* TAProfileViewController.m */,
+				2C42727619A26FC900B3E7C6 /* TAAreaSelectViewController.h */,
+				2C42727719A26FC900B3E7C6 /* TAAreaSelectViewController.m */,
+				2C42728019A394BB00B3E7C6 /* TASettingsViewController.h */,
+				2C42728119A394BB00B3E7C6 /* TASettingsViewController.m */,
 				2CD8D491196B21E200F4BA87 /* Main.storyboard */,
 			);
 			name = "View Controllers";
@@ -249,6 +281,8 @@
 				2C6828D11977105B001FEDFA /* TATower.m */,
 				2CE59DF5196B2A6500FF3BD4 /* TANonPassiveTower.h */,
 				2CE59DF6196B2A6500FF3BD4 /* TANonPassiveTower.m */,
+				2C427264199E4BEB00B3E7C6 /* TASingleTargetTower.h */,
+				2C427265199E4BEB00B3E7C6 /* TASingleTargetTower.m */,
 				2C7E6CB81977140A0017BE62 /* TAFireballTower.h */,
 				2C7E6CB91977140A0017BE62 /* TAFireballTower.m */,
 				2C6828C61976F47B001FEDFA /* TAFreezeTower.h */,
@@ -257,6 +291,8 @@
 				2C6828CA1976F499001FEDFA /* TABlastTower.m */,
 				2C08A30D1979B786001A2BCF /* TAPsychicTower.h */,
 				2C08A30E1979B786001A2BCF /* TAPsychicTower.m */,
+				2C427261199E4AAE00B3E7C6 /* TAArrowTower.h */,
+				2C427262199E4AAE00B3E7C6 /* TAArrowTower.m */,
 			);
 			name = Towers;
 			sourceTree = "<group>";
@@ -364,6 +400,7 @@
 				2C0D1049199166E300795828 /* Protector.png */,
 				2C0D1036198BE62700795828 /* heart.png */,
 				2C0D1034198BE22A00795828 /* coin1.png */,
+				2C42727419A250D300B3E7C6 /* FireArea@2x.jpg */,
 				2C0D1038198BE82900795828 /* coin2.png */,
 				2C28D0C81986946500E9499C /* LevelStripe.png */,
 				2C0D1030198BDF3300795828 /* coin.png */,
@@ -379,6 +416,8 @@
 				2C6828C11976D7A5001FEDFA /* BlastTower@2x.png */,
 				2C08A3121979BAEA001A2BCF /* SpinTower.png */,
 				2C427259199BDC1000B3E7C6 /* Projectile.sks */,
+				2C427267199E4FB900B3E7C6 /* Tower.png */,
+				2C42726D199E522900B3E7C6 /* ArrowSprite.png */,
 				2C6828BC1976CEB2001FEDFA /* Images.atlas */,
 				2CD8D487196B21E200F4BA87 /* TowerAttack-Info.plist */,
 				2CA3D7DD197441F90042BB27 /* TowerPlaced.wav */,
@@ -386,6 +425,7 @@
 				2CD8D48B196B21E200F4BA87 /* main.m */,
 				2CD8D48D196B21E200F4BA87 /* TowerAttack-Prefix.pch */,
 				2CA3D7DF19745F220042BB27 /* Game Data.plist */,
+				2C427269199E51F600B3E7C6 /* Arrow.sks */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -501,9 +541,12 @@
 				2CA3D7DE197441F90042BB27 /* TowerPlaced.wav in Resources */,
 				2C42725A199BDC1000B3E7C6 /* Projectile.sks in Resources */,
 				2C842E9719782FD500C98606 /* Frost.sks in Resources */,
+				2C427268199E4FB900B3E7C6 /* Tower.png in Resources */,
+				2C42727519A250D300B3E7C6 /* FireArea@2x.jpg in Resources */,
 				2C0846E61980335500BB3632 /* grass14.png in Resources */,
 				2C0D103F198C0DA300795828 /* Grass@2x.jpg in Resources */,
 				2C0D1035198BE22A00795828 /* coin1.png in Resources */,
+				2C42726E199E522900B3E7C6 /* ArrowSprite.png in Resources */,
 				2CE6ACD5197EADC9006CAB16 /* spark.png in Resources */,
 				2C0D1037198BE62700795828 /* heart.png in Resources */,
 				2C6828BD1976CEB2001FEDFA /* Images.atlas in Resources */,
@@ -517,8 +560,10 @@
 				2CA3D7E019745F220042BB27 /* Game Data.plist in Resources */,
 				2C0D10591992A13100795828 /* Fire.png in Resources */,
 				2C6828BF1976D4F8001FEDFA /* FreezeTower.png in Resources */,
+				2C42727F19A27ACE00B3E7C6 /* TACell.xib in Resources */,
 				2C0D104F19916D0F00795828 /* Demon.png in Resources */,
 				2C42725E199D09AE00B3E7C6 /* StartWave@2x.png in Resources */,
+				2C42726B199E51F600B3E7C6 /* Arrow.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -544,22 +589,27 @@
 				2C08A30F1979B786001A2BCF /* TAPsychicTower.m in Sources */,
 				2C0D102F198BDCF600795828 /* TALabel.m in Sources */,
 				2CA3D7DC197437400042BB27 /* TAUnit.m in Sources */,
+				2C427263199E4AAE00B3E7C6 /* TAArrowTower.m in Sources */,
 				2C7E6CBA1977140A0017BE62 /* TAFireballTower.m in Sources */,
 				2CD8D490196B21E200F4BA87 /* AppDelegate.m in Sources */,
 				2C427258199A6A9F00B3E7C6 /* TAProfileViewController.m in Sources */,
 				2C6828D21977105B001FEDFA /* TATower.m in Sources */,
+				2C42728219A394BB00B3E7C6 /* TASettingsViewController.m in Sources */,
 				2CA3D7E3197568630042BB27 /* TATowerPurchaseSidebar.m in Sources */,
 				2C6828CB1976F499001FEDFA /* TABlastTower.m in Sources */,
 				2CA3D7D9197422CE0042BB27 /* TATowerInfoPanel.m in Sources */,
 				2C6ECC6A196DC9BC00053238 /* TAUIOverlay.m in Sources */,
 				2C0D105219926C1200795828 /* TANinja.m in Sources */,
+				2C427266199E4BEB00B3E7C6 /* TASingleTargetTower.m in Sources */,
 				2C0D104D19916B8200795828 /* TADemon.m in Sources */,
 				2C6828C81976F47B001FEDFA /* TAFreezeTower.m in Sources */,
+				2C42727B19A2787800B3E7C6 /* TACell.m in Sources */,
 				2C0D102C198AD7E200795828 /* TAInfoPopUp.m in Sources */,
 				2C0D104719915CED00795828 /* TAProtector.m in Sources */,
 				2CD8D48C196B21E200F4BA87 /* main.m in Sources */,
 				2C0D103D198C063A00795828 /* TAButton.m in Sources */,
 				2CE59DF7196B2A6500FF3BD4 /* TANonPassiveTower.m in Sources */,
+				2C42727819A26FC900B3E7C6 /* TAAreaSelectViewController.m in Sources */,
 				2C0D1042199127E700795828 /* TAAttacker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

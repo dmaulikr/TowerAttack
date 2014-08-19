@@ -7,6 +7,7 @@
 //
 
 #import "TALabel.h"
+#import "TAPLayerProfile.h"
 
 @implementation TALabel
 
@@ -15,7 +16,6 @@
     if (self) {
         // Initialization code
         [self configurePropertiesWithSize:size];
-      //  self.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.5];
     }
     return self;
 }
@@ -26,7 +26,6 @@
     if (self) {
         // Initialization code
         [self configurePropertiesWithSize:size];
-      //  self.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.5];
     }
     return self;
 }
@@ -36,7 +35,6 @@
     self = [super initWithCoder:coder];
     if (self) {
         [self configurePropertiesWithSize:self.font.pointSize];
-      //  self.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.5];
     }
     return self;
 }
@@ -48,6 +46,10 @@
     self.numberOfLines = 0;
     self.lineBreakMode = NSLineBreakByWordWrapping;
     self.textAlignment = NSTextAlignmentCenter;
+    self.textColor = [[TAPlayerProfile sharedInstance] colorForClass:TAClassLabelText];
+    self.shouldResizeFontForSize = YES;
+    self.attributedStringReference = [[NSMutableAttributedString alloc] init];
+    //  self.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.5];
  //   self.adjustsFontSizeToFitWidth = YES;
  //   self.minimumScaleFactor = 0.1;
 }
@@ -59,17 +61,44 @@
     style.alignment = NSTextAlignmentCenter;
     style.lineBreakMode = NSLineBreakByWordWrapping;
     CGSize textSize = [self.text sizeWithAttributes:@{NSFontAttributeName : [UIFont fontWithName:self.font.fontName size:size], NSParagraphStyleAttributeName : style}];
-    while ((textSize.width / self.frame.size.width + 1) * textSize.height >= self.frame.size.height) {
+    while ((textSize.width / self.frame.size.width) * textSize.height >= self.frame.size.height) {
         size--;
         textSize = [self.text sizeWithAttributes:@{NSFontAttributeName : [UIFont fontWithName:self.font.fontName size:size]}];
     }
     return size;
 }
 
+-(void)applyValue:(id)value forAttribute:(NSUInteger)attribute forRange:(NSRange)range
+{
+    NSArray *attributes = @[NSForegroundColorAttributeName, NSFontAttributeName, NSStrokeColorAttributeName];
+    [self.attributedStringReference.mutableString setString:self.text];
+    [self.attributedStringReference addAttribute:attributes[attribute] value:value range:range];
+    self.attributedText = self.attributedStringReference;
+}
+
+-(void)setFrame:(CGRect)frame
+{
+    [super setFrame:frame];
+    if (self.shouldResizeFontForSize) {
+        [self setFontSize:[self bestFontSize]];
+    };
+}
+
+/*-(void)setAdjustsFontSizeToFitWidth:(BOOL)adjustsFontSizeToFitWidth
+{
+    [super setAdjustsFontSizeToFitWidth:NO];
+}*/
+
 -(void)setFontSize:(CGFloat)fontSize
 {
     _fontSize = fontSize;
     self.font = [UIFont fontWithName:@"Cochin" size:fontSize];
+}
+
+-(void)setText:(NSString *)text
+{
+    [self.attributedStringReference.mutableString setString:text];
+    [super setText:text];
 }
 
 /*

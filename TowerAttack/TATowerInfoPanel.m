@@ -15,6 +15,7 @@
 #import "TAInfoPopUp.h"
 #import "TALabel.h"
 #import "TAButton.h"
+#import "TAPLayerProfile.h"
 
 @implementation TATowerInfoPanel
 
@@ -23,33 +24,7 @@
     if (self) {
         // Initialization code
 
-        self.backgroundColor = [UIColor colorWithRed:0.8 green:0.9 blue:0.8 alpha:0.7];
-        {
-      /*  self.unitIcon = [[UIImageView alloc] initWithFrame:CGRectMake(18, 9, 45, 45)];
-        [self addSubview:self.unitIcon];
-        
-        self.unitName = [[TALabel alloc] initWithFrame:CGRectMake(10, 54, 70, 21) andFontSize:13];
-        [self.unitName setCenter:CGPointMake(self.unitIcon.center.x, self.unitName.center.y)];
-        [self addSubview:self.unitName];
-        
-        self.unitDescription = [[TALabel alloc] initWithFrame:CGRectMake(74, 7, 151, 66) andFontSize:12];
-        [self addSubview:self.unitDescription];
-        
-        self.otherUnitInfo = [[TALabel alloc] initWithFrame:CGRectMake(245, 10, 200, 80) andFontSize:12];
-        [self addSubview:self.otherUnitInfo];
-        
-        self.upgradeButton = [[TAButton alloc] initWithFrame:CGRectMake(428, 8, 126, 30) andFontSize:15];
-        [self.upgradeButton setTitle:@"Max Level" forState:UIControlStateDisabled];
-        [self.upgradeButton addTarget:self action:@selector(upgradeSelectedTower) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:self.upgradeButton];
-        
-        self.sellButton = [[TAButton alloc] initWithFrame:CGRectMake(428, 41, 126, 30) andFontSize:15];
-        [self.sellButton setTitle:@"Can't Sell" forState:UIControlStateDisabled];
-        [self.sellButton addTarget:self action:@selector(sellSelectedTower) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:self.sellButton];*/
-        }
-        
-  //      [self setTranslatesAutoresizingMaskIntoConstraints:NO];
+        self.backgroundColor = [[TAPlayerProfile sharedInstance] colorForClass:TAClassInfoPanel];//[UIColor colorWithRed:0.8 green:0.9 blue:0.8 alpha:0.7];
         
         self.unitIcon = [[UIImageView alloc] init];
         [self addSubview:self.unitIcon];

@@ -16,7 +16,7 @@
         self.size = CGSizeMake(60, 40);
         self.healthBarInside.position = CGPointMake(self.position.x - 33.5/2, self.position.y + self.size.height * 3 / 4);
         self.goldReward = TAEnemyGoldRewardProtector;
-        self.xpReward = 70;//TAEnemyXPRewardProtector;
+        self.xpReward = 350;//TAEnemyXPRewardProtector;
         self.maximumHealth = TAEnemyMaximumHealthProtector;
         self.description = @"Protectors are slow but heavily fortified, making them difficult to kill quickly.";
         self.unitType = @"Protector";

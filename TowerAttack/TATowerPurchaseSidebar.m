@@ -11,7 +11,9 @@
 #import "TAFreezeTower.h"
 #import "TABlastTower.h"
 #import "TAPsychicTower.h"
+#import "TAArrowTower.h"
 #import "TAInfoPopUp.h"
+#import "TAPLayerProfile.h"
 #import "TALabel.h"
 
 @implementation TATowerPurchaseSidebar
@@ -22,14 +24,14 @@ CGFloat topAndBottomBuffer = 8, iconToNameBuffer = 2, nameToIconBuffer = 6, towe
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        self.backgroundColor = [UIColor colorWithRed:0.8 green:0.9 blue:0.8 alpha:0.7];
+        self.backgroundColor = [[TAPlayerProfile sharedInstance] colorForClass:TAClassPurchaseSidebar];//[UIColor colorWithRed:0.8 green:0.9 blue:0.8 alpha:0.7];
         self.canSelectTowers = YES;
    //     self.layoutMargins = UIEdgeInsetsMake(0, 5, 0, 5);
         self.clipsToBounds = NO;
         self.selectedTowerType = TATowerTypeNoTower;
         self.towerIcons = [NSMutableArray array];
         self.towerLabels = [NSMutableArray array];
-        self.towers = @[[[TAFireballTower alloc] init],[[TAFireballTower alloc] init], [[TAFreezeTower alloc] init], [[TABlastTower alloc] init], [[TAPsychicTower alloc] init]]; //hardcoded
+        self.towers = @[[[TAArrowTower alloc] init], [[TAFreezeTower alloc] init], [[TABlastTower alloc] init], [[TAPsychicTower alloc] init],[[TAFireballTower alloc] init]]; //hardcoded
         
         for (int i = 0; i < [self.towers count]; i++) {
             UIButton *b = [UIButton buttonWithType:UIButtonTypeCustom];

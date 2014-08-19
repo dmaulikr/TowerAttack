@@ -63,16 +63,6 @@ NSInteger const maxTowerLevel = 5;
     //overidden by subclasses
 }
 
-+(NSArray *)towerIconStrings
-{
-    return [NSArray arrayWithObjects:@"50Fire", @"40FreezeTower", @"45BlastTower", @"60SpinTower", nil]; //hardcoded
-}
-
-+(NSArray *)towerNames
-{
-    return [NSArray arrayWithObjects:@"Fireball Tower", @"Freeze Tower", @"Blast Tower", @"Psychic Tower", nil]; //hardcoded
-}
-
 -(void)setAttackRadius:(CGFloat)attackRadius
 {
     NSUInteger index = [self.infoStrings indexOfObject:[NSString stringWithFormat:@"%gm attack radius",self.attackRadius]];

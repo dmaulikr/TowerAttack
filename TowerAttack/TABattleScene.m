@@ -11,6 +11,7 @@
 #import "TAFireballTower.h"
 #import "TAFreezeTower.h"
 #import "TABlastTower.h"
+#import "TAArrowTower.h"
 #import "TAEnemy.h"
 #import "TAPsychicTower.h"
 #import "TAUIOverlay.h"
@@ -70,15 +71,15 @@ int numWaves = 2;
 
 #pragma mark - scene configuration
 
--(id)initWithSize:(CGSize)size andPath:(CGPathRef)path andSpawnPoint:(CGPoint)point {
-    if (self = [super init]) {
+-(id)initWithSize:(CGSize)size path:(CGPathRef)path spawnPoint:(CGPoint)point {
+    if (self = [super initWithColor:[UIColor redColor] size:size]) {
         
         TAPlayerProfile *profile = [TAPlayerProfile sharedInstance];
         
         self.currentWave = 1;
         self.enemyCount = 0;
-        self.currentArea = profile.stage;
-        self.spawnPoint = CGPointMake(point.x, 900);//point;
+        self.currentArea = profile.lastStagePlayed;//profile.stage;
+        self.spawnPoint = CGPointMake(point.x, areaHeight);//point;
         self.click = NO;
         _waveIsSpawning = NO;
         self.towersOnField = [[NSMutableArray alloc] init];
@@ -86,7 +87,7 @@ int numWaves = 2;
         self.isDraggingTowerPlaceholder = NO;
         self.enemyMovementPath = CGPathCreateCopy(path);
        
-        self.position = CGPointMake((point.x - screenWidth / 2) * -1, 320 - 900);
+        self.position = CGPointMake((point.x - screenWidth / 2) * -1, 320 - areaHeight);
         self.size = size;
         self.scale = 1.0f;
         
@@ -117,15 +118,34 @@ int numWaves = 2;
     pathDrawer.physicsBody.collisionBitMask = TAContactTypeNothing;
     [self addChild:pathDrawer];
     
-    UIGraphicsBeginImageContextWithOptions(size, YES, 0);
+    NSString *imageForArea;
+    switch (self.currentArea) {
+        case 1:
+            imageForArea = @"Grass.jpg";
+            break;
+        case 2:
+            imageForArea = @"FireArea.jpg";
+            break;
+        default:
+            NSLog(@"Area out of range");
+            imageForArea = @"Grass.jpg";
+            break;
+    }
+    
+    int i = 1;
+    if IOS8 {
+        i = 0;
+    }
+    
+    UIGraphicsBeginImageContextWithOptions(size, NO, i);
     CGContextRef c = UIGraphicsGetCurrentContext();
-    CGContextDrawTiledImage(c, CGRectMake(0, 0, 240, 240), [UIImage imageNamed:@"Grass.jpg"].CGImage);
+    CGContextDrawTiledImage(c, CGRectMake(0, 0, 240, 240), [UIImage imageNamed:imageForArea].CGImage);
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
     self.texture = [SKTexture textureWithImage:image];
     
-    UIGraphicsBeginImageContextWithOptions(size, NO, 0);
+    UIGraphicsBeginImageContextWithOptions(size, NO, i);
     c = UIGraphicsGetCurrentContext();
     CGContextAddPath(c, CGPathCreateCopyByStrokingPath(self.enemyMovementPath, NULL, 40, kCGLineCapRound, kCGLineJoinRound, 100));
     CGContextClip(c);
@@ -142,7 +162,7 @@ int numWaves = 2;
     pathFill.position = CGPointMake(600, 450);
     [self addChild:pathFill];
     
-    UIGraphicsBeginImageContextWithOptions(size, NO, 0);
+    UIGraphicsBeginImageContextWithOptions(size, NO, i);
     c = UIGraphicsGetCurrentContext();
     CGContextAddPath(c, CGPathCreateCopyByStrokingPath(self.enemyMovementPath, NULL, 42, kCGLineCapRound, kCGLineJoinRound, 100));
     CGContextSetRGBStrokeColor(c, 0, 0, 0, 1);
@@ -189,14 +209,14 @@ int numWaves = 2;
         if (self.position.x + deltaX > 0) {
             deltaX = (CGFloat)self.position.x * -1;
         }
-        else if (self.position.x * -1 - deltaX + self.scene.view.frame.size.width >= 1200 * self.scale) {
-            deltaX = (1200 * self.scale + self.position.x - self.scene.view.frame.size.width) * -1;
+        else if (self.position.x * -1 - deltaX + self.scene.view.frame.size.width >= areaWidth * self.scale) {
+            deltaX = (areaWidth * self.scale + self.position.x - self.scene.view.frame.size.width) * -1;
         }
         if (self.position.y + deltaY > 0) {
             deltaY = self.position.y * -1;
         }
-        else if ((self.position.y + deltaY) * -1 + self.scene.view.frame.size.height >= 900 * self.scale) {
-            deltaY = (900 * self.scale + self.position.y - self.scene.view.frame.size.height) * -1;
+        else if ((self.position.y + deltaY) * -1 + self.scene.view.frame.size.height >= areaHeight * self.scale) {
+            deltaY = (areaHeight * self.scale + self.position.y - self.scene.view.frame.size.height) * -1;
         }
         self.position = CGPointMake(self.position.x + deltaX, self.position.y + deltaY);
         self.lastPoint = [[touches anyObject] locationInNode:self];
@@ -259,10 +279,10 @@ int numWaves = 2;
             SKSpriteNode *towerPlaceHolder;
             CGSize detectorSize;
             switch (self.uiOverlay.purchaseSidebar.selectedTowerType) { //hardcoded
-                case TATowerTypeFireballTower:
-                    towerPlaceHolder = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImageNamed:@"Fire"] size:CGSizeMake(TATowerSizeFireballTower, TATowerSizeFireballTower)];
-                    towerPlaceHolder.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:TATowerSizeFireballTower / 2];
-                    detectorSize = CGSizeMake(TATowerAttackRadiusFireballTower * 2 + 25, TATowerAttackRadiusFireballTower * 2 + 25);
+                case TATowerTypeArrowTower:
+                    towerPlaceHolder = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImageNamed:@"Tower"] size:CGSizeMake(TATowerSizeArrowTower, TATowerSizeArrowTower)];
+                    towerPlaceHolder.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:TATowerSizeArrowTower / 2];
+                    detectorSize = CGSizeMake(TATowerAttackRadiusArrowTower * 2 + 25, TATowerAttackRadiusArrowTower * 2 + 25);
                     break;
                 case TATowerTypeFreezeTower:
                     towerPlaceHolder = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImageNamed:@"FreezeTower"] size:CGSizeMake(TATowerSizeFreezeTower, TATowerSizeFreezeTower)];
@@ -278,6 +298,11 @@ int numWaves = 2;
                     towerPlaceHolder = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImageNamed:@"SpinTower"] size:CGSizeMake(TATowerSizePsychicTower, TATowerSizePsychicTower)];
                     towerPlaceHolder.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:TATowerSizePsychicTower / 2];
                     detectorSize = CGSizeMake(TATowerAttackRadiusPsychicTower * 2 + 25, TATowerAttackRadiusPsychicTower * 2 +  25);
+                    break;
+                case TATowerTypeFireballTower:
+                    towerPlaceHolder = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImageNamed:@"Fire"] size:CGSizeMake(TATowerSizeFireballTower, TATowerSizeFireballTower)];
+                    towerPlaceHolder.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:TATowerSizeFireballTower / 2];
+                    detectorSize = CGSizeMake(TATowerAttackRadiusFireballTower * 2 + 25, TATowerAttackRadiusFireballTower * 2 + 25);
                     break;
             }
             towerPlaceHolder.colorBlendFactor = 0.5;
@@ -380,40 +405,28 @@ int numWaves = 2;
 
 -(void)addTower
 {
+    TATower *tower;
     switch ((NSInteger)[(SKSpriteNode *)[self childNodeWithName:@"Placeholder"] size].width) {
-        case TATowerSizeFireballTower: {
-            TAFireballTower *tower = [[TAFireballTower alloc] initWithLocation:[[self childNodeWithName:@"Placeholder"] position] inScene:self];
-            self.uiOverlay.currentGold -= tower.purchaseCost;
-            [self removeChildrenInArray:[NSArray arrayWithObject:[self childNodeWithName:@"Placeholder"]]];
-            [self addChild:tower];
-            [self.towersOnField addObject:tower];
-        }
+        case TATowerSizeArrowTower: //hardcoded
+            tower = [[TAArrowTower alloc] initWithLocation:[[self childNodeWithName:@"Placeholder"] position] inScene:self];
             break;
-        case TATowerSizeFreezeTower: {
-            TAFreezeTower *tower = [[TAFreezeTower alloc] initWithLocation:[[self childNodeWithName:@"Placeholder"] position] inScene:self];
-            self.uiOverlay.currentGold -= tower.purchaseCost;
-            [self removeChildrenInArray:[NSArray arrayWithObject:[self childNodeWithName:@"Placeholder"]]];
-            [self addChild:tower];
-            [self.towersOnField addObject:tower];
-        }
+        case TATowerSizeFreezeTower:
+            tower = [[TAFreezeTower alloc] initWithLocation:[[self childNodeWithName:@"Placeholder"] position] inScene:self];
             break;
-        case TATowerSizeBlastTower: {
-            TABlastTower *tower = [[TABlastTower alloc] initWithLocation:[[self childNodeWithName:@"Placeholder"] position] inScene:self];
-            self.uiOverlay.currentGold -= tower.purchaseCost;
-            [self removeChildrenInArray:[NSArray arrayWithObject:[self childNodeWithName:@"Placeholder"]]];
-            [self addChild:tower];
-            [self.towersOnField addObject:tower];
-        }
+        case TATowerSizeBlastTower:
+            tower = [[TABlastTower alloc] initWithLocation:[[self childNodeWithName:@"Placeholder"] position] inScene:self];
             break;
-        case TATowerSizePsychicTower: {
-            TAPsychicTower *tower = [[TAPsychicTower alloc] initWithLocation:[[self childNodeWithName:@"Placeholder"] position] inScene:self];
-            self.uiOverlay.currentGold -= tower.purchaseCost;
-            [self removeChildrenInArray:[NSArray arrayWithObject:[self childNodeWithName:@"Placeholder"]]];
-            [self addChild:tower];
-            [self.towersOnField addObject:tower];
-        }
+        case TATowerSizePsychicTower:
+            tower = [[TAPsychicTower alloc] initWithLocation:[[self childNodeWithName:@"Placeholder"] position] inScene:self];
+            break;
+        case TATowerSizeFireballTower:
+            tower = [[TAFireballTower alloc] initWithLocation:[[self childNodeWithName:@"Placeholder"] position] inScene:self];
             break;
     }
+    self.uiOverlay.currentGold -= tower.purchaseCost;
+    [self removeChildrenInArray:[NSArray arrayWithObject:[self childNodeWithName:@"Placeholder"]]];
+    [self addChild:tower];
+    [self.towersOnField addObject:tower];
 }
 
 -(void)removeTower:(TATower *)tower

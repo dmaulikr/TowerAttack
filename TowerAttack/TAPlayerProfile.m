@@ -13,6 +13,7 @@
 
 static TAPlayerProfile *sharedInstance;
 NSArray *levelXPs;
+NSArray *colors;
 
 + (void)initialize
 {
@@ -28,11 +29,14 @@ NSArray *levelXPs;
     self = [super init];
     if (self) {
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        levelXPs = [[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Game Data" ofType:@"plist"]] objectForKey:@"LevelXPs"];
+        NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Game Data" ofType:@"plist"]];
+        levelXPs = [dict objectForKey:@"LevelXPs"];
+        colors = [dict objectForKey:@"StageColors"]; //contains arrays, one for each stage; each has a list of UIcolors in string form representing the color of the class at its position (using the TAClass enum)
         if (![userDefaults boolForKey:@"notFirstTimeSetup"]) {
             [self runFirstTimeSetup:userDefaults];
         }
         [self extractValuesFromUserDefaults:userDefaults];
+        self.lastXpGain = 0;
     }
     return self;
 }
@@ -49,22 +53,40 @@ NSArray *levelXPs;
     self.stage = [userDefaults integerForKey:@"stage"];
     self.currentLevelXP = [userDefaults integerForKey:@"currentLevelXP"];
     self.name = [userDefaults stringForKey:@"name"];
+    self.lastStagePlayed = [userDefaults integerForKey:@"lastStagePlayed"];
 }
 
 -(void)runFirstTimeSetup:(NSUserDefaults *)userDefaults
 { //hardcoded
     [userDefaults setBool:YES forKey:@"notFirstTimeSetup"];
+    [userDefaults setInteger:TAAreaGrassy forKey:@"lastStagePlayed"];
     [userDefaults setInteger:1 forKey:@"level"];
     [userDefaults setInteger:TAAreaGrassy forKey:@"stage"];
     [userDefaults setInteger:0 forKey:@"currentLevelXP"];
     [userDefaults setObject:@"Profile" forKey:@"name"];
 }
 
+-(UIColor *)colorForClass:(NSUInteger)classToColor
+{
+    NSString *colorInStringForm = [colors[self.lastStagePlayed-1] objectAtIndex:classToColor];
+    NSArray *colorComponents = [colorInStringForm componentsSeparatedByString:@" "];
+    return [UIColor colorWithRed:[colorComponents[0] floatValue] green:[colorComponents[1] floatValue] blue:[colorComponents[2] floatValue] alpha:[colorComponents[3] floatValue]];
+}
 
 -(void)setStage:(NSUInteger)stage
 {
     _stage = stage;
     [[NSUserDefaults standardUserDefaults] setInteger:stage forKey:@"stage"];
+}
+
+-(void)setLastStagePlayed:(NSUInteger)lastStagePlayed
+{
+    if (lastStagePlayed == 0 || lastStagePlayed-1 >= colors.count) {
+        NSLog(@"Stage out of range; set to 1");
+        lastStagePlayed = 1;
+    }
+    _lastStagePlayed = lastStagePlayed;
+    [[NSUserDefaults standardUserDefaults] setInteger:lastStagePlayed forKey:@"lastStagePlayed"];
 }
 
 -(void)setLevel:(NSUInteger)level
@@ -79,6 +101,7 @@ NSArray *levelXPs;
 
 -(void)setCurrentLevelXP:(NSUInteger)currentLevelXP
 {
+    self.lastXpGain = currentLevelXP - _currentLevelXP;
     while (currentLevelXP >= self.totalLevelXP) {
         currentLevelXP -= self.totalLevelXP;
         self.level++;

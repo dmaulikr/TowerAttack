@@ -14,25 +14,28 @@
 extern NSInteger const maxTowerLevel;
 
 enum TATowerType : NSInteger {
-    TATowerTypeFireballTower,
+    TATowerTypeArrowTower,
     TATowerTypeFreezeTower,
     TATowerTypeBlastTower,
     TATowerTypePsychicTower,
+    TATowerTypeFireballTower,
     TATowerTypeNoTower
 };
 
 enum TATowerSize : NSInteger {
-    TATowerSizeFireballTower = 50,
+    TATowerSizeArrowTower = 46,
     TATowerSizeFreezeTower = 40,
     TATowerSizeBlastTower = 45,
-    TATowerSizePsychicTower = 60
+    TATowerSizePsychicTower = 60,
+    TATowerSizeFireballTower = 50,
 };
 
 enum TATowerAttackRadius : NSInteger {
-    TATowerAttackRadiusFireballTower = 100,
+    TATowerAttackRadiusArrowTower = 90,
     TATowerAttackRadiusFreezeTower = 70,
     TATowerAttackRadiusBlastTower = 55,
-    TATowerAttackRadiusPsychicTower = 150
+    TATowerAttackRadiusPsychicTower = 150,
+    TATowerAttackRadiusFireballTower = 100,
 };
 
 enum TATowerLevelDataStatPosition : NSInteger {
@@ -55,8 +58,5 @@ enum TATowerLevelDataStatPosition : NSInteger {
 -(void)beginAttack;
 -(void)endAttack;
 -(void)endAttackOnEnemy:(TAEnemy *)enemy;
-+(NSArray *)towerNames;
-+(NSArray *)towerIconStrings;
-
 
 @end

@@ -5,11 +5,11 @@
 	<key>TowerStatsForLevel</key>
 	<array>
 		<array>
-			<string>50 100 0.5 1</string>
-			<string>12 110 0.4 1</string>
-			<string>15 120 0.35 1</string>
-			<string>18 125 0.3 1</string>
-			<string>20 135 0.25 1</string>
+			<string>20 100 0.5 1</string>
+			<string>26 110 0.4 1</string>
+			<string>32 120 0.35 1</string>
+			<string>40 125 0.3 1</string>
+			<string>45 135 0.25 1</string>
 		</array>
 		<array>
 			<string>0 70 0 0.5</string>
@@ -32,13 +32,21 @@
 			<string>0.4 180 0.05 1</string>
 			<string>0.45 200 0.04 1</string>
 		</array>
+		<array>
+			<string>70 100 1.5 1</string>
+			<string>90 110 1.4 1</string>
+			<string>120 120 1.2 1</string>
+			<string>160 125 1 1</string>
+			<string>210 135 0.8 1</string>
+		</array>
 	</array>
 	<key>TowerDescriptions</key>
 	<array>
-		<string>The fireball tower shoots deadly balls of fire at enemies within range.</string>
+		<string>Arrow towers quickly fire off relatively weak arrows at enemies.</string>
 		<string>This tower creates a frigid, icy aura around itself, slowing all enemies that enter it.</string>
 		<string>This tower fires off powerful blasts, doing heavy damage to all enemies in the danger zone.</string>
-		<string>The psychic tower emits constant psychic waves, causing the health of all enemies within its large area of effect to continuously drop.</string>
+		<string>The psychic tower emits constant psychic waves, whittling down the health of all enemies within its large area.</string>
+		<string>The fireball tower shoots slowly, but its fireballs unleash massive damage.</string>
 	</array>
 	<key>WaveInfo</key>
 	<array>
@@ -52,6 +60,25 @@
 		<string>150</string>
 		<string>200</string>
 		<string>280</string>
+	</array>
+	<key>StageColors</key>
+	<array>
+		<array>
+			<string>0.5 0.7 0.4 0.9</string>
+			<string>0.8 0.9 0.8 0.7</string>
+			<string>0.8 0.9 0.8 0.7</string>
+			<string>0.8 0.9 0.8 0.7</string>
+			<string>0 0 0 1</string>
+			<string>0.85 0.95 0.85 1</string>
+		</array>
+		<array>
+			<string>0.75 0.09 0.01 0.9</string>
+			<string>0.584 0.263 0.188 0.7</string>
+			<string>0.584 0.263 0.188 0.7</string>
+			<string>0.584 0.263 0.188 0.7</string>
+			<string>0.75 0.75 0.75 1</string>
+			<string>0.78 0.455 0.376 1</string>
+		</array>
 	</array>
 </dict>
 </plist>

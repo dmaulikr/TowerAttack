@@ -15,13 +15,14 @@
 #import "TALabel.h"
 #import "TAButton.h"
 #import "TAPLayerProfile.h"
-#import "TAMainMenuViewController.h"
+#import "TAAreaSelectViewController.h"
 
 CGFloat const panelY = 240;
 CGFloat const purchaseBarWidth = 68;
 
 @implementation TAUIOverlay
 
+#pragma mark - configuration
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -38,9 +39,13 @@ CGFloat const purchaseBarWidth = 68;
         self.shouldPassTouches = YES;
         self.backgroundColor = [UIColor clearColor];
         
-        self.bottomDisplayLabel = [[TALabel alloc] initWithFrame:CGRectMake(6, self.frame.size.height - 20, 400, 20) andFontSize:14];
+        self.bottomDisplayLabel = [[TALabel alloc] initWithFrame:CGRectMake(6, self.frame.size.height - 20, 200, 20) andFontSize:14];
+        if (screenWidth == 480) {
+            self.bottomDisplayLabel.fontSize = 12;
+        }
         self.bottomDisplayLabel.textAlignment = NSTextAlignmentLeft;
         self.bottomDisplayLabel.numberOfLines = 1;
+        self.bottomDisplayLabel.shouldResizeFontForSize = NO;
         [self addSubview:self.bottomDisplayLabel];
         
         self.xpBar = [[UIProgressView alloc] initWithFrame:CGRectMake(-1, self.frame.size.height - 5, 120, 4)];
@@ -59,7 +64,7 @@ CGFloat const purchaseBarWidth = 68;
         [self addSubview:coin];
         
         self.startWaveButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [self.startWaveButton setFrame:CGRectMake(screenWidth - purchaseBarWidth - 3 - 25, 2 + 25 + 2, 25, 25)];
+        [self.startWaveButton setFrame:CGRectMake(screenWidth - purchaseBarWidth - 3 - 30, 2 + 25 + 2 - 40 + 25, 40, 40)];
         self.startWaveButton.adjustsImageWhenHighlighted = NO;
         [self.startWaveButton setImage:[UIImage imageNamed:@"StartWave"] forState:UIControlStateNormal];
     //    self.startWaveButton.alpha = 0.7;
@@ -67,7 +72,7 @@ CGFloat const purchaseBarWidth = 68;
         [self addSubview:self.startWaveButton];
         
         self.pauseButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [self.pauseButton setFrame:CGRectMake(screenWidth - purchaseBarWidth - 3 - 25, 2, 25, 25)];
+        [self.pauseButton setFrame:CGRectMake(screenWidth - purchaseBarWidth - 3 - 30, 2 - 35 + 25, 40, 40)];
         [self.pauseButton setImage:[UIImage imageNamed:@"PauseButton"] forState:UIControlStateNormal];
         [self.pauseButton addTarget:self action:@selector(pauseGame) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.pauseButton];
@@ -99,6 +104,64 @@ CGFloat const purchaseBarWidth = 68;
     return self;
 }
 
+-(void)configureBottomLabel
+{
+    TAPlayerProfile *profile = [TAPlayerProfile sharedInstance];
+
+    NSInteger previousLevel = 0;
+    if (self.xpBar.frame.origin.x > 0) {
+        NSRange range = [self.bottomDisplayLabel.text rangeOfString:@"Level "];
+        NSUInteger index = range.location + range.length;
+        range = NSMakeRange(index, [self.bottomDisplayLabel.text rangeOfString:@" " options:0 range:NSMakeRange(index, self.bottomDisplayLabel.text.length - index)].location - index);
+        previousLevel = [[self.bottomDisplayLabel.text substringWithRange:range] integerValue];
+    }
+    
+    self.bottomDisplayLabel.text = [NSString stringWithFormat:@"Area %lu Wave %lu | %@: Level %lu (%luxp / %luxp)",(unsigned long)self.battleScene.currentArea, (unsigned long)self.battleScene.currentWave,profile.name,(unsigned long)profile.level,(unsigned long)profile.currentLevelXP,(unsigned long)profile.totalLevelXP];
+    [self.bottomDisplayLabel sizeToFit];
+
+    if (self.xpBar.frame.origin.x > 0) {
+        NSInteger level = profile.level;
+    //    NSInteger xpGained = [profile currentLevelXP] - self.xpBar.progress * [profile totalLevelXP];
+        
+        [self popText:[NSString stringWithFormat:@"%ldXP",(long)profile.lastXpGain] withColour:self.xpBar.progressTintColor overPoint:[self.battleScene convertPoint:[self.battleScene.scene convertPointFromView:CGPointMake(CGRectGetMaxX(self.bottomDisplayLabel.frame) + 20, self.xpBar.frame.origin.y - 10)] fromNode:self.battleScene.scene]  completion:nil];
+        
+        [self performSelectorInBackground:@selector(configureXPBarNumberOfLevels:) withObject:[NSNumber numberWithInteger:level - previousLevel]];
+    }
+    else {
+        [self.xpBar setProgress:(CGFloat)[profile currentLevelXP] / (CGFloat)[profile totalLevelXP]];
+    }
+    
+    CGFloat bufferSpace = 6.0, maxWidth = self.frame.size.width - purchaseBarWidth - bufferSpace - CGRectGetMaxX(self.bottomDisplayLabel.frame) - bufferSpace;
+    
+    self.xpBar.frame = CGRectMake(CGRectGetMaxX(self.bottomDisplayLabel.frame) + 6, self.xpBar.frame.origin.y, maxWidth, self.xpBar.frame.size.height);
+}
+
+-(void)configureXPBarNumberOfLevels:(NSNumber *)levels
+{
+    for (int i = 0; i < [levels intValue]; i++) {
+        [self.xpBar setProgress:1.0 animated:YES];
+        [self.xpBar setProgress:0.0];
+    }
+    [self.xpBar setProgress:(CGFloat)[[TAPlayerProfile sharedInstance] currentLevelXP] / (CGFloat)[[TAPlayerProfile sharedInstance] totalLevelXP] animated:YES];
+}
+
+#pragma mark - confirm / cancel button handling
+
+-(void)decideTowerPlacementFromButton:(UIButton *)button
+{
+    if (button.tag == 0 && [self.selectedNode.color isEqual:[UIColor greenColor]]) {
+        [self.battleScene addTower];
+        [[self.battleScene childNodeWithName:@"Placeholder"] removeFromParent];
+        [self changeNodeOverlayLocation:CGPointMake(0,0) andHidden:YES];
+        self.battleScene.towerRadiusDisplay.alpha = 0.0;
+    }
+    else if (button.tag == 1) {
+        [[self.battleScene childNodeWithName:@"Placeholder"] removeFromParent];
+        [self changeNodeOverlayLocation:CGPointMake(0,0) andHidden:YES];
+        self.battleScene.towerRadiusDisplay.alpha = 0.0;
+    }
+}
+
 -(void)changeNodeOverlayLocation:(CGPoint)point andHidden:(BOOL)hidden
 {
     if (!hidden) {
@@ -116,39 +179,7 @@ CGFloat const purchaseBarWidth = 68;
     self.lastOverlayLocation = point;
 }
 
--(void)configureBottomLabel
-{
-    TAPlayerProfile *profile = [TAPlayerProfile sharedInstance];
-
-    self.bottomDisplayLabel.text = [NSString stringWithFormat:@"Area %lu Wave %lu | %@: Level %lu (%luxp / %luxp)",(unsigned long)self.battleScene.currentArea, (unsigned long)self.battleScene.currentWave,profile.name,(unsigned long)profile.level,(unsigned long)profile.currentLevelXP,(unsigned long)profile.totalLevelXP];
-    [self.bottomDisplayLabel sizeToFit];
-    
-    NSInteger xpGained = [profile currentLevelXP] - self.xpBar.progress * [profile totalLevelXP];
-    if (self.xpBar.frame.origin.x > 0) {
-        [self popText:[NSString stringWithFormat:@"%ldXP",(long)xpGained] withColour:self.xpBar.progressTintColor overPoint:[self.battleScene convertPoint:[self.battleScene.scene convertPointFromView:CGPointMake(CGRectGetMaxX(self.bottomDisplayLabel.frame) + 20, self.xpBar.frame.origin.y - 10)] fromNode:self.battleScene.scene]  completion:nil];
-        [self.xpBar setProgress:(CGFloat)[profile currentLevelXP] / (CGFloat)[profile totalLevelXP] animated:YES];
-    }
-    else {
-        [self.xpBar setProgress:(CGFloat)[profile currentLevelXP] / (CGFloat)[profile totalLevelXP]];
-    }
-    
-    self.xpBar.frame = CGRectMake(CGRectGetMaxX(self.bottomDisplayLabel.frame) + 6, self.xpBar.frame.origin.y, self.xpBar.frame.size.width, self.xpBar.frame.size.height);
-}
-
--(void)decideTowerPlacementFromButton:(UIButton *)button
-{
-    if (button.tag == 0 && [self.selectedNode.color isEqual:[UIColor greenColor]]) {
-        [self.battleScene addTower];
-        [[self.battleScene childNodeWithName:@"Placeholder"] removeFromParent];
-        [self changeNodeOverlayLocation:CGPointMake(0,0) andHidden:YES];
-        self.battleScene.towerRadiusDisplay.alpha = 0.0;
-    }
-    else if (button.tag == 1) {
-        [[self.battleScene childNodeWithName:@"Placeholder"] removeFromParent];
-        [self changeNodeOverlayLocation:CGPointMake(0,0) andHidden:YES];
-        self.battleScene.towerRadiusDisplay.alpha = 0.0;
-    }
-}
+#pragma mark - respond to touch events
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
@@ -180,8 +211,8 @@ CGFloat const purchaseBarWidth = 68;
     CGFloat scale = listener.scale * self.lastScale;
     CGPoint point = CGPointMake((touchZero.x + touchOne.x) / 2, (touchZero.y + touchOne.y) / 2);
     if (listener.state == UIGestureRecognizerStateChanged) {
-        if (1200 * scale < screenWidth) {
-            scale = screenWidth / 1200;
+        if (areaWidth * scale < screenWidth) {
+            scale = screenWidth / areaWidth;
         }
         [self changeNodeOverlayLocation:CGPointMake(0, 0) andHidden:YES];
         [self.battleScene runAction:[SKAction scaleTo:scale duration:0] completion:^{
@@ -190,14 +221,14 @@ CGFloat const purchaseBarWidth = 68;
             if (self.battleScene.position.x + deltaX > 0) {
                 deltaX = (CGFloat)self.battleScene.position.x * -1;
             }
-            else if (self.battleScene.position.x * -1 - deltaX + self.frame.size.width >= 1200 * scale) {
-                deltaX = (1200 * scale + self.battleScene.position.x - self.frame.size.width) * -1;
+            else if (self.battleScene.position.x * -1 - deltaX + self.frame.size.width >= areaWidth * scale) {
+                deltaX = (areaWidth * scale + self.battleScene.position.x - self.frame.size.width) * -1;
             }
             if (self.battleScene.position.y + deltaY > 0) {
                 deltaY = self.battleScene.position.y * -1;
             }
-            else if ((self.battleScene.position.y + deltaY) * -1 + self.frame.size.height >= 900 * scale) {
-                deltaY = (900 * scale + self.battleScene.position.y - self.frame.size.height) * -1;
+            else if ((self.battleScene.position.y + deltaY) * -1 + self.frame.size.height >= areaHeight * scale) {
+                deltaY = (areaHeight * scale + self.battleScene.position.y - self.frame.size.height) * -1;
             }
    //         self.battleScene.position = CGPointMake(self.battleScene.position.x + deltaX, self.battleScene.position.y + deltaY);
    //         self.battleScene.scale = scale;
@@ -217,30 +248,14 @@ CGFloat const purchaseBarWidth = 68;
     }
 }
 
+#pragma mark - change game states
+
 -(void)startWave
 {
     self.battleScene.waveIsSpawning = YES;
     [UIView animateWithDuration:0.3 animations:^{
         self.startWaveButton.alpha = 0;
     }];
-}
-
--(void)presentNotificationWithText:(NSString *)text
-{
-    CGFloat x = self.frame.size.width / 2 - 150, y = -80, width = self.frame.size.width - x * 2, height = y * -1;
-    TAButton *notification = [[TAButton alloc] initWithFrame:CGRectMake(x, y, width, height) andFontSize:40];
-    [notification setTitle:text forState:UIControlStateNormal];
-    [self addSubview:notification];
-    [UIView animateWithDuration:1
-                          delay:0
-         usingSpringWithDamping:1
-          initialSpringVelocity:0
-                        options:UIViewAnimationOptionTransitionNone
-                     animations:^{
-                         notification.frame = CGRectMake(notification.frame.origin.x, self.frame.size.height / 2 - notification.frame.size.height / 2, notification.frame.size.width, notification.frame.size.height);
-                         self.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.7];
-                     }
-                     completion:nil];
 }
 
 -(void)pauseGame
@@ -330,10 +345,33 @@ CGFloat const purchaseBarWidth = 68;
 -(void)endGame
 {
  //   [self.battleScene.scene.view presentScene:nil];
-    TAMainMenuViewController *v = (TAMainMenuViewController *)[self.battleScene.scene.view.superview nextResponder];
+    TAAreaSelectViewController *v = (TAAreaSelectViewController *)[self.battleScene.scene.view.superview nextResponder];
+    
+    [v performSegueWithIdentifier:@"Unwind" sender:v];
     [self.battleScene.scene.view removeFromSuperview];
-    [v.view setBackgroundColor:[UIColor whiteColor]];
-    NSLog(@"%@",v.view.backgroundColor);
+  //  [v.view setBackgroundColor:[UIColor whiteColor]];
+  //  NSLog(@"%@",v.view.backgroundColor);
+}
+
+
+#pragma mark - show text
+
+-(void)presentNotificationWithText:(NSString *)text
+{
+    CGFloat x = self.frame.size.width / 2 - 150, y = -80, width = self.frame.size.width - x * 2, height = y * -1;
+    TAButton *notification = [[TAButton alloc] initWithFrame:CGRectMake(x, y, width, height) andFontSize:40];
+    [notification setTitle:text forState:UIControlStateNormal];
+    [self addSubview:notification];
+    [UIView animateWithDuration:1
+                          delay:0
+         usingSpringWithDamping:1
+          initialSpringVelocity:0
+                        options:UIViewAnimationOptionTransitionNone
+                     animations:^{
+                         notification.frame = CGRectMake(notification.frame.origin.x, self.frame.size.height / 2 - notification.frame.size.height / 2, notification.frame.size.width, notification.frame.size.height);
+                         self.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.7];
+                     }
+                     completion:nil];
 }
 
 -(void)popText:(NSString *)text withColour:(UIColor *)colour overPoint:(CGPoint)point completion:(void (^)(void))block
@@ -350,6 +388,8 @@ CGFloat const purchaseBarWidth = 68;
         if (block) { block(); }
     }];
 }
+
+#pragma mark - setters
 
  -(void)setCurrentGold:(NSUInteger)currentGold
 {
@@ -384,19 +424,21 @@ CGFloat const purchaseBarWidth = 68;
     if (selectedUnit != nil) {
         [UIView animateWithDuration:0.25 animations:^(void) {
             self.infoPanel.frame = CGRectMake(0, self.frame.size.height - self.infoPanel.frame.size.height, screenWidth, self.infoPanel.frame.size.height);
-            self.bottomDisplayLabel.frame = CGRectMake(self.bottomDisplayLabel.frame.origin.x, self.infoPanel.frame.origin.y - self.bottomDisplayLabel.frame.size.height, self.bottomDisplayLabel.frame.size.width, self.bottomDisplayLabel.frame.size.height);
+            self.bottomDisplayLabel.frame = CGRectMake(self.bottomDisplayLabel.frame.origin.x, self.infoPanel.frame.origin.y - 20, self.bottomDisplayLabel.frame.size.width, self.bottomDisplayLabel.frame.size.height);
+            self.xpBar.center = CGPointMake(self.xpBar.center.x, self.bottomDisplayLabel.center.y);
             self.purchaseSidebar.frame = CGRectMake(screenWidth, 0, purchaseBarWidth, self.frame.size.height);
-            self.pauseButton.frame = CGRectMake(screenWidth - 2 - 25, self.pauseButton.frame.origin.y, self.pauseButton.frame.size.width, self.pauseButton.frame.size.height);
-            self.startWaveButton.frame = CGRectMake(screenWidth - 2 - 25, self.startWaveButton.frame.origin.y, self.startWaveButton.frame.size.width, self.startWaveButton.frame.size.height);
+            self.pauseButton.frame = CGRectMake(screenWidth - 2 - 30, self.pauseButton.frame.origin.y, self.pauseButton.frame.size.width, self.pauseButton.frame.size.height);
+            self.startWaveButton.frame = CGRectMake(screenWidth - 2 - 30, self.startWaveButton.frame.origin.y, self.startWaveButton.frame.size.width, self.startWaveButton.frame.size.height);
         }];
     }
     else {
         [UIView animateWithDuration:0.25 animations:^(void) {
             self.infoPanel.frame = CGRectMake(0, self.frame.size.height, screenWidth, self.infoPanel.frame.size.height);
-            self.bottomDisplayLabel.frame = CGRectMake(self.bottomDisplayLabel.frame.origin.x, self.frame.size.height - self.bottomDisplayLabel.frame.size.height, self.bottomDisplayLabel.frame.size.width, self.bottomDisplayLabel.frame.size.height);
+            self.bottomDisplayLabel.frame = CGRectMake(self.bottomDisplayLabel.frame.origin.x, self.frame.size.height - 20, self.bottomDisplayLabel.frame.size.width, self.bottomDisplayLabel.frame.size.height);
+            self.xpBar.center = CGPointMake(self.xpBar.center.x, self.bottomDisplayLabel.center.y);
             self.purchaseSidebar.frame = CGRectMake(screenWidth - purchaseBarWidth, 0, purchaseBarWidth, self.frame.size.height);
-            self.pauseButton.frame = CGRectMake(screenWidth - 2 - purchaseBarWidth - 25, self.pauseButton.frame.origin.y, self.pauseButton.frame.size.width, self.pauseButton.frame.size.height);
-            self.startWaveButton.frame = CGRectMake(screenWidth - 2 - purchaseBarWidth - 25, self.startWaveButton.frame.origin.y, self.startWaveButton.frame.size.width, self.startWaveButton.frame.size.height);
+            self.pauseButton.frame = CGRectMake(screenWidth - 2 - purchaseBarWidth - 30, self.pauseButton.frame.origin.y, self.pauseButton.frame.size.width, self.pauseButton.frame.size.height);
+            self.startWaveButton.frame = CGRectMake(screenWidth - 2 - purchaseBarWidth - 30, self.startWaveButton.frame.origin.y, self.startWaveButton.frame.size.width, self.startWaveButton.frame.size.height);
         }];
     }
     //code for bringing up tower upgrade / info overlay
