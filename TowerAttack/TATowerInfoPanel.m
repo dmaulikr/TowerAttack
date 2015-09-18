@@ -110,7 +110,7 @@
     if (_selectedUnit != nil) {
         self.unitIcon.image = [UIImage imageNamed:selectedUnit.imageName];
         self.unitName.text = selectedUnit.unitType;
-        self.unitDescription.text = selectedUnit.description;
+        self.unitDescription.text = selectedUnit.unitDescription;
         NSMutableArray *arr = _selectedUnit.infoStrings;
         _selectedUnit.infoStrings = arr;
     }

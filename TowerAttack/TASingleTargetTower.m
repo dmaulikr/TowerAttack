@@ -19,7 +19,7 @@
    //     self.texture = [SKTexture textureWithImageNamed:self.imageName];
         self.projectileSpeed = 400;
    //     self.size = CGSizeMake(TATowerSizeFireballTower, TATowerSizeFireballTower);
-        self.description = (NSString *)[[[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Game Data" ofType:@"plist"]] objectForKey:@"TowerDescriptions"] objectAtIndex:[self towerTypeFromSubclass]];
+        self.unitDescription = (NSString *)[[[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Game Data" ofType:@"plist"]] objectForKey:@"TowerDescriptions"] objectAtIndex:[self towerTypeFromSubclass]];
    //     self.unitType = @"Fireball Tower";
         self.maximumSimultaneouslyAffectedEnemies = 1;
    //     self.attackRadius = TATowerAttackRadiusFireballTower;
@@ -66,6 +66,9 @@
                    completion:^{
                        projectile.hidden = YES;
                        [enemy setCurrentHealth:enemy.currentHealth - self.attackDamage];
+           //            CGFloat angle = enemy.zRotation + M_PI;
+          //             NSLog(@"%f",angle);
+          //             [enemy vibrateAtAngle:angle];
                        if ([enemy currentHealth] <= 0) {
                            [self.enemiesInRange removeObject:enemy];
                        }
@@ -77,6 +80,7 @@
             [self endAttack];
         }
     }
+//    [super fireProjectile];
 }
 
 -(void)setAttackDamage:(NSInteger)attackDamage

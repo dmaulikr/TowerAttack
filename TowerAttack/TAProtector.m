@@ -18,7 +18,7 @@
         self.goldReward = TAEnemyGoldRewardProtector;
         self.xpReward = 350;//TAEnemyXPRewardProtector;
         self.maximumHealth = TAEnemyMaximumHealthProtector;
-        self.description = @"Protectors are slow but heavily fortified, making them difficult to kill quickly.";
+        self.unitDescription = @"Protectors are slow but heavily fortified, making them difficult to kill quickly.";
         self.unitType = @"Protector";
         self.imageName = @"Protector";
         self.texture = [SKTexture textureWithImageNamed:self.imageName];

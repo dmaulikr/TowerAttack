@@ -21,7 +21,7 @@
         self.xpReward = TAEnemyXPRewardDemon;
         self.movementSpeed = arc4random() % 10 + TAEnemyMovementSpeedDemon;
         self.maximumHealth = TAEnemyMaximumHealthDemon;
-        self.description = @"Demons are dangerously fast - don't let one get through: they take an extra life if they do!";
+        self.unitDescription = @"Demons are dangerously fast - don't let one get through: they take an extra life if they do!";
         self.unitType = @"Demon";
         self.imageName = @"Demon";
         self.texture = [SKTexture textureWithImageNamed:self.imageName];

@@ -51,17 +51,20 @@
     self.titleEdgeInsets = UIEdgeInsetsMake(10, 5, 10, 5);
     
     self.defaultColor = [[TAPlayerProfile sharedInstance] colorForClass:TAClassButton];//[UIColor colorWithRed:0.5 green:0.7 blue:0.4 alpha:0.9];
+ //   self.backgroundColor = [UIColor whiteColor];
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    self.backgroundColor = self.highlightedColor;
+ //   self.backgroundColor = self.highlightedColor;
+    [self setNeedsDisplay];
     [super touchesBegan:touches withEvent:event];
 }
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    self.backgroundColor = self.defaultColor;
+ //   self.backgroundColor = self.defaultColor;
+    [self setNeedsDisplay];
     [super touchesEnded:touches withEvent:event];
 }
 
@@ -77,15 +80,25 @@
     CGFloat h,s,b,a;
     [defaultColor getHue:&h saturation:&s brightness:&b alpha:&a];
     self.highlightedColor = [UIColor colorWithHue:h saturation:s brightness:b * 0.75 alpha:a];
-    self.backgroundColor = defaultColor;
+    [self setNeedsDisplay];
+ //   self.backgroundColor = defaultColor;
 }
 
-/*
+
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect {
     // Drawing code
+    [super drawRect:rect];
+    UIBezierPath *pathToDraw = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height) cornerRadius:6];
+    if (self.highlighted) {
+        [self.highlightedColor setFill];
+    }
+    else {
+        [self.defaultColor setFill];
+    }
+    [pathToDraw fill];
 }
-*/
+
 
 @end

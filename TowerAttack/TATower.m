@@ -12,6 +12,7 @@
 #import "TAEnemy.h"
 #import "TAUIOverlay.h"
 #import "TATowerInfoPanel.h"
+#import "TASound.h"
 
 NSInteger const maxTowerLevel = 5;
 
@@ -38,7 +39,8 @@ NSInteger const maxTowerLevel = 5;
         self.physicsBody.collisionBitMask = TAContactTypeNothing;
         self.physicsBody.dynamic = NO;
         
-        [self runAction:[SKAction playSoundFileNamed:@"TowerPlaced.wav" waitForCompletion:NO]];
+        if (sceneParam)
+            [TASound playSoundWithFileName:@"TowerPlaced" ofType:@"wav"];
     }
     return self;
 }

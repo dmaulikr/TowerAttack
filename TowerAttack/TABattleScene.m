@@ -75,6 +75,9 @@ int numWaves = 2;
     if (self = [super initWithColor:[UIColor redColor] size:size]) {
         
         TAPlayerProfile *profile = [TAPlayerProfile sharedInstance];
+        CGFloat screenWidth;
+        if IOS8 screenWidth = screenWidthIOS8;
+        else screenWidth = screenWidthIOS7;
         
         self.currentWave = 1;
         self.enemyCount = 0;
@@ -103,6 +106,13 @@ int numWaves = 2;
         
         [self configurePathsForSize:size];
         
+    //    TADemon *d = [[TADemon alloc] initWithLocation:CGPointMake(600, 800) inScene:self];
+  //      [self addChild:d];
+        
+   //     [d vibrateAtAngle:0];
+        
+   //     NSTimer *callTimer = [NSTimer scheduledTimerWithTimeInterval:arc4random() % 10 + 10 target:self selector:@selector(addCloud:) userInfo:nil repeats:NO];
+        
     }
     return self;
 }
@@ -119,16 +129,24 @@ int numWaves = 2;
     [self addChild:pathDrawer];
     
     NSString *imageForArea;
+    NSString *imageForPath;
     switch (self.currentArea) {
         case 1:
             imageForArea = @"Grass.jpg";
+            imageForPath = @"sand.jpg";
             break;
         case 2:
             imageForArea = @"FireArea.jpg";
+            imageForPath = @"Rock.jpg";
+            break;
+        case 3:
+            imageForArea = @"Desert.jpg";
+            imageForPath = @"Cracked.jpg";
             break;
         default:
             NSLog(@"Area out of range");
             imageForArea = @"Grass.jpg";
+            imageForPath = @"sand.jpg";
             break;
     }
     
@@ -137,19 +155,21 @@ int numWaves = 2;
         i = 0;
     }
     
+    UIImage *imageToDraw = [UIImage imageNamed:imageForArea];
     UIGraphicsBeginImageContextWithOptions(size, NO, i);
     CGContextRef c = UIGraphicsGetCurrentContext();
-    CGContextDrawTiledImage(c, CGRectMake(0, 0, 240, 240), [UIImage imageNamed:imageForArea].CGImage);
+    CGContextDrawTiledImage(c, CGRectMake(0, 0, imageToDraw.size.width, imageToDraw.size.height), imageToDraw.CGImage);
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
     self.texture = [SKTexture textureWithImage:image];
     
+    imageToDraw = [UIImage imageNamed:imageForPath];
     UIGraphicsBeginImageContextWithOptions(size, NO, i);
     c = UIGraphicsGetCurrentContext();
     CGContextAddPath(c, CGPathCreateCopyByStrokingPath(self.enemyMovementPath, NULL, 40, kCGLineCapRound, kCGLineJoinRound, 100));
     CGContextClip(c);
-    CGContextDrawTiledImage(c, CGRectMake(0, 0, 240, 240), [UIImage imageNamed:@"sand.jpg"].CGImage);
+    CGContextDrawTiledImage(c, CGRectMake(0, 0, imageToDraw.size.width, imageToDraw.size.height), imageToDraw.CGImage);
     image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
@@ -157,8 +177,8 @@ int numWaves = 2;
     pathFill.zPosition = TANodeZPositionPath;
     pathFill.size = self.size;
     pathFill.yScale = -1.0;
-    pathFill.colorBlendFactor = 1;
-    pathFill.color = [UIColor colorWithRed:1 green:226.0/255.0 blue:145.0f/255.0f alpha:1];
+ //   pathFill.colorBlendFactor = 0.4;
+ //   pathFill.color = //[UIColor blackColor];//[UIColor colorWithRed:1 green:226.0/255.0 blue:145.0f/255.0f alpha:1];
     pathFill.position = CGPointMake(600, 450);
     [self addChild:pathFill];
     
@@ -243,6 +263,10 @@ int numWaves = 2;
 -(void)userClickedAtLocation:(UITouch *)touch
 {
     SKNode *nodeTouched = [SKNode node];
+    CGFloat screenWidth;
+    if IOS8 screenWidth = screenWidthIOS8;
+    else screenWidth = screenWidthIOS7;
+    
     if ([[self nodesAtPoint:[touch locationInNode:self]] count] > 1) {
         for (SKNode *n in [self nodesAtPoint:[touch locationInNode:self]]) {
             if (([n.name characterAtIndex:0] == 'E' && [nodeTouched.name characterAtIndex:0] != 'T' && [nodeTouched.name characterAtIndex:1] != 'l') || ([n.name characterAtIndex:0] == 'T' && [self distanceFromA:n.position toB:[touch locationInNode:self]] <= [(SKSpriteNode *)n size].width  && [nodeTouched.name characterAtIndex:1] != 'l') || [n.name characterAtIndex:1] == 'l') {
@@ -468,6 +492,32 @@ int numWaves = 2;
             NSLog(@"Invalid Enemy Type");
             break;
     }
+}
+
+-(void)addCloud:(NSTimer *)callTimer
+{
+    callTimer = [NSTimer scheduledTimerWithTimeInterval:arc4random() % 10 + 10 target:self selector:@selector(addCloud:) userInfo:nil repeats:NO];
+    CGFloat x = arc4random() % 2 * areaWidth;
+    CGFloat y = arc4random() % areaHeight;
+    CGFloat cloudSpeed = arc4random() % 20 + 40;
+    SKEmitterNode *cloud = [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSBundle mainBundle] pathForResource:@"Cloud" ofType:@"sks"]];
+    cloud.particleSpeed = cloudSpeed - ceil(x / areaWidth) * cloudSpeed * 2;
+    cloud.position = CGPointMake(x, y);
+    cloud.particleLifetime = 100;
+    cloud.zPosition = TANodeZPositionPlaceholder - 0.5;
+    CGFloat alpha = cloud.alpha;
+    cloud.alpha = 0;
+    [UIView animateWithDuration:1 animations:^{
+        cloud.alpha = alpha;
+    }];
+    [self addChild:cloud];
+    [self performSelector:@selector(removeCloud:) withObject:cloud afterDelay:0.2];
+}
+
+-(void)removeCloud:(SKEmitterNode *)cloud
+{
+    cloud.particleBirthRate = 0;
+    [cloud performSelector:@selector(removeFromParent) withObject:nil afterDelay:areaWidth / abs(cloud.particleSpeed)];
 }
 
 @end

@@ -23,8 +23,9 @@
         _movementSpeed = 0;
         _maximumHealth = 0;
         _currentHealth = 0;
+        self.isVibrating = NO;
         self.goldReward = 0;
-        self.description = @"Weak but relatively fast, enemies are a common enemy, but not too much of a threat.";
+        self.unitDescription = @"Weak but relatively fast, enemies are a common enemy, but not too much of a threat.";
         self.unitType = @"Enemy";
         self.imageName = @"Attacker";
         [self.infoStrings addObjectsFromArray:[NSArray arrayWithObjects:[NSString stringWithFormat:@"Health: %lu/%lu",(unsigned long)self.currentHealth,(unsigned long)self.maximumHealth], [NSString stringWithFormat:@"Movement Speed: %g",self.movementSpeed * self.speed], nil]];
@@ -95,6 +96,36 @@
     [self removeAllActions];
 }
 
+/*-(void)moveByTimer:(NSTimer *)timer
+{
+    NSMutableArray *arr = [(NSArray *)[timer userInfo] objectAtIndex:2];
+    
+    float x = [(NSNumber *)[arr objectAtIndex:0] floatValue];
+    [arr replaceObjectAtIndex:0 withObject:[NSNumber numberWithFloat:x+0.008]];
+    CGFloat vibrateAngle = [(NSNumber *)[(NSArray *)[timer userInfo] objectAtIndex:0] floatValue];
+    x += 0.004;
+    CGFloat magnitude = [(NSNumber *)[(NSArray *)[timer userInfo] objectAtIndex:1] floatValue] *( (3-x) * (3-x) * 2*M_PI * cos(x*2*M_PI) - 2*(3-x) * sin(2*x*M_PI)/*(3-x)*(2 * M_PI) * cosf(x*(2 * M_PI)) - sinf(x*(2 * M_PI)));
+   // CGFloat magnitude = [(NSNumber *)[(NSArray *)[timer userInfo] objectAtIndex:1] floatValue] *( sinf(x * 2 * M_PI) * (x-3));
+    NSLog(@"%f, %f, (%f,%f)", x, magnitude, magnitude * cosf(vibrateAngle), magnitude * sinf(vibrateAngle));
+    if (3 - x > 0) {
+       // [self runAction:[SKAction moveTo:CGPointMake(600 + magnitude * cosf(vibrateAngle), 800 + magnitude * sinf(vibrateAngle)) duration:timer.timeInterval]];
+        [self runAction:[SKAction moveByX:magnitude * cosf(vibrateAngle) y:magnitude * sinf(vibrateAngle) duration:timer.timeInterval]];
+    }
+    else {
+        NSLog(@"inv");
+        [timer invalidate];
+        self.isVibrating = NO;
+    }
+}
+
+-(void)vibrateAtAngle:(CGFloat)vibrateAngle
+{
+    if (!self.isVibrating) {
+        NSTimer *moveTimer = [NSTimer scheduledTimerWithTimeInterval:0.0001 target:self selector:@selector(moveByTimer:) userInfo:@[[NSNumber numberWithFloat:vibrateAngle], [NSNumber numberWithFloat:0.1f /* magnitude ], [NSMutableArray arrayWithObject:[NSNumber numberWithInt:0]]] repeats:YES];
+        self.isVibrating = YES;
+    }
+}
+*/
 -(void)setCurrentHealth:(CGFloat)currentHealth
 {
 //    NSUInteger index = [self.infoStrings indexOfObject:[NSString stringWithFormat:@"Health: %lu/%lu",(unsigned long)self.currentHealth,(unsigned long)self.maximumHealth]];
@@ -107,6 +138,7 @@
         }
     }];
     _currentHealth = currentHealth;
+    
     if (index != NSNotFound) {
         [self.infoStrings replaceObjectAtIndex:index withObject:[NSString stringWithFormat:@"Health: %lu/%lu",(unsigned long)self.currentHealth,(unsigned long)self.maximumHealth]];
     }

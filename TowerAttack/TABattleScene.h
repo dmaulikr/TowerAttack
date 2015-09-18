@@ -14,7 +14,8 @@
 @class TAEnemy;
 
 #define IOS8 ([[[UIDevice currentDevice] systemVersion] characterAtIndex:0] == '8')
-#define screenWidth [[UIScreen mainScreen] bounds].size.height
+#define screenWidthIOS7 [[UIScreen mainScreen] bounds].size.height
+#define screenWidthIOS8 [[UIScreen mainScreen] bounds].size.width
 #define areaWidth 1200
 #define areaHeight 900
 

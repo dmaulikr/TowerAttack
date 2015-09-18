@@ -35,6 +35,8 @@
     [self.levelLabel setText:[NSString stringWithFormat:@"Level %lu",(unsigned long)[profile level]]];
     [self.xpLabel setText:[NSString stringWithFormat:@"XP: %lu/%lu",(unsigned long)[profile currentLevelXP],(unsigned long)[profile totalLevelXP]]];
     [self.xpBar setProgress:(CGFloat)[profile currentLevelXP] / (CGFloat)[profile totalLevelXP]];
+    self.xpBar.trackTintColor = [profile colorForClass:TAClassSliderOrProgressViewLight];
+    self.xpBar.progressTintColor = [profile colorForClass:TAClassSliderOrProgressViewDark];
 }
 
 -(IBAction)changeProfileName:(id)sender

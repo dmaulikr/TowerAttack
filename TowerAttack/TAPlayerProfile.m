@@ -54,6 +54,7 @@ NSArray *colors;
     self.currentLevelXP = [userDefaults integerForKey:@"currentLevelXP"];
     self.name = [userDefaults stringForKey:@"name"];
     self.lastStagePlayed = [userDefaults integerForKey:@"lastStagePlayed"];
+    self.fxVolume = [userDefaults floatForKey:@"fxVolume"];
 }
 
 -(void)runFirstTimeSetup:(NSUserDefaults *)userDefaults
@@ -64,6 +65,7 @@ NSArray *colors;
     [userDefaults setInteger:TAAreaGrassy forKey:@"stage"];
     [userDefaults setInteger:0 forKey:@"currentLevelXP"];
     [userDefaults setObject:@"Profile" forKey:@"name"];
+    [userDefaults setFloat:1.0 forKey:@"fxVolume"];
 }
 
 -(UIColor *)colorForClass:(NSUInteger)classToColor

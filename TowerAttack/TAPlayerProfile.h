@@ -14,7 +14,9 @@ enum TAClass : NSUInteger {
     TAClassInfoPanel,
     TAClassInfoPopup,
     TAClassLabelText,
-    TAClassMainMenuBackground
+    TAClassMainMenuBackground,
+    TAClassSliderOrProgressViewDark,
+    TAClassSliderOrProgressViewLight
 };
 
 @interface TAPlayerProfile : NSObject
@@ -25,6 +27,7 @@ enum TAClass : NSUInteger {
 @property (nonatomic) NSUInteger lastXpGain;
 @property (nonatomic) NSUInteger currentLevelXP;
 @property (nonatomic) NSUInteger totalLevelXP;
+@property (nonatomic) CGFloat fxVolume;
 @property (nonatomic, strong) NSString *name;
 
 -(void)runFirstTimeSetup:(NSUserDefaults *)userDefaults;

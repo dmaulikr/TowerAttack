@@ -18,7 +18,7 @@
         self.goldReward = TAEnemyGoldRewardAttacker;
         self.xpReward = TAEnemyXPRewardAttacker;
         self.maximumHealth = TAEnemyMaximumHealthAttacker;
-        self.description = @"Weak but relatively fast, attackers are common enemies, but not too much of a threat.";
+        self.unitDescription = @"Weak but relatively fast, attackers are common enemies, but not too much of a threat.";
         self.unitType = @"Attacker";
         self.imageName = @"Attacker";
         self.texture = [SKTexture textureWithImageNamed:self.imageName];

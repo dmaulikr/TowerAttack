@@ -11,6 +11,7 @@
 #import "TAEnemy.h"
 #import "TAUIOverlay.h"
 #import "TATowerInfoPanel.h"
+#import "TASound.h"
 
 @implementation TANonPassiveTower
 
@@ -32,6 +33,13 @@
 -(void)fireProjectile
 {
   //overidden by subclasses
+    if (self.enemiesInRange.count <= 0) {
+        [self.attackUpdate invalidate];
+    }
+    else if (self.projectileWAVSoundString != nil) {
+        [TASound playSoundWithFileName:self.projectileWAVSoundString ofType:@"wav"];
+    }
+    
 }
 
 -(void)endAttack

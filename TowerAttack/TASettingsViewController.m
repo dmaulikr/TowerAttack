@@ -7,6 +7,7 @@
 //
 
 #import "TASettingsViewController.h"
+#import "TAPLayerProfile.h"
 
 @interface TASettingsViewController ()
 
@@ -16,12 +17,23 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    TAPlayerProfile *profile = [TAPlayerProfile sharedInstance];
+    self.fxVolumeSlider.value = [profile fxVolume];
+    self.fxVolumeSlider.minimumTrackTintColor = [profile colorForClass:TAClassSliderOrProgressViewDark];
+    self.fxVolumeSlider.thumbTintColor = [profile colorForClass:TAClassSliderOrProgressViewDark];
+    self.fxVolumeSlider.maximumTrackTintColor = [profile colorForClass:TAClassSliderOrProgressViewLight];
+    self.view.backgroundColor = [profile colorForClass:TAClassMainMenuBackground];
     // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(IBAction)fxVolumeChanged:(id)sender
+{
+    [[TAPlayerProfile sharedInstance] setFxVolume:self.fxVolumeSlider.value];
 }
 
 /*

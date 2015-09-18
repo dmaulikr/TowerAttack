@@ -23,7 +23,7 @@
         self.attackRadius = TATowerAttackRadiusBlastTower;
         self.unitType = @"Blast Tower";
         self.maximumSimultaneouslyAffectedEnemies = 0;
-        self.description = (NSString *)[[[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Game Data" ofType:@"plist"]] objectForKey:@"TowerDescriptions"] objectAtIndex:TATowerTypeBlastTower];
+        self.unitDescription = (NSString *)[[[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Game Data" ofType:@"plist"]] objectForKey:@"TowerDescriptions"] objectAtIndex:TATowerTypeBlastTower];
         super.attackDamage = 20;
         super.timeBetweenAttacks = 1.5;
         self.projectileToFire = [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSBundle mainBundle] pathForResource:@"Blast" ofType:@"sks"]];

@@ -19,6 +19,7 @@
         self.size = CGSizeMake(TATowerSizeArrowTower, TATowerSizeArrowTower);
         self.unitType = @"Arrow Tower";
         self.attackRadius = TATowerAttackRadiusArrowTower;
+        self.projectileWAVSoundString = @"Arrow";
     }
     return self;
 }

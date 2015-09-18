@@ -9,6 +9,7 @@
 #import <SpriteKit/SpriteKit.h>
 #import "TAUnit.h"
 
+
 @class TABattleScene;
 
 enum TAEnemyGoldReward : NSUInteger {
@@ -54,8 +55,11 @@ enum TAEnemyType : NSUInteger {
 @property (nonatomic, strong) SKSpriteNode *healthBarInside;
 @property (nonatomic) NSUInteger goldReward;
 @property (nonatomic) NSUInteger xpReward;
+@property (nonatomic) BOOL isVibrating;
 
 -(void)finishPath;
 -(void)die;
+-(void)moveByTimer:(NSTimer *)timer;
+-(void)vibrateAtAngle:(CGFloat)angle;
 
 @end

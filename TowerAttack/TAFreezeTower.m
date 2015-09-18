@@ -23,7 +23,7 @@
         self.texture = [SKTexture textureWithImageNamed:self.imageName];
         self.attackRadius = TATowerAttackRadiusFreezeTower;
         self.unitType = @"Freeze Tower";
-        self.description = (NSString *)[[[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Game Data" ofType:@"plist"]] objectForKey:@"TowerDescriptions"] objectAtIndex:TATowerTypeFreezeTower];
+        self.unitDescription = (NSString *)[[[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Game Data" ofType:@"plist"]] objectForKey:@"TowerDescriptions"] objectAtIndex:TATowerTypeFreezeTower];
         _speedMultiplier = 0.5;
         SKEmitterNode *frost = [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSBundle mainBundle] pathForResource:@"Frost" ofType:@"sks"]];
         frost.zPosition = TANodeZPositionProjectile - TANodeZPositionTower;

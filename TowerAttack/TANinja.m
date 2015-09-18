@@ -21,7 +21,7 @@
         self.xpReward = TAEnemyXPRewardNinja;
         self.movementSpeed = arc4random() % 10 + TAEnemyMovementSpeedNinja;
         self.maximumHealth = TAEnemyMaximumHealthNinja;
-        self.description = @"Killing a ninja is never a sure thing, because they have a chance to dodge any damaging attack!";
+        self.unitDescription = @"Killing a ninja is never a sure thing, because they have a chance to dodge any damaging attack!";
         self.unitType = @"Ninja";
         self.imageName = @"Ninja";
         self.texture = [SKTexture textureWithImageNamed:self.imageName];

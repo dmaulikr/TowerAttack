@@ -25,7 +25,7 @@
         self.attackDamage = 0.2;
         self.towerType = TATowerTypePsychicTower;
         self.damageTimers = [NSMutableArray array];
-        self.description = (NSString *)[[[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Game Data" ofType:@"plist"]] objectForKey:@"TowerDescriptions"] objectAtIndex:TATowerTypePsychicTower];
+        self.unitDescription = (NSString *)[[[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Game Data" ofType:@"plist"]] objectForKey:@"TowerDescriptions"] objectAtIndex:TATowerTypePsychicTower];
         self.damageNodes = [NSMutableArray array];
         [self runAction:[SKAction repeatActionForever:[SKAction rotateByAngle:360 duration:5]]];
         [self.infoStrings addObject:[NSString stringWithFormat:@"DPS: %g",self.attackDamage / self.timeBetweenAttacks]];

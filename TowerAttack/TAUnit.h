@@ -17,7 +17,7 @@
 @property (nonatomic, strong) NSString *imageName;
 @property (nonatomic, weak) TABattleScene *battleScene;
 @property (nonatomic, strong) NSString *unitType;
-@property (nonatomic, strong) NSString *description;
+@property (nonatomic, strong) NSString *unitDescription;
 @property (nonatomic, strong) NSMutableArray *infoStrings;
 
 -(id)initWithLocation:(CGPoint)location inScene: (TABattleScene *)sceneParam;

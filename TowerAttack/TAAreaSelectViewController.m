@@ -7,7 +7,6 @@
 //
 
 #import "TAAreaSelectViewController.h"
-#import "TACell.h"
 #import "TAUIOverlay.h"
 #import "TABattleScene.h"
 #import "AppDelegate.h"
@@ -47,8 +46,8 @@
         cell = [[TACell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Generic Cell" areaNumber:[indexPath row]];
     }*/
     cell.transform = CGAffineTransformMakeRotation(M_PI_2);
-    [(UIImageView *)[cell viewWithTag:5] setImage:[UIImage imageNamed:[self picNameForArea:[indexPath row] % 2]]];
-    [(TALabel *)[cell viewWithTag:4] setText:[NSString stringWithFormat:@"Area %d",[indexPath row]+1]];
+    [(UIImageView *)[cell viewWithTag:5] setImage:[UIImage imageNamed:[self picNameForArea:[indexPath row] % 3]]];
+    [(TALabel *)[cell viewWithTag:4] setText:[NSString stringWithFormat:@"Area %ld",[indexPath row]+1]];
     cell.backgroundColor = [[TAPlayerProfile sharedInstance] colorForClass:TAClassMainMenuBackground];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
@@ -60,7 +59,7 @@
     UIView *b = [[UIView alloc] initWithFrame:self.view.frame];
     b.backgroundColor = [UIColor blackColor];
     [self.view addSubview:b];
-    [[TAPlayerProfile sharedInstance] setLastStagePlayed:[indexPath row] % 2 + 1];
+    [[TAPlayerProfile sharedInstance] setLastStagePlayed:[indexPath row] % 3 + 1];
     [self startGame];
 }
 
@@ -89,6 +88,9 @@
 
 -(void)startGame
 {
+    CGFloat screenWidth;
+    if IOS8 screenWidth = screenWidthIOS8;
+    else screenWidth = screenWidthIOS7;
     SKView * skView = [[SKView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 320)];
     skView.showsFPS = YES;
     skView.showsNodeCount = YES;
@@ -165,6 +167,8 @@
             break;
         case 1:
             return @"FireArea.jpg";
+        case 2:
+            return @"Desert.jpg";
         default:
             return @"Grass.jpg";
             break;

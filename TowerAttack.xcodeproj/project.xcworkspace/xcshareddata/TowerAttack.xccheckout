@@ -10,29 +10,29 @@
 	<string>TowerAttack</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>47979826-D469-4778-8202-99F95BF77E4E</key>
-		<string>ssh://github.com/ethan-hardy/TowerAttack.git</string>
+		<key>A3320B8C24F612AD4D3D015E7BB276F270214876</key>
+		<string>github.com:ethan-hardy/TowerAttack.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>TowerAttack.xcodeproj/project.xcworkspace</string>
+	<string>TowerAttack.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>47979826-D469-4778-8202-99F95BF77E4E</key>
+		<key>A3320B8C24F612AD4D3D015E7BB276F270214876</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://github.com/ethan-hardy/TowerAttack.git</string>
+	<string>github.com:ethan-hardy/TowerAttack.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>47979826-D469-4778-8202-99F95BF77E4E</string>
+	<string>A3320B8C24F612AD4D3D015E7BB276F270214876</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>47979826-D469-4778-8202-99F95BF77E4E</string>
+			<string>A3320B8C24F612AD4D3D015E7BB276F270214876</string>
 			<key>IDESourceControlWCCName</key>
 			<string>TowerAttack</string>
 		</dict>

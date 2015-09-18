@@ -10,4 +10,8 @@
 
 @interface TASettingsViewController : UIViewController
 
+@property (nonatomic, strong) IBOutlet UISlider *fxVolumeSlider;
+
+-(IBAction)fxVolumeChanged:(id)sender;
+
 @end

@@ -17,6 +17,7 @@
 @property (nonatomic) CGFloat normalBirthRateOfProjectile;
 @property (nonatomic, strong) NSTimer *attackUpdate;
 @property (nonatomic, strong) SKEmitterNode *projectileToFire;
+@property (nonatomic, strong) NSString *projectileWAVSoundString;
 
 -(void)fireProjectile;
 -(void)turnOffEmitter;

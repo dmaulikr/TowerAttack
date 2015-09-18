@@ -27,6 +27,11 @@ CGFloat const purchaseBarWidth = 68;
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
+        TAPlayerProfile *profile = [TAPlayerProfile sharedInstance];
+        CGFloat screenWidth;
+        if IOS8 screenWidth = screenWidthIOS8;
+        else screenWidth = screenWidthIOS7;
+        
         self.topDisplayLabel = [[TALabel alloc] initWithFrame:CGRectMake(0, 5, 45, 60) andFontSize:20];
         self.topDisplayLabel.textAlignment = NSTextAlignmentRight;
         [self addSubview:self.topDisplayLabel];
@@ -49,8 +54,8 @@ CGFloat const purchaseBarWidth = 68;
         [self addSubview:self.bottomDisplayLabel];
         
         self.xpBar = [[UIProgressView alloc] initWithFrame:CGRectMake(-1, self.frame.size.height - 5, 120, 4)];
-        self.xpBar.progressTintColor = [UIColor colorWithRed:22.0f / 255.0f green:87.0f / 255.0f blue:0.0f / 255.0f alpha:1.0f];
-        self.xpBar.trackTintColor = [UIColor colorWithRed:255.0f / 255.0f green:254.0f / 255.0f blue:201.0f / 255.0f alpha:0.7f];
+        self.xpBar.progressTintColor = [profile colorForClass:TAClassSliderOrProgressViewDark];
+        self.xpBar.trackTintColor = [profile colorForClass:TAClassSliderOrProgressViewLight];
         [self addSubview:self.xpBar];
         self.xpBar.center = CGPointMake(self.xpBar.center.x, self.bottomDisplayLabel.center.y);
         
@@ -208,8 +213,13 @@ CGFloat const purchaseBarWidth = 68;
     if ([listener numberOfTouches] > 1) {
         touchOne = [listener locationOfTouch:1 inView:self];
     }
+    
     CGFloat scale = listener.scale * self.lastScale;
     CGPoint point = CGPointMake((touchZero.x + touchOne.x) / 2, (touchZero.y + touchOne.y) / 2);
+    CGFloat screenWidth;
+    if IOS8 screenWidth = screenWidthIOS8;
+    else screenWidth = screenWidthIOS7;
+    
     if (listener.state == UIGestureRecognizerStateChanged) {
         if (areaWidth * scale < screenWidth) {
             scale = screenWidth / areaWidth;
@@ -261,6 +271,10 @@ CGFloat const purchaseBarWidth = 68;
 -(void)pauseGame
 {
     [self.battleScene setPaused:YES];
+    
+    CGFloat screenWidth;
+    if IOS8 screenWidth = screenWidthIOS8;
+    else screenWidth = screenWidthIOS7;
     
     UIView *grayCover = [[UIView alloc] initWithFrame:self.frame];
     grayCover.tag = 20;
@@ -421,6 +435,11 @@ CGFloat const purchaseBarWidth = 68;
     _selectedUnit = selectedUnit;
     _selectedNode = selectedUnit;
     self.infoPanel.selectedUnit = selectedUnit;
+    
+    CGFloat screenWidth;
+    if IOS8 screenWidth = screenWidthIOS8;
+    else screenWidth = screenWidthIOS7;
+    
     if (selectedUnit != nil) {
         [UIView animateWithDuration:0.25 animations:^(void) {
             self.infoPanel.frame = CGRectMake(0, self.frame.size.height - self.infoPanel.frame.size.height, screenWidth, self.infoPanel.frame.size.height);

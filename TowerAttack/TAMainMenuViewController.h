@@ -22,6 +22,5 @@
 
 
 -(IBAction)unwindToMainScreenFromSegue:(UIStoryboardSegue *)segue;
--(IBAction)startGame:(id)sender;
 
 @end
